@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Remnants generated="2021-01-30T18:00:00">
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="133c5a02-9e6b-11e9-3d82-f2903d9c4902" Product="Крем-мыло жидкое (флакон 500 мл.)" Quantity="9" Stock="ЦКФ Князьков" Unit="шт" Date="04.01.2021 9:06:25"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="2ad32096-13a0-11eb-868a-f2903d9c4902" Product="Маска медицинская голубая на резинках уп/50шт." Quantity="1" Stock="ЦКФ Князьков" Unit="упак" Date="04.01.2021 9:06:25"/>
+	<ProductItem ProductCharacteristicGUID="ФОБ F/F сорт 1/1 1220 х 2440 х 12 120/120 DB" ProductCharacteristic="ФОБ F/F сорт 1/1 1220 х 2440 х 12 120/120 DB" GUID="c7591210-c6e3-11e3-941e-b62b3a813221" Product="Фанера облицованная пленками" Quantity="0.036" Stock="ЦКФ Князьков" Unit="м3" Date="16.10.2020 10:00:00"/>
+	<ProductItem ProductCharacteristicGUID="ФОБ F/F сорт 1/1 2440 х 1220 х 12 120/120 DB" ProductCharacteristic="ФОБ F/F сорт 1/1 2440 х 1220 х 12 120/120 DB" GUID="c7591210-c6e3-11e3-941e-b62b3a813221" Product="Фанера облицованная пленками" Quantity="0.071" Stock="ЦКФ Князьков" Unit="м3" Date="16.10.2020 10:00:00"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="44450697-e891-11e2-a52a-00241dc9e2b2" Product="Рукавицы комбин. с брезентовым наладонником" Quantity="24" Stock="ЦКФ Князьков" Unit="пар" Date="04.01.2021 9:06:25"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="96eb6e7a-c124-11e2-adb5-00241dc9e2b2" Product="Перчатки трикотажные с ПВХ 5-ти нитка" Quantity="150" Stock="ЦКФ Князьков" Unit="пар" Date="04.01.2021 9:06:25"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="170b097c-7fb0-11ea-ce81-f2903d9c4902" Product="Маска марлевая нестерильная гигиеническая " Quantity="40" Stock="ЦКФ Князьков" Unit="шт" Date="04.01.2021 9:06:25"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="184bf95a-1d81-11e9-d09a-f2903d9c4902" Product="Полотенце махровое 50*90" Quantity="9" Stock="ЦКФ Князьков" Unit="шт" Date="04.01.2021 9:06:25"/>
+</Remnants>

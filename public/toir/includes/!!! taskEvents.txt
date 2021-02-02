@@ -1,0 +1,1 @@
+Слушатели событий подключаются в файле: /home/bitrix/www/bitrix/php_interface/include/bup/event_tasks.php

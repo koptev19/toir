@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Remnants generated="2020-12-23T22:51:54">
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="61593498-886e-11e9-1b90-f2903d9c4902" Product="Подшипник GE 32 LO" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="5a2cf1bc-ad0a-11e9-1d8d-f2903d9c4902" Product="Масло моторное синтич. бочка 208л. ROLF GT SAE 5W-40 " Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="a1d8adb4-4f02-11e9-2d87-f2903d9c4902" Product="Очки защитные закрытые" Quantity="4" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="fa86b3e8-4a79-11ea-328c-f2903d9c4902" Product="Коронка режущая резьба М18 60х60х30мм" Quantity="40" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="133c5a02-9e6b-11e9-3d82-f2903d9c4902" Product="Крем-мыло жидкое (флакон 500 мл.)" Quantity="6" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="e9b3f61e-9e78-11e9-3d82-f2903d9c4902" Product="Подшипник GE 35 DO INA" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="8b928ea0-c71e-11e9-5694-f2903d9c4902" Product="Комплект экстракторов 5 предметов" Quantity="2" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="1e178eaa-51f0-11e9-7a8c-f2903d9c4902" Product="Фильтр гидравлический Parker PR2863Q" Quantity="2" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="c1527ec0-284c-11e9-802b-00155dfe3100" Product="Уровень магнитный " Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="c8ff366a-284c-11e9-802b-00155dfe3100" Product="Очки &quot;Панорама&quot;" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="c8ff36a2-284c-11e9-802b-00155dfe3100" Product="Болт М6*35" Quantity="0.21" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="d025d208-284c-11e9-802b-00155dfe3100" Product="Подшипник 6209-2RS" Quantity="6" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="d025d2a3-284c-11e9-802b-00155dfe3100" Product="Шайба ф14" Quantity="0.26" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="d7114505-284c-11e9-802b-00155dfe3100" Product="Гайка М24" Quantity="0.25" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="d711452c-284c-11e9-802b-00155dfe3100" Product="Болт М8*30" Quantity="0.58" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="d711459c-284c-11e9-802b-00155dfe3100" Product="Гайка М27," Quantity="0.001" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="dd5fa992-284c-11e9-802b-00155dfe3100" Product="Болт М12*90" Quantity="0.53" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="e36e6d4f-284c-11e9-802b-00155dfe3100" Product="Болт М10*40" Quantity="0.85" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="e36e6de4-284c-11e9-802b-00155dfe3100" Product="Мотор-редуктор UD-KA 67-68,95-20,5-2,2В5-М1" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="ea3537f1-284c-11e9-802b-00155dfe3100" Product="Шайба ф18" Quantity="0.26" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="f0afb841-284c-11e9-802b-00155dfe3100" Product="Масло редуктор. CLP-68 205л/181кг" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="38cea294-f8e1-11ea-868a-f2903d9c4902" Product="Хомут червячный 20-32/9 W2" Quantity="20" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="10a2930e-f8e4-11ea-868a-f2903d9c4902" Product="Хомут червячный 32-50/9 W2" Quantity="20" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="6ca5b3ac-9ecb-11e3-8855-001e6724ef26" Product="Ремень клиновой С(В) 3000" Quantity="2" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="c3fa4355-da88-11e3-8855-001e6724ef26" Product="Подшипниковый узел UCF208" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="299d1f2d-35df-11dd-8b5a-001d6066a862" Product="Гайка М8" Quantity="0.35" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="299d1f2e-35df-11dd-8b5a-001d6066a862" Product="Гайка М14" Quantity="0.25" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="299d1f30-35df-11dd-8b5a-001d6066a862" Product="Гайка М10" Quantity="0.31" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="408f9c09-558f-11de-8c5d-001d6066a862" Product="Мыло хозяйственное" Quantity="6" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="b1a2e100-5bb0-11e9-8c83-f2903d9c4902" Product="Крышка конторножа (из 6 частей) " Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="8ff24578-e1dd-11e0-8efb-001d6066a862" Product="Подшипник UC208" Quantity="2" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="27fd287c-2477-11e9-8f92-f2903d9c4902" Product="Очки защитные открытые " Quantity="6" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="7c0f05b6-eb2d-11e9-9395-f2903d9c4902" Product="Гайка М18 " Quantity="0.45" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="874b2f07-5ef3-11e2-961a-001e6724ef27" Product="Дроссель с обратным клапаном для цилиндра" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="44450697-e891-11e2-a52a-00241dc9e2b2" Product="Рукавицы комбин. с брезентовым наладонником" Quantity="21" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="e250b6de-9f3f-11dc-a89f-0008a17d505f" Product="Очки защитные" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="5df12d5a-a192-11dc-a8a0-0008a17d505f" Product="Бензин АИ-92" Quantity="20" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="96eb6e7a-c124-11e2-adb5-00241dc9e2b2" Product="Перчатки трикотажные с ПВХ 5-ти нитка" Quantity="28" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="cd02d3fe-3b78-11e9-b097-f2903d9c4902" Product="Шпилька резьбовая (штанга) 12х1000" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="f73e4df6-110b-11e2-b1f6-001e6724ef27" Product="Гайка М12" Quantity="0.51" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="f73e4df8-110b-11e2-b1f6-001e6724ef27" Product="Гайка М16" Quantity="0.23" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="f73e4dfc-110b-11e2-b1f6-001e6724ef27" Product="Гайка М20" Quantity="0.41" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="ca58eb26-b2a0-11e9-b791-f2903d9c4902" Product="Набор надфилей алмазных" Quantity="3" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="4ee0a134-12a7-11e2-bb85-00241dc9e2b2" Product="Пассатижи" Quantity="2" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="a7359ed0-2b0a-11eb-c193-f2903d9c4902" Product="Съемник стопорных колец разжимной прямой 300 мм" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="3ff5179a-2d59-11eb-c193-f2903d9c4902" Product="Мотор-редуктор FH77/GDRN100LS4 (46.79448723.01.0001.20)" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="1d6c952a-348b-11eb-c193-f2903d9c4902" Product="Стопорное кольцо внутреннее 55х2,0" Quantity="12" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="61dc3e64-b9f1-11ea-c89f-f2903d9c4902" Product="Хомут червячный 10-16/9 W2" Quantity="20" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="71f2c1c4-cb21-11ea-c89f-f2903d9c4902" Product="Цепь 16 3/8 55зв 1.3мм" Quantity="3" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="712b52ee-e2da-11ea-c89f-f2903d9c4902" Product="Крепежный болт ножа G-60-4333" Quantity="6" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="170b097c-7fb0-11ea-ce81-f2903d9c4902" Product="Маска марлевая нестерильная гигиеническая " Quantity="40" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="b1c85880-8aae-11ea-ce81-f2903d9c4902" Product="Инструмент абразивный 1 125х32х32 25А F60 H 6V2" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="8e45ec9c-1d77-11e9-d09a-f2903d9c4902" Product="Пленка стретч " Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="50d1532a-1d80-11e9-d09a-f2903d9c4902" Product="Ветошь х/б трикот. цветная (10 кг)" Quantity="10" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="184bf95a-1d81-11e9-d09a-f2903d9c4902" Product="Полотенце махровое 50*90" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="3e435a2a-d16a-11e9-e299-f2903d9c4902" Product="Бесшовная холоднотянутая прецизионная (Н8) труба 080/095 E355 SR" Quantity="0.75" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="d24314de-3863-11eb-e482-f2903d9c4902" Product="Зубило плоское с изол. ручкой 300мм" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="53922c46-3864-11eb-e482-f2903d9c4902" Product="Кольцесъёмники KN-4411J2" Quantity="2" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="a8292368-3864-11eb-e482-f2903d9c4902" Product="Зубило плоское 20х200мм" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="cde434ee-3864-11eb-e482-f2903d9c4902" Product="Вороток шарнирный 450мм" Quantity="2" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="03a4a33a-388c-11eb-e482-f2903d9c4902" Product="Насос NO4221 ручной роторный для раздачи масла из бочек 60-220л" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="aebadac8-3945-11eb-e482-f2903d9c4902" Product="Хомут червячный 25-40/9 W2" Quantity="20" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="01b371f8-3947-11eb-e482-f2903d9c4902" Product="Шайба 11872 мног.Ф30" Quantity="12" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="8741f62c-3a24-11eb-e482-f2903d9c4902" Product="Адаптер электронный динамометрический 3/4 200-1000Нм,кейс 34607-1А" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="d45aace2-3a24-11eb-e482-f2903d9c4902" Product="Ключ динамометрический 3/4,150-750 Нм" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="70dad3a2-3aee-11eb-e482-f2903d9c4902" Product="Сальник (манжета армир.)2.2-85х105х10" Quantity="10" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="4bdc5836-3aef-11eb-e482-f2903d9c4902" Product="Хомут червячный 08-16/9 W2" Quantity="20" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="77bd726e-3aef-11eb-e482-f2903d9c4902" Product="Хомут червячный 12-20/9 W2" Quantity="20" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="1b78169e-3f68-11eb-e482-f2903d9c4902" Product="Трещетка  1/2 DR 06-05-47" Quantity="4" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="418ae76c-3f68-11eb-e482-f2903d9c4902" Product="Трещетка  1/4 DR 06-05-48" Quantity="3" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="7d2037a0-3f68-11eb-e482-f2903d9c4902" Product="Головка торцевая 1/2 24 высокая" Quantity="4" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="9e9d3d02-4106-11eb-e482-f2903d9c4902" Product="Шаблон углов гибкого ножа R-16S-4124" Quantity="1" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="a4d97490-410d-11eb-e482-f2903d9c4902" Product="Вороток 1/2 с усиленным шарниром 600 мм" Quantity="2" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="e6c8b000-410d-11eb-e482-f2903d9c4902" Product="Набор удлинителей 1/4,3/8,1/2" Quantity="2" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="6313cf96-410e-11eb-e482-f2903d9c4902" Product="Напильник по металлу" Quantity="3" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="9bace0ea-410e-11eb-e482-f2903d9c4902" Product="Удлинитель ударный 1/2 125 мм" Quantity="2" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="bd4c571c-410e-11eb-e482-f2903d9c4902" Product="Набор удлинителей на 42767" Quantity="2" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="3f22fde8-22ff-11e9-ee99-f2903d9c4902" Product="Шайба ф 8" Quantity="0.6" Stock="Биржа сырья Борисов"/>
+	<ProductItem ProductCharacteristicGUID="" ProductCharacteristic="" GUID="7de56710-999b-11e9-f596-f2903d9c4902" Product="Подшипник 8210 Н(51210)ГПЗ" Quantity="3" Stock="Биржа сырья Борисов"/>
+</Remnants>
