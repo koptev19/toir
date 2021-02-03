@@ -31,7 +31,7 @@ class DepartmentFormRequest extends FormRequest
                 'max:255',
             ],
             'manager_id' => [
-                'nullable',
+                'required',
                 'exists:users,id',
             ],
         ];
