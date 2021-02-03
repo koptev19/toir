@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Http\Requests\DepartmentFormRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 /**
@@ -19,9 +20,7 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
-        $departments = Department::all();
-        
-        return view('departments.index', compact('departments'));
+        return view('departments.index');
     }
 
     /**
@@ -31,7 +30,10 @@ class DepartmentController extends Controller
      */
     public function create(Request $request)
     {
-        return view('departments.create');
+        $users = User::whereConnected(true)
+            ->get();
+        
+        return view('departments.create', compact('users'));
     }
 
     /**
@@ -54,7 +56,10 @@ class DepartmentController extends Controller
      */
     public function edit(Request $request, Department $department)
     {
-        return view('departments.edit', compact('department'));
+        $users = User::whereConnected(true)
+            ->get();
+
+        return view('departments.edit', compact('department', 'users'));
     }
 
     /**

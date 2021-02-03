@@ -21,6 +21,8 @@ Route::get('profile/logout', 'ProfileController@logout')->name('profile.logout')
 Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('main', 'MainController@index')->name('main');
     Route::get('toir/{workshop}', 'ToirController@index')->name('toir');
+
+    Route::resource('departments', DepartmentController::class);
 });
 
 // Route::resource('equipments', EquipmentController::class);
