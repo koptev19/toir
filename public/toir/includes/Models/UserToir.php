@@ -125,7 +125,7 @@ class UserToir extends ToirModel
             }
             $workshopsIds = $this->availableWorkshopsIds();
             if (!in_array($workshopId, $workshopsIds)) {
-                header("Location: /404.php");
+                header("Location: /");
             }
         }
         return true;
@@ -143,7 +143,7 @@ class UserToir extends ToirModel
             }
             $servicesIds = $this->availableServicesIds();
             if (!in_array($serviceId, $servicesIds)) {
-                header("Location: /404.php");
+                header("Location: /");
             }
         }
         return true;

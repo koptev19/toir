@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.toir')
 
 @section('content')
 
@@ -7,7 +7,7 @@
     <h5 class="text-center">Выберите цех</h5>
     <ul class="list-group mt-4">
     @foreach($workshops as $workshop)
-        <li class="list-group-item"><a href="{{ route('home', $workshop) }}">{{ $workshop->name }}</a></li>
+        <li class="list-group-item"><a href="{{ route('toir', $workshop) }}">{{ $workshop->name }}</a></li>
     @endforeach
     </ul>
 @else

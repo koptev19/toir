@@ -28,7 +28,7 @@ class ToirAddPlanController extends ToirController
 				$work = Work::find($_REQUEST['work_id']);
 				$this->workshop = $work -> WORKSHOP_ID; 		
 			}else{		
-            header("Location: main.php");
+            header("Location: /main");
         }
         }
         UserToir::current()->checkWorkshopOrFail($this->workshop->ID);

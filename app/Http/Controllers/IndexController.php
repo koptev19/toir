@@ -17,7 +17,7 @@ class IndexController extends Controller
     public function index(Request $request)
     {
         if(Auth::check()) {
-            return redirect(route('workshops'));
+            return redirect(route('main'));
         } else {
             return redirect(route('login'));
         }
@@ -30,13 +30,6 @@ class IndexController extends Controller
     {
         return view('home');
     }
-    
-    /**
-     * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
-     */
-    public function workshops(Request $request)
-    {
-        return redirect('/toir/main.php');
-    }
+
 
 }

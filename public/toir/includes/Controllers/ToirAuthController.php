@@ -18,7 +18,7 @@ class ToirAuthController extends ToirController
         if($user) {
             if($user->connected) {
                 $_SESSION['auth_id'] = $user->id;
-                header('Location: main.php');
+                header('Location: /main');
             } else {
                 $_SESSION['auth_error'] = 'Вы временно отключены от системы';
                 header('Location: auth.php');

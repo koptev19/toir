@@ -24,7 +24,7 @@ class ToirAddWorkController extends ToirController
 			$this->equipment = Equipment::findAvailabled($work->EQUIPMENT_ID); 
 		}
         if(!$this->equipment) {
-            header("Location: main.php");
+            header("Location: /main");
         }
     }
 
