@@ -9,7 +9,7 @@ class ToirUserController extends ToirController
     public function __construct()
     {
         if(!UserToir::current()->IS_ADMIN) {
-            header("Location: /404.php");
+            header("Location: /");
         }
     }
 

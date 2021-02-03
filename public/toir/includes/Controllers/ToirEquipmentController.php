@@ -88,7 +88,7 @@ class ToirEquipmentController extends ToirController
 
         if(!UserToir::current()->IS_ADMIN){
             if(!$parent || !in_array($parent->WORKSHOP_ID, UserToir::current()->availableWorkshopsIds)){
-                header("Location: main.php");
+                header("Location: /main");
             }
         }
 

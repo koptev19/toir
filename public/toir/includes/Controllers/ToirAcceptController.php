@@ -6,7 +6,7 @@ class ToirAcceptController extends ToirController
     public function __construct()
     {
         if (!UserToir::current()->IS_ADMIN) {
-            header("Location: main.php");
+            header("Location: /main");
         }        
     }
 

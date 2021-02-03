@@ -15,7 +15,7 @@ class ToirIndexController extends ToirController
     {
         $this->workshop = Workshop::find((int)$_REQUEST['workshop']);
         if(!$this->workshop) {
-            header("Location: main.php");
+            header("Location: /main");
         }
         UserToir::current()->checkWorkshopOrFail($this->workshop->ID);
         $this->month = intval($_REQUEST['month'] ?? date('n'));

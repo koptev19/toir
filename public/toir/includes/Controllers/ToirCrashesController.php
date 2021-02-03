@@ -23,7 +23,7 @@ class ToirCrashesController extends ToirController
             $this->workshop = $this->selectedCrash->workshop;
         }
         if (!$this->workshop) {
-            header("Location: main.php");
+            header("Location: /main");
         }
         UserToir::current()->checkWorkshopOrFail($this->workshop->ID);
     }

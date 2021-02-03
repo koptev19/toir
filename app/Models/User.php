@@ -50,5 +50,41 @@ class User extends Authenticatable
         return $this->belongsToMany(Department::class);
     }
 
+    /**
+     * @return Collection
+     */
+    public function getAvailableWorkshopsAttribute()
+    {
+        $workshops = collect([]);
+
+        if($this->connected) {
+            if($this->is_admin) {
+                $workshops = Workshop::all();
+            } else {
+                $workshops = $this->workshops;
+            }
+        }
+
+        return $workshops;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getAvailableDepartmentsAttribute()
+    {
+        $departments = collect([]);
+
+        if($this->connected) {
+            if($this->is_admin) {
+                $departments = Department::all();
+            } else {
+                $departments = $this->departments;
+            }
+        }
+
+        return $departments;
+    }
+
     
 }
