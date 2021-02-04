@@ -7,7 +7,7 @@ $title = $title ?? 'ТОиР';
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <link href="styles/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <link href="styles/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
         <!-- <link rel="stylesheet" href="styles/fontawesome-all.css"> -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
