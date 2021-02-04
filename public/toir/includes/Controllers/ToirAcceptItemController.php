@@ -39,7 +39,7 @@ class ToirAcceptItemController extends ToirController
             'LINE_ID' => $accept->LINE_ID,
             'EQUIPMENT_ID' => $accept->EQUIPMENT_ID,
             'USER_SECOND_NAME' => $_REQUEST['USER_NAME'],
-			'STAGE' => $_REQUEST['noComment'] ? AcceptItem::STAGE_DONE : AcceptItem::STAGE_NEW,
+			'STAGE' => $_REQUEST['COMMENT'] ? AcceptItem::STAGE_NEW : AcceptItem::STAGE_DONE,
 			'COMMENT' => $_REQUEST['COMMENT'],
         ];
         if($files = FileService::uploadMultiple('files')) {
