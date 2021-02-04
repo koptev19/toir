@@ -1,7 +1,7 @@
 @extends('layouts.toir')
 
 @section('content')
-@include('components/admin_tabs', ['active' => 'departments'])
+@include('components/admin_tabs', ['active' => 'settings'])
 
 <div class="tab-content border border-top-0">
     <div class="tab-pane fade show active p-4"role="tabpanel" aria-labelledby="department-tab">

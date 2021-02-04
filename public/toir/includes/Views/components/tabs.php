@@ -3,7 +3,7 @@
 		["name"=>"Оборудование","url"=>"equipment.php","admin"=>0],
 		["name"=>"Службы","url"=>"/departments","admin"=>1],
 		["name"=>"Пользователи","url"=>"users.php","admin"=>1],
-		["name"=>"Настройки","url"=>"settings.php","admin"=>1],
+		["name"=>"Настройки","url"=>"/settings","admin"=>1],
 		["name"=>"Приемка оборудования","url"=>"accept.php","admin"=>1],
 //		["name"=>"Приемка оборудования","url"=>"accept_item.php","admin"=>0],
 	]

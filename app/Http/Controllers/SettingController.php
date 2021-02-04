@@ -30,9 +30,7 @@ class SettingController extends Controller
      */
     public function update(SettingFormRequest $request)
     {
-        $settings = Setting::all()->keyBy('name');
-
-        $settings['plan_month_day']->update(['value' => $request->plan_month_day]);
+        Setting::getByName('plan_month_day')->update(['value' => $request->plan_month_day]);
         
         return redirect()
             ->route('settings.index')

@@ -12,7 +12,7 @@
 	    <a class="nav-link" href="users.php">Пользователи</a>
 	</li>
 	<li class="nav-item" role="presentation">
-	    <a class="nav-link" href="settings.php">Настройки</a>
+	    <a class="nav-link" href="/settings">Настройки</a>
 	</li>
 </ul>
 <div class="tab-content border border-top-0">
