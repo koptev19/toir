@@ -15,7 +15,7 @@
         @else
             <select class="form-select" name="type">
             @foreach(\App\Models\Equipment::getTypes() as $keyType => $nameType)
-                @if($key !== \App\Models\Equipment::TYPE_WORKSHOP && $key !== \App\Models\Equipment::TYPE_LINE)
+                @if($keyType !== \App\Models\Equipment::TYPE_WORKSHOP && $keyType !== \App\Models\Equipment::TYPE_LINE)
                     <option value='{{ $keyType }}' {{ $keyType === $equipment->type ? 'selected' : '' }}>{{ $nameType }}</option>
                 @endif
             @endforeach

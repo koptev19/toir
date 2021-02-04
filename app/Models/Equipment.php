@@ -110,4 +110,17 @@ class Equipment extends Model
         return $this->type === Equipment::TYPE_WORKSHOP;
     }
 
+    public function getHtmlClassAttribute()
+    {
+		$classes = [
+            Equipment::TYPE_WORKSHOP =>"text-body link-dark",
+            Equipment::TYPE_LINE =>"text-danger link-danger",
+            Equipment::TYPE_MECHANISM =>"text-primary link-primary",
+            Equipment::TYPE_NODE=>"text-success link-success",
+            Equipment::TYPE_DETAIL=>"text-info link-info"
+        ];
+
+        return $classes[$this->type];
+    }
+
 }

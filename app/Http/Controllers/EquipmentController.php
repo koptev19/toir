@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Equipment;
 use App\Http\Requests\EquipmentFormRequest;
+use App\Http\Resources\EquipmentResource;
 use App\Models\Line;
 use App\Models\Workshop;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 /**
  * Class EquipmentController
@@ -22,8 +22,6 @@ class EquipmentController extends Controller
      */
     public function index(Request $request)
     {
-        // $equipmentsTree = $this->getEquipmentsTree();
-        
         return view('equipments.index');
     }
 
@@ -37,9 +35,9 @@ class EquipmentController extends Controller
         $parentId = $request->parent ?? null;
         $parent = Equipment::find($parentId);
 
-        $equipmentsTree = $this->getEquipmentsTree($parent);
+        $parentsId = array_merge($parent->allParentsId(), [$parent->id]);
 
-        return view('equipments.create', compact('equipmentsTree', 'parent'));
+        return view('equipments.create', compact('parentsId', 'parent'));
     }
 
     /**
@@ -52,15 +50,15 @@ class EquipmentController extends Controller
         if($request->parent_id) {
             $parent = Equipment::find($request->parent_id);
             if($parent->type === Equipment::TYPE_WORKSHOP) {
-                Line::create($request->validated());
+                $equipment = Line::create($request->validated());
             } else {
-                Equipment::create($request->validated());
+                $equipment = Equipment::create($request->validated());
             }
         } else {
-            Workshop::create($request->validated());
+            $equipment = Workshop::create($request->validated());
         }
 
-        return redirect()->route('equipments.index');
+        return redirect()->route('equipments.show', $equipment);
     }
 
     /**
@@ -71,9 +69,8 @@ class EquipmentController extends Controller
      */
     public function edit(Request $request, Equipment $equipment)
     {
-        $equipmentsTree = $this->getEquipmentsTree($equipment);
-
-        return view('equipments.edit', compact('equipment', 'equipmentsTree'));
+        $parentsId = array_merge($equipment->allParentsId(), [$equipment->id]);
+        return view('equipments.edit', compact('equipment', 'parentsId'));
     }
 
     /**
@@ -86,9 +83,8 @@ class EquipmentController extends Controller
     {
         $equipment->update($request->validated());
 
-        return redirect()->route('equipments.index');
+        return redirect()->route('equipments.show', $equipment);
     }
-
     
     /**
      * @param Request $request
@@ -98,32 +94,24 @@ class EquipmentController extends Controller
      */
     public function show(Request $request, Equipment $equipment)
     {
-        $equipmentsTree = $this->getEquipmentsTree($equipment);
-
-        return view('equipments.show', compact('equipment', 'equipmentsTree'));
+        $parentsId = array_merge($equipment->allParentsId(), [$equipment->id]);
+        return view('equipments.show', compact('equipment', 'parentsId'));
     }
 
     /**
-     * @param Equipment|null $equipment = null
+     * @param Request $request
      * 
-     * @return Collection
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    private function getEquipmentsTree(?Equipment $equipment = null, int $parentId = null): Collection
+    public function children(Request $request)
     {
-        $equipments = ($parentId ? Equipment::whereNull('parent_id') : Equipment::whereParentId($parentId))
+        $equipments = Equipment::whereParentId($request->parent ?? null)
+            ->withCount('children')
             ->get();
-        
-        /*
-        if($equipment) {
-            $parentsId = $equipment->allParentsId();
-            foreach($parents as $parent) {
-                if(in_array($parent->id, $parentsId)) {
-                    $parent->childrenTree = $this->getEquipmentsTree($equipment, $parent->id);
-                }
-            }
-        }
-        */
-        return $parents;
-    }
+
+        return response()->json([
+            'items' => new EquipmentResource($equipments)
+        ]);
+}
 
 }

@@ -25,6 +25,8 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('settings', 'SettingController@index')->name('settings.index');
     Route::put('settings/update', 'SettingController@update')->name('settings.update');
 
+    Route::get('equipments/children', 'EquipmentController@children')->name('equipments.children');
+
     Route::resources([
         'departments' => DepartmentController::class,
         'equipments' => EquipmentController::class,
