@@ -22,7 +22,7 @@
 <div class="text-center my-4 h5">
     Ведомость списания запасных частей<br>
     на ремонт оборудования<br>
-    с <?php echo date("d.m.Y", strtotime($this->filter['PLANNED_DATE_FROM'])); ?>  по <?php echo date("d.m.Y", strtotime($this->filter['PLANNED_DATE_TO'])); ?>
+    с <?php echo d($this->filter['PLANNED_DATE_FROM']); ?>  по <?php echo d($this->filter['PLANNED_DATE_TO']); ?>
 </div>
 
 <table class="table table-bordered table-sm" id='table3'>
@@ -44,11 +44,11 @@
             ?>
 			<tr class=''>
                 <td class="text-center"><?php echo $num; ?></td>
-                <td><?php echo $writeoff['UF_NAME']?></td>
-                <td class="text-center"><?php echo $writeoff['UF_UNIT']?></td>
-                <td class="text-center"><?php echo $writeoff['UF_QUANTITY']?></td>
-                <td><?php echo $operations[$writeoff['UF_OPERATIONID']]->NAME ?></td>
-                <td><?php echo $equipments[$writeoff['UF_EQUIPMENTID']]->path(false); ?></td>
+                <td><?php echo $writeoff->NAME?></td>
+                <td class="text-center"><?php echo $writeoff->UNIT?></td>
+                <td class="text-center"><?php echo $writeoff->QUANTITY?></td>
+                <td><?php echo $operations[$writeoff->OPERATION_ID]->NAME ?></td>
+                <td><?php echo $equipments[$writeoff->EQUIPMENT_ID]->path(false); ?></td>
 			</tr>
 		<?php }?>
     </tbody>

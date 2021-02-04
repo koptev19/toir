@@ -6,7 +6,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 </head>
 <body>
-<h1 class="text-center">План работ на день профилактики <?php echo $this->date;?>
+<h1 class="text-center">План работ на день профилактики <?php echo d($this->date);?>
 <br>
 
 <?php foreach($groupBy as $group){?>
@@ -46,13 +46,13 @@
 			</td>
             <td><?php echo $operation->equipment()->path(); ?></td>
             <td><?php echo $operation->NAME; ?> (<?php echo $operation->PLAN_ID ? "Плановая" : "Внеплановая"; ?>)</td>
-            <td><?php echo $plan->TYPE_TO; ?></td>
+            <td><?php echo $plan ? Plan::getVerbalTypeTo($plan->TYPE_TO) : ''; ?></td>
             <td><?php echo $operation->WORK_TIME; ?></td>
             <td><?php echo $operation->COMMENT; ?></td>
-            <td><?php echo $operation->TYPE_OPERATION; ?></td>
+            <td><?php echo Operation::getVerbalType($operation->TYPE_OPERATION); ?></td>
             <td class='text-center'><?php echo $plan->PERIODICITY; ?></td>
             <td class='text-center'><?php echo $operation->OWNER; ?></td>
-            <td class='text-center'><?php echo $operation->PLANNED_DATE; ?></td>
+            <td class='text-center'><?php echo d($operation->PLANNED_DATE); ?></td>
             <td class='text-center'><?php echo $operation->difference; ?></td>
             <td class='text-center'>
                 <?php if($operation->TASK_RESULT == 'N') { ?>

@@ -44,6 +44,7 @@ require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/Worker.php
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/Workshop.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/Downtime.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/Worktime.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/Writeoff.php");
 
 /* Services */
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Services/AnaliticService.php");

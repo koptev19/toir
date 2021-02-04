@@ -44,6 +44,10 @@ class MysqlConnecter
         if ($this->mysqli->connect_errno) {
             die('Ошибка соединения: ' . $this->mysqli->connect_error);
         }
+
+        $this->mysqli->query("set character_set_client='utf8'");
+        $this->mysqli->query("set character_set_results='utf8'");
+        $this->mysqli->query("set collation_connection='utf8_general_ci'");
     }
 
     /**

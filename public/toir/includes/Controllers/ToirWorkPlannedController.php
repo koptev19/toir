@@ -63,28 +63,34 @@ class ToirWorkPlannedController extends ToirController
 	  	$planned = $works = [];
 		
 		if (!$filter['PERIODICITY']){
+            unset($operationFilter['PERIODICITY']);
+            unset($operationFilter['TYPE_OPERATION']);
 			$works = Work::filter($operationFilter)
-		        ->orderBy('WORKSHOP_ID', 'LINE_ID','EQUIPMENT_ID')
+		        ->orderBy('WORKSHOP_ID', 'asc')
+		        ->orderBy('LINE_ID', 'asc')
+		        ->orderBy('EQUIPMENT_ID', 'asc')
 				->get();
 		}
 		
 		
 		if (!$filter['NO_PERIODICITY']){
 		$planned = Plan::filter($operationFilter)
-            ->orderBy('WORKSHOP_ID', 'LINE_ID','EQUIPMENT_ID')
+		        ->orderBy('WORKSHOP_ID', 'asc')
+		        ->orderBy('LINE_ID', 'asc')
+		        ->orderBy('EQUIPMENT_ID', 'asc')
             ->get();
 		}
 		
 		
 		$operationsAr = array_merge($planned,$works);
-		$type = Operation::getEnumList('TYPE_OPERATION');
+		$type = Operation::getTypes();
 
 		foreach($operationsAr as $op){
 			$operations[$op->EQUIPMENT_ID][] = ['ID'=>$op->ID,
 												'NAME'=>$op->NAME,
 												'PERIODICITY'=>$op->PERIODICITY,
 												'RECOMMENDATION'=>$op->RECOMMENDATION,
-												'TYPE' => $op->TYPE_OPERATION ?? $type[$op->TYPE]
+												'TYPE' => Operation::getVerbalType($op->TYPE_OPERATION)
 												];
 			$workshopid[] = $op->WORKSHOP_ID;
 

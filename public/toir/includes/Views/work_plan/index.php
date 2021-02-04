@@ -1,11 +1,11 @@
-<h1 class="text-center">План работ на день профилактики <?php echo $this->date; ?>
+<h1 class="text-center">План работ на день профилактики <?php echo d($this->date); ?>
 <a href="#" onclick="printTable(); return false;" class='ml-2' id='table3Print'><img src='./images/print.svg'></a>
 </h1><br>
 
 <?php foreach($groupBy as $group){?>
 
 
-<?php if (!count($operations[$group->ID])){
+<?php if (!isset($operations[$group->ID]) ||  !count($operations[$group->ID])){
 	continue ;
 }else{?>
 <h3 class="text-center"><?php echo $group->NAME ?></h3>
@@ -39,7 +39,7 @@
 			</td>
             <td><?php echo $operation->equipment()->path(); ?></td>
             <td><?php echo $operation->NAME; ?> (<?php echo $operation->PLAN_ID ? "Плановая" : "Внеплановая"; ?>)</td>
-            <td><?php echo $plan->TYPE_TO; ?></td>
+            <td><?php echo $plan ? Plan::getVerbalTypeTo($plan->TYPE_TO) : ''; ?></td>
             <td><?php echo $operation->WORK_TIME; ?></td>
             <td><?php echo $operation->COMMENT; ?></td>
             <td><?php echo Operation::getVerbalType($operation->TYPE_OPERATION); ?></td>
