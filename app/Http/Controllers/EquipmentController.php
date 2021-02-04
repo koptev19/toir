@@ -22,9 +22,9 @@ class EquipmentController extends Controller
      */
     public function index(Request $request)
     {
-        $equipmentsTree = $this->getEquipmentsTree();
+        // $equipmentsTree = $this->getEquipmentsTree();
         
-        return view('equipments.index', compact('equipmentsTree'));
+        return view('equipments.index');
     }
 
     /**
@@ -110,8 +110,9 @@ class EquipmentController extends Controller
      */
     private function getEquipmentsTree(?Equipment $equipment = null, int $parentId = null): Collection
     {
-        $parents = ($parentId ? Equipment::whereNull('parent_id') : Equipment::whereParentId($parentId))
+        $equipments = ($parentId ? Equipment::whereNull('parent_id') : Equipment::whereParentId($parentId))
             ->get();
+        
         /*
         if($equipment) {
             $parentsId = $equipment->allParentsId();

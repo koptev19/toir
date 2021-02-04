@@ -93,7 +93,7 @@ class ToirAddWorkController extends ToirController
     {
 		$work = Work::find($_REQUEST["work_id"]);
         $work->delete();
-        header('Location: equipment.php?id=' . $work->EQUIPMENT_ID);
+        header('Location: /equipments?id=' . $work->EQUIPMENT_ID);
     }
 
     /**

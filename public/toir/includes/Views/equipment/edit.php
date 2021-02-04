@@ -1,4 +1,4 @@
-<form action="equipment.php" enctype="multipart/form-data" method="POST">
+<form action="/equipments" enctype="multipart/form-data" method="POST">
 	<div class="error alert alert-danger" role="alert" style="display:none;"></div>
 	<input type=hidden name="ID" value="<?php echo $node->ID; ?>">
 	<input type=hidden name="ACTION" value="update">

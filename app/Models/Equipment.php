@@ -94,4 +94,20 @@ class Equipment extends Model
         return $parentsId;
     }
 
+    /**
+     * @return bool
+     */
+    public function isLine(): bool
+    {
+        return $this->type === Equipment::TYPE_LINE;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWorkshop(): bool
+    {
+        return $this->type === Equipment::TYPE_WORKSHOP;
+    }
+
 }

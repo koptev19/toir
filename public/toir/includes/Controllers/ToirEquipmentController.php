@@ -156,11 +156,11 @@ class ToirEquipmentController extends ToirController
             }
             $node->save();
         } else {
-            header('Location: equipment.php');
+            header('Location: /equipments');
             die();
         }
 
-        header('Location: equipment.php?id=' . $node->id);
+        header('Location: /equipments?id=' . $node->id);
     }
 
 

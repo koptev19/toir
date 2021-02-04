@@ -1,6 +1,6 @@
 <?php 
 	$tabs =[
-		["name"=>"Оборудование","url"=>"equipment.php","admin"=>0],
+		["name"=>"Оборудование","url"=>"/equipments","admin"=>0],
 		["name"=>"Службы","url"=>"/departments","admin"=>1],
 		["name"=>"Пользователи","url"=>"users.php","admin"=>1],
 		["name"=>"Настройки","url"=>"/settings","admin"=>1],
