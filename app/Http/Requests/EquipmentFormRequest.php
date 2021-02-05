@@ -3,11 +3,14 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
-use Illuminate\Contracts\Validation\Rule;
+use App\Traits\UploadFileTrait;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class EquipmentFormRequest extends FormRequest
 {
+    use UploadFileTrait;
+
     /**
      * @return bool
      */
@@ -93,14 +96,59 @@ class EquipmentFormRequest extends FormRequest
             'sketch' => [
                 'nullable',
                 'file',
-          ],
+                'max:1000'
+            ],
             'documents' => [
                 'nullable',
                 'array',
             ],
             'documents.*' => [
                 'file',
+                'max:1000'
             ],
         ];
     }
+
+    /**
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator(Validator $validator)
+    {
+        $validator->after(function (Validator $validator)  {
+            $this->uploadFile('photo');
+            $this->uploadFile('sketch');
+            $this->uploadFileMultiple('documents', 'documents_added');
+        });
+
+        return $validator;
+    }
+
+    /**
+     * @return array
+     */
+    public function validated()
+    {
+        $validated = parent::validated();
+
+        if($this->photo_del) {
+            $validated['photo_id'] = null;
+        }
+
+        if($this->photo) {
+            $validated['photo_id'] = $this->photo_id;
+        }
+
+        if($this->sketch_del) {
+            $validated['sketch_id'] = null;
+        }
+
+        if($this->sketch) {
+            $validated['sketch_id'] = $this->sketch_id;
+        }
+
+        return $validated;
+    }
+
+
 }

@@ -30,6 +30,8 @@ class ChangeEquipment extends Migration
         });
 
         Schema::table('equipment', function (Blueprint $table) {
+            $table->date('enter_date')->nullable()->change();
+
             $table->foreign('parent_id')->references('id')->on('equipment')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
@@ -58,6 +60,23 @@ class ChangeEquipment extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
         });
+
+        Schema::table('files', function (Blueprint $table) {
+            $table->dropColumn('filepath');
+        });
+    
+        Schema::create('equipments_documents', function (Blueprint $table) {
+            $table->unsignedBigInteger('equipment_id');
+            $table->unsignedBigInteger('document_id');
+
+            $table->foreign('equipment_id')->references('id')->on('equipment')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
+
+            $table->foreign('document_id')->references('id')->on('files')
+                ->onUpdate('cascade')
+                ->onDelete('restrict');
+        });
     }
 
     /**
@@ -67,6 +86,12 @@ class ChangeEquipment extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('equipments_documents');
+
+        Schema::table('files', function (Blueprint $table) {
+            $table->string('filepath');
+        });
+
         Schema::table('equipment', function (Blueprint $table) {
             $table->dropForeign(['parent_id']);
             $table->dropForeign(['workshop_id']);        
@@ -75,6 +100,7 @@ class ChangeEquipment extends Migration
             $table->dropForeign(['mechanic_id']);
             $table->dropForeign(['photo_id']);
             $table->dropForeign(['sketch_id']);
+            $table->string('enter_date')->nullable()->change();
         });
         Schema::table('equipment', function (Blueprint $table) {
             $table->renameColumn('manager_id', 'nachalnik_tsekha');

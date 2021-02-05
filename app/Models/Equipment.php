@@ -46,6 +46,10 @@ class Equipment extends Model
         ];
     }
 
+    protected $casts = [
+        'enter_date' => 'date',
+    ];
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -87,6 +91,30 @@ class Equipment extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function photo()
+    {
+        return $this->belongsTo(File::class, 'photo_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sketch()
+    {
+        return $this->belongsTo(File::class, 'sketch_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function documents()
+    {
+        return $this->belongsToMany(File::class, 'equipments_documents', 'equipment_id', 'document_id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function children()
@@ -125,6 +153,9 @@ class Equipment extends Model
         return $this->type === Equipment::TYPE_WORKSHOP;
     }
 
+    /**
+     * @return string
+     */
     public function getHtmlClassAttribute()
     {
 		$classes = [
@@ -136,6 +167,14 @@ class Equipment extends Model
         ];
 
         return $classes[$this->type];
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnterDateFormattedAttribute()
+    {
+        return $this->enter_date->format('d.m.Y');
     }
 
 }

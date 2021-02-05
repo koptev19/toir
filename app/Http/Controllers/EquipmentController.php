@@ -86,6 +86,14 @@ class EquipmentController extends Controller
     {
         $equipment->update($request->validated());
 
+        if($request->documents_added) {
+            $equipment->documents()->attach($request->documents_added);
+        }
+
+        if($request->documents_deleted) {
+            $equipment->documents()->detach($request->documents_deleted);
+        }
+
         return redirect()->route('equipments.show', $equipment);
     }
     

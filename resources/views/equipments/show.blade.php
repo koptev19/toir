@@ -45,7 +45,7 @@
 
 <div class="row mb-3">
     <div class='col-4 col-md-2'>Дата ввода в экспуатацию:</div>
-    <div class="col-8 col-md-10">{{ $equipment->enter_date }}</div>
+    <div class="col-8 col-md-10">{{ $equipment->enter_date_formatted }}</div>
 </div>
 
 <div class="row mb-3">
@@ -55,17 +55,25 @@
 
 <div class="row mb-3">
     <div class='col-4 col-md-2'>Внешний вид:</div>
-    <div class="col-8 col-md-10"></div>
+    <div class="col-8 col-md-2">
+        {!! \App\Helpers\ImageHelper::linkImgTag($equipment->photo, [], ["class" => "img-fluid"]) !!}
+    </div>
 </div>
 
 <div class="row mb-3">
     <div class='col-4 col-md-2'>Схема:</div>
-    <div class="col-8 col-md-10"></div>
+    <div class="col-8 col-md-2">
+        {!! \App\Helpers\ImageHelper::linkImgTag($equipment->sketch, [], ["class" => "img-fluid"]) !!}
+    </div>
 </div>
 
 <div class="row mb-3">
     <div class='col-4 col-md-2'>Документация:</div>
-    <div class="col-8 col-md-10"></div>
+    <div class="col-8 col-md-10">
+        @foreach($equipment->documents as $document)
+            <a href="{{ \App\Helpers\FileHelper::url($document) }}" class="d-block mb-2" target=_blank>{{ $document->original_name }}</a>
+        @endforeach
+    </div>
 </div>
 
 @endsection
