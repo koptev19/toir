@@ -26,6 +26,13 @@ class Equipment extends Model
         'workshop_id',
         'line_id',
         'mechanic_id',
+        'short_name',
+        'manager_id',
+        'inventory_number',
+        'enter_date',
+        'description',
+        'photo_id',
+        'sketch_id',
     ];
 
     public static function getTypes(): array
@@ -38,6 +45,10 @@ class Equipment extends Model
             self::TYPE_DETAIL => 'Деталь',
         ];
     }
+
+    protected $casts = [
+        'enter_date' => 'date',
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -72,6 +83,38 @@ class Equipment extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function manager()
+    {
+        return $this->belongsTo(User::class, 'manager_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function photo()
+    {
+        return $this->belongsTo(File::class, 'photo_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sketch()
+    {
+        return $this->belongsTo(File::class, 'sketch_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function documents()
+    {
+        return $this->belongsToMany(File::class, 'equipments_documents', 'equipment_id', 'document_id');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function children()
@@ -92,6 +135,46 @@ class Equipment extends Model
         }
 
         return $parentsId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLine(): bool
+    {
+        return $this->type === Equipment::TYPE_LINE;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isWorkshop(): bool
+    {
+        return $this->type === Equipment::TYPE_WORKSHOP;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHtmlClassAttribute()
+    {
+		$classes = [
+            Equipment::TYPE_WORKSHOP =>"text-body link-dark",
+            Equipment::TYPE_LINE =>"text-danger link-danger",
+            Equipment::TYPE_MECHANISM =>"text-primary link-primary",
+            Equipment::TYPE_NODE=>"text-success link-success",
+            Equipment::TYPE_DETAIL=>"text-info link-info"
+        ];
+
+        return $classes[$this->type];
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnterDateFormattedAttribute()
+    {
+        return $this->enter_date->format('d.m.Y');
     }
 
 }

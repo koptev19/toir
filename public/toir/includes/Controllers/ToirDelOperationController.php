@@ -10,7 +10,7 @@ class ToirDelOperationController extends ToirController
 			if($plan = Plan::findAvailabled($id)) {
 				$equipmentId = $plan->EQUIPMENT_ID;
 				PlanService::delete($plan);
-				header('Location:equipment.php?id=' . $equipmentId);
+				header('Location:/equipments?id=' . $equipmentId);
 			} else if($operation = Operation::findAvailabled($id)) {
 				$equipmentId = $plan->EQUIPMENT_ID;
 				OperationService::deleteAndDeleteStop($operation);

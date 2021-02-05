@@ -6,7 +6,7 @@ function getNodes(parentId, setposition)
 
 	$.ajax({
 	    type: "POST",
-        url: "equipment.php",
+        url: "/equipments",
         data: {
             ACTION: "getNodes",
 			PARENT_ID: parentId
@@ -66,7 +66,7 @@ function showNode(id){
 	}
 	$.ajax({
 	   type: "POST",
-	   url: "equipment.php",
+	   url: "/equipments",
 	   data: {
 		   ACTION: "show",
 		   ID: id
@@ -82,7 +82,7 @@ function createNode(parentId){
 	$("#main-equipment").html("");
 	$.ajax({
 	   type: "POST",
-	   url: "equipment.php",
+	   url: "/equipments",
 	   data: {
 		   ACTION: "create",
 		   PARENT_ID: parentId
@@ -98,7 +98,7 @@ function storeNode(el){
 	var data = $(el).parent().parent().serializeArray();
 	$.ajax({
     	type: "POST",
-        url: "equipment.php",
+        url: "/equipments",
         data: {
 			ACTION: "store",
 			DATA: data 
@@ -119,7 +119,7 @@ function editNode(id){
 	$("#main-equipment").html("");
 	$.ajax({
 	   type: "POST",
-	   url: "equipment.php",
+	   url: "/equipments",
 	   data: {
 		   ACTION: "edit",
 		   ID: id,
@@ -135,7 +135,7 @@ function updateNode(el){
 	var data = $(el).parent().parent().serializeArray();
 	$.ajax({
     	type: "POST",
-        url: "equipment.php",
+        url: "/equipments",
         data: {
         	ACTION: "update",
 			DATA: data 
@@ -156,7 +156,7 @@ function updateNode(el){
 function clickOnItem(el){
 	$(".item").removeClass("selected");
 	$(el).parent().addClass("selected");
-	let url = 'equipment.php?id='+$(el).parent().attr("el");
+	let url = '/equipments?id='+$(el).parent().attr("el");
 	history.replaceState({}, "������������", url)
 	showNode($(el).parent().attr("el"));
 }

@@ -66,4 +66,6 @@ return [
 
     ],
 
+    'max_size_upload' => env('FILE_SYSTEM_MAX_SIZE_UPLOAD', 500 * 1024 * 1024),
+
 ];

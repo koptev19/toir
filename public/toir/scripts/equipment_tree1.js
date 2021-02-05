@@ -5,7 +5,7 @@ function getNodes(parentId, setposition)
 
 	$.ajax({
 	    type: "POST",
-        url: "equipment.php",
+        url: "/equipments",
         data: {
             ACTION: "getNodes",
 			PARENT_ID: parentId
@@ -54,7 +54,7 @@ function showNode(id){
 	}
 	$.ajax({
 	   type: "POST",
-	   url: "equipment.php",
+	   url: "/equipments",
 	   data: {
 		   ACTION: "show",
 		   ID: id
@@ -70,7 +70,7 @@ function createNode(parentId){
 	$("#main").html("");
 	$.ajax({
 	   type: "POST",
-	   url: "equipment.php",
+	   url: "/equipments",
 	   data: {
 		   ACTION: "create",
 		   PARENT_ID: parentId
@@ -86,7 +86,7 @@ function storeNode(el){
 	var data = $(el).parent().parent().serializeArray();
 	$.ajax({
     	type: "POST",
-        url: "equipment.php",
+        url: "/equipments",
         data: {
 			ACTION: "store",
 			DATA: data 
@@ -107,7 +107,7 @@ function editNode(id){
 	$("#main").html("");
 	$.ajax({
 	   type: "POST",
-	   url: "equipment.php",
+	   url: "/equipments",
 	   data: {
 		   ACTION: "edit",
 		   ID: id,
@@ -123,7 +123,7 @@ function updateNode(el){
 	var data = $(el).parent().parent().serializeArray();
 	$.ajax({
     	type: "POST",
-        url: "equipment.php",
+        url: "/equipments",
         data: {
         	ACTION: "update",
 			DATA: data 

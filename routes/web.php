@@ -22,10 +22,15 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('main', 'MainController@index')->name('main');
     Route::get('toir/{workshop}', 'ToirController@index')->name('toir');
 
-    Route::resource('departments', DepartmentController::class);
-
     Route::get('settings', 'SettingController@index')->name('settings.index');
     Route::put('settings/update', 'SettingController@update')->name('settings.update');
+
+    Route::get('equipments/children', 'EquipmentController@children')->name('equipments.children');
+
+    Route::resources([
+        'departments' => DepartmentController::class,
+        'equipments' => EquipmentController::class,
+    ]);
 });
 
 // Route::resource('equipments', EquipmentController::class);
