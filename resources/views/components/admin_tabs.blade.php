@@ -7,7 +7,7 @@
 	    <a class="nav-link @if($active === 'departments') active @endif" href="{{ route('departments.index') }}">Службы</a>
 	</li>
 	<li class="nav-item" role="presentation">
-	    <a class="nav-link @if($active === 'users') active @endif" href="/toir/users.php">Пользователи</a>
+	    <a class="nav-link @if($active === 'users') active @endif" href="{{ route('users.index') }}">Пользователи</a>
 	</li>
 	<li class="nav-item" role="presentation">
 	    <a class="nav-link @if($active === 'settings') active @endif" href="{{ route('settings.index') }}">Настройки</a>
