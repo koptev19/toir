@@ -6,6 +6,7 @@ use App\Models\Equipment;
 use App\Http\Requests\EquipmentFormRequest;
 use App\Http\Resources\EquipmentResource;
 use App\Models\Line;
+use App\Models\User;
 use App\Models\Workshop;
 use Illuminate\Http\Request;
 
@@ -70,7 +71,9 @@ class EquipmentController extends Controller
     public function edit(Request $request, Equipment $equipment)
     {
         $parentsId = array_merge($equipment->allParentsId(), [$equipment->id]);
-        return view('equipments.edit', compact('equipment', 'parentsId'));
+        $users = User::whereConnected(true)->get();
+
+        return view('equipments.edit', compact('equipment', 'parentsId', 'users'));
     }
 
     /**

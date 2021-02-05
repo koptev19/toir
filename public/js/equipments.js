@@ -50668,7 +50668,7 @@ var app = new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\localserver\OSPanel\domains\toir.loc\resources\js\equipments.js */"./resources/js/equipments.js");
+module.exports = __webpack_require__(/*! C:\localserver\domains\toir.loc\resources\js\equipments.js */"./resources/js/equipments.js");
 
 
 /***/ })

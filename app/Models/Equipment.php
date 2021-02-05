@@ -26,6 +26,13 @@ class Equipment extends Model
         'workshop_id',
         'line_id',
         'mechanic_id',
+        'short_name',
+        'manager_id',
+        'inventory_number',
+        'enter_date',
+        'description',
+        'photo_id',
+        'sketch_id',
     ];
 
     public static function getTypes(): array
@@ -69,6 +76,14 @@ class Equipment extends Model
     public function mechanic()
     {
         return $this->belongsTo(User::class, 'mechanic_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function manager()
+    {
+        return $this->belongsTo(User::class, 'manager_id');
     }
 
     /**
