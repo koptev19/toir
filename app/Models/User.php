@@ -39,7 +39,7 @@ class User extends Authenticatable
      */
     public function workshops()
     {
-        return $this->belongsToMany(Workshop::class);
+        return $this->belongsToMany(Workshop::class, 'users_workshops');
     }
 
     /**
@@ -47,7 +47,7 @@ class User extends Authenticatable
      */
     public function departments()
     {
-        return $this->belongsToMany(Department::class);
+        return $this->belongsToMany(Department::class, 'departments_users');
     }
 
     /**
