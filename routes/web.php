@@ -31,6 +31,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'departments' => DepartmentController::class,
         'equipments' => EquipmentController::class,
         'users' => UserController::class,
+        'accepts' => AcceptController::class,
     ]);
 });
 
