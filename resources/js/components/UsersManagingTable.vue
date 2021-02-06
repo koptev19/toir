@@ -3,10 +3,10 @@
         <thead>
             <tr>
                 <th class="text-left" rowspan="2">ФИО</th>
+                <th rowspan="2">Подключен</th>
                 <th rowspan="2">Администратор</th>
                 <th rowspan="2">Службы</th>
                 <th :colspan="workshops.length + 1">Цеха</th>
-                <th rowspan="2">&nbsp;</th>
             </tr>
             <tr>
                 <th>Все цеха</th>
@@ -16,19 +16,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="user in connectedUsers" :key="user.id">
+            <tr v-for="user in users2" :key="user.id">
                 <td class="text-start">{{ user.fullname}}</td>
-                <td><input type="checkbox" v-model="user.is_admin" @change="setAdmin(user)"></td>
+                <td><input type="checkbox" v-model="user.connected" name="connected[]" :value="user.id"></td>
+                <td><input type="checkbox" v-model="user.is_admin" @change="setAdmin(user)" v-if="user.connected" name="is_admin[]" :value="user.id"></td>
                 <td>
-                    <label v-for="department in departments" :key="department.id" class="d-block mb-2">
-                        <input type="checkbox" v-model="user.connectedDepartments[department.id]" :disabled="user.is_admin"> {{ department.name }}
-                    </label>
+                    <div v-if="user.connected">
+                        <label v-for="department in departments" :key="department.id" class="d-block mb-2">
+                            <input type="checkbox" v-model="user.connectedDepartments[department.id]" :disabled="user.is_admin" :name="'departments[' + user.id + '][]'" :value="department.id"> 
+                            {{ department.name }}
+                        </label>
+                    </div>
                 </td>
-                <td><input type="checkbox" v-model="user.all_workshops" :disabled="user.is_admin" @change="setAllWorkshops(user)"></td>
+                <td><input type="checkbox" v-model="user.all_workshops" :disabled="user.is_admin" @change="setAllWorkshops(user)" v-if="user.connected" name="all_workshops[]" :value="user.id"></td>
                 <td v-for="workshop in workshops" :key="workshop.id">
-                    <input type="checkbox" v-model="user.connectedWorkshops[workshop.id]" :disabled="user.all_workshops">
+                    <input type="checkbox" v-model="user.connectedWorkshops[workshop.id]" :disabled="user.all_workshops" v-if="user.connected" :name="'workshops[' + user.id + '][]'" :value="workshop.id">
                 </td>
-                <td><button class="btn" @click="deleteUser(user)"><img src="/images/x.svg"></button></td>
             </tr>
         </tbody>
     </table>
@@ -53,7 +56,7 @@
         },
         data() {
             return {
-                connectedUsers: []
+                users2: []
             }
         },
         methods: {
@@ -72,9 +75,6 @@
                         user.connectedWorkshops[this.workshops[workshopNum].id] = true;
                     }
                 }
-            },
-            deleteUser: function(user) {
-                this.connectedUsers.splice(this.connectedUsers.indexOf(user), 1);
             }
         },
         mounted: function() {
@@ -93,13 +93,9 @@
                     user.connectedDepartments[department.id] = user.is_admin || user.departments.indexOf(department.id) !== -1;
                 }
 
-                if(user.is_admin) {
-                    user.all_workshops = true;
-                }
+                user.all_workshops = user.is_admin;
 
-                if(user.connected) {
-                    this.connectedUsers.push(user);
-                }
+                this.users2.push(user);
             }
         }
     }

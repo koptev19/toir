@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserFormRequest;
 use App\Http\Resources\DepartmentResource;
 use App\Http\Resources\EquipmentResource;
 use App\Http\Resources\UserResource;
@@ -23,7 +24,9 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::with(['workshops', 'departments'])->get();
+        $users = User::with(['workshops', 'departments'])
+            ->where('id', '!=', \Auth::user()->id)
+            ->get();
         $users = new UserResource($users);
 
         $workshops = ModelsWorkshop::all();
@@ -33,6 +36,28 @@ class UserController extends Controller
         $departments = new DepartmentResource($departments);
 
         return view('users.index', compact('users', 'workshops', 'departments'));
+    }
+
+    public function store(UserFormRequest $request)
+    {
+        $users = User::with(['workshops', 'departments'])
+            ->where('id', '!=', \Auth::user()->id)
+            ->get();
+
+        foreach($users as $user) {
+            $user->connected =  in_array($user->id, $request->connected ?? []);
+            $user->is_admin =  in_array($user->id, $request->is_admin ?? []);
+            $user->all_workshops =  in_array($user->id, $request->all_workshops ?? []);
+
+            $user->save();
+
+            $user->departments()->sync($request->departments[$user->id] ?? []);
+            $user->workshops()->sync($request->workshops[$user->id] ?? []);
+        }
+
+        return redirect()
+            ->route('users.index')
+            ->with('users_message', 'Пользователи обновлены');
     }
 
 
