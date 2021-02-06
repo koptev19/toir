@@ -181,7 +181,6 @@ class ToirWorkPlanController extends ToirController
 		$workers = Worker::filter(["ID"=>$workerIds])->get();
 		$workshop = Workshop::find((int)$_GET['workshop']);
 		
-	
 		$this->view('work_plan/route_print', [
 			'groups' => $groups,
 			'workshop'=> $workshop,
