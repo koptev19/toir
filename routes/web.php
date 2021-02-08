@@ -26,11 +26,13 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::put('settings/update', 'SettingController@update')->name('settings.update');
 
     Route::get('equipments/children', 'EquipmentController@children')->name('equipments.children');
+    Route::get('equipments/{equipment}/parents', 'EquipmentController@parents')->name('equipments.parents');
 
     Route::resources([
         'departments' => DepartmentController::class,
         'equipments' => EquipmentController::class,
         'users' => UserController::class,
+        'accepts' => AcceptController::class,
     ]);
 });
 

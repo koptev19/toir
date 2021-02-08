@@ -64,6 +64,6 @@ require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Services/UserServ
 
 if (!defined('DONT_CHECK_AUTH') || !DONT_CHECK_AUTH) {
     if(empty(UserToir::current())) {
-        header("Location: auth.php");
+        header("Location: /login");
     }
 }

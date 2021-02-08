@@ -13,7 +13,7 @@
 	    <a class="nav-link @if($active === 'settings') active @endif" href="{{ route('settings.index') }}">Настройки</a>
 	</li>
 	<li class="nav-item" role="presentation">
-    	<a class="nav-link @if($active === 'accept') active @endif" href="/toir/accept.php">Приемка оборудования</a>
+    	<a class="nav-link @if($active === 'accepts') active @endif" href="{{ route('accepts.index') }}">Приемка оборудования</a>
 	</li>
     @endif
 </ul>

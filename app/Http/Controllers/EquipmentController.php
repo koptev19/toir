@@ -116,13 +116,31 @@ class EquipmentController extends Controller
      */
     public function children(Request $request)
     {
-        $equipments = Equipment::whereParentId($request->parent ?? null)
+        $equipments = Equipment::whereParentId($request->parent ?: null)
             ->withCount('children')
             ->get();
 
         return response()->json([
             'items' => new EquipmentResource($equipments)
         ]);
-}
+    }
 
+    /**
+     * @param Request $request
+     * 
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function parents(Request $request, Equipment $equipment)
+    {
+        $equipments = [$equipment];
+        $e = $equipment;
+        while($e->parent) {
+            $equipments[] = $e->parent;
+            $e = $e->parent;
+        }
+
+        return response()->json([
+            'items' => new EquipmentResource(collect(array_reverse($equipments)))
+        ]);
+    }
 }
