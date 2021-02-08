@@ -40,9 +40,7 @@
         methods: {
             select: function(equipment) {
                 this.$emit('select', equipment);
-                if(this.parent) {
-                    this.$emit('active', equipment.id);
-                } else {
+                if(!this.parent) {
                     this.activeId = equipment.id;
                 }
             }
