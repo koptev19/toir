@@ -174,7 +174,7 @@ class Equipment extends Model
      */
     public function getEnterDateFormattedAttribute()
     {
-        return $this->enter_date->format('d.m.Y');
+        return $this->enter_date ? $this->enter_date->format('d.m.Y') : '';
     }
 
 }

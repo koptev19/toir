@@ -14,17 +14,20 @@
                 <div class='col-2'>Оборудование</div>
                 <div class="col-10">
                     @include('components.equipment', [
-                        'equipment' => old('equipment_id')
+                        'equipment' => old('equipment_id'),
+                        'required' => true
                     ])
+                    @error('equipment_id') <div class="text-danger">{{ $message }}</div>@enderror
                 </div>
             </div>
 
             <div class="mb-3 row mb-4">
                 <div class='col-2'>Чек-лист</div>
                 <div class="col-10">
-                    <textarea name="CHECKLIST" class='form-control' rows="7"></textarea>
+                    <textarea name="checklist" class='form-control' rows="7"></textarea>
                     Для создания чеклиста введите текст.<br>
                     Каждая новая строка - это новый пункт чеклиста
+                    @error('checklist') <div class="text-danger">{{ $message }}</div>@enderror
                 </div>
             </div>
 

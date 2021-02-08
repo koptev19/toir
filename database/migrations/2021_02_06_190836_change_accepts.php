@@ -16,6 +16,7 @@ class ChangeAccepts extends Migration
         Schema::table('accepts', function (Blueprint $table) {
             $table->dropColumn('workshop_id');
             $table->dropColumn('line_id');
+            $table->text('checklist')->nullable()->change();
         
             $table->foreign('equipment_id')->references('id')->on('equipment')
                 ->onUpdate('cascade')
@@ -31,7 +32,7 @@ class ChangeAccepts extends Migration
     public function down()
     {
         Schema::table('accepts', function (Blueprint $table) {
-            $table->dropForeign('equipment_id')->references('id')->on('equipment')
+            $table->dropForeign(['equipment_id'])->references('id')->on('equipment')
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
 

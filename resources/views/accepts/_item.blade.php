@@ -8,7 +8,7 @@
     <td><a href="#" class="btn btn-primary" target=_blank>Принять</a></td>         
     <th>
         <a href="{{ route('accepts.edit', $accept) }}"><img src="./images/pencil.svg"></a>
-        <form action="{{ route('accepts.delete', $accept) }}" method="POST" onsubmit="return confirm('Удалить?')" class="d-inline">
+        <form action="{{ route('accepts.destroy', $accept) }}" method="POST" onsubmit="return confirm('Удалить?')" class="d-inline">
             @method('delete')
             @csrf
             <button type="submit" class="btn btn-link"><img src="./images/x.svg"></button>

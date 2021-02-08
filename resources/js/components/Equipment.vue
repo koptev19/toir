@@ -1,7 +1,7 @@
 <template>
     <div class="p-2 border rounded">
-        <a href="#" data-bs-toggle="modal" data-bs-target="#equipmentModal">Выбрать оборудование</a>
-        <input type="hidden" name="equipment_id" v-model="value">
+        <input v-if="required" type="text" required class="equipment_hidden" v-model="id" name="equipment_id">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#equipmentModal">{{ linkText }}</a>
 
         <div class="modal fade" id="equipmentModal" tabindex="-1" aria-labelledby="equipmentModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
@@ -11,10 +11,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <equipment-tree
+                            :selected="[]"
+                            v-on:select="select"
+                        ></equipment-tree>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="select">Выбрать</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Выбрать</button>
                     </div>
                 </div>
             </div>
@@ -29,14 +32,35 @@
             value: {
                 type: String|Number,
                 default: ""
+            },
+            required: {
+                type: Boolean,
+                default: false
+            }
+        },
+        data: function() {
+            return {
+                linkText: 'Выбрать оборудование',
+                id: ''
             }
         },
         methods: {
-            select: function(event) {
-                console.log('select');
+            select: function(equipment) {
+                this.id = equipment.id;
+                this.linkText = equipment.name;
             }
         },
         mounted() {
+            this.id = this.value
         }
     }
 </script>
+
+<style scoped>
+.equipment_hidden {
+    position:absolute;
+    opacity:0;
+    border:none;
+    width:1px;
+}
+</style>

@@ -116,7 +116,7 @@ class EquipmentController extends Controller
      */
     public function children(Request $request)
     {
-        $equipments = Equipment::whereParentId($request->parent ?? null)
+        $equipments = Equipment::whereParentId($request->parent ?: null)
             ->withCount('children')
             ->get();
 

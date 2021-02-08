@@ -14,11 +14,11 @@
     </head>
     <body>
 
-        @if($app ?? false) <div id="app"> @endif
+        @if(!($no_app ?? false)) <div id="app"> @endif
 
         @yield('content')
 
-        @if($app ?? false) 
+        @if(!($no_app ?? false)) 
             </div> 
             <script src="{{ asset('js/app.js') }}"></script>
         @endif
