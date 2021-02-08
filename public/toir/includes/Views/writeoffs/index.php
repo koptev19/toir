@@ -24,15 +24,15 @@ $this->view('writeoffs/filter');
     <tbody>
 		<?php foreach ($writeOffs as $writeoff){ ?>
 			<tr class='text-center'>
-                <td><?php echo $writeoff['ID']?></td>
-                <td><?php echo $writeoff['UF_DATE']->format("d.m.Y")?></td>
-                <td><?php echo $users[$writeoff['UF_USERID']]; ?></td>
-                <td><?php echo $writeoff['UF_NAME']?></td>
-                <td><?php echo $writeoff['UF_STORE']?></td>
-				<td><?php echo $writeoff['UF_MOVINGDATE']?></td>
-                <td><?php echo $writeoff['UF_QUANTITY']."&nbsp;".$writeoff['UF_UNIT'] ?></td>
-                <td><?php echo $operations[$writeoff['UF_OPERATIONID']]->NAME ?></td>
-                <td><?php echo $equipments[$writeoff['UF_EQUIPMENTID']]->path(); ?></td>
+                <td><?php echo $writeoff->ID?></td>
+                <td><?php echo d($writeoff->DATE)?></td>
+                <td><?php echo $users[$writeoff->USER_ID]->fullname; ?></td>
+                <td><?php echo $writeoff->NAME?></td>
+                <td><?php echo $writeoff->STORE?></td>
+				<td><?php echo d($writeoff->MOVINGDATE)?></td>
+                <td><?php echo $writeoff->QUANTITY."&nbsp;".$writeoff->UNIT ?></td>
+                <td><?php echo $operations[$writeoff->OPERATION_ID]->NAME ?></td>
+                <td><?php echo $equipments[$writeoff->EQUIPMENT_ID]->path(); ?></td>
 			</tr>
 		<?php }?>
     </tbody>

@@ -45,7 +45,6 @@ if($_POST['GETFILES']){
 
 
 if($_POST['SAVEFILE']){
-	require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php"); 
 	require_once($_SERVER["DOCUMENT_ROOT"]."/toir/includes/include.php");
 	$results=$_POST['DATA'];
 	foreach($results as $operation=>$result){
@@ -63,24 +62,26 @@ if($_POST['SAVEFILE']){
 					$str='<ProductItem ProductCharacteristicGUID="'.$product->attributes()->ProductCharacteristicGUID[0].'" ProductCharacteristic="'.
 					$product->attributes()->ProductCharacteristic[0].'" GUID="'.$product->attributes()->GUID[0].'" Product="'.
 					htmlspecialchars($product->attributes()->Product[0]).'" Quantity="'.$value[(string)$guid].'" 
-					UserName="'.$USER->GetFullName().'" 
+					UserName="'.UserToir::current()->fullname.'" 
 					Stock="'.$product->attributes()->Stock[0].'"/>'.PHP_EOL;
 					fwrite($fd, $str);
 					
 					
-					HighloadBlockService::add(HIGHLOAD_WRITEOFFS_BLOCK_ID, [
-                        "UF_GUID" => $product->attributes()->GUID[0], 
-						"UF_STORE" => $product->attributes()->Stock[0],
-						"UF_NAME" => $product->attributes()->Product[0],
-						"UF_UNIT" => $product->attributes()->Unit[0],
-						"UF_MOVINGDATE" => $product->attributes()->Date[0],
-						"UF_QUANTITY" => $value[(string)$guid], 
-                        "UF_OPERATIONID" => $operation->ID, 
-                        "UF_DATE" => $operation->PLANNED_DATE, 
-                        "UF_LINEID" =>$operation->LINE_ID,
-						"UF_WORKSHOPID" =>$operation->WORKSHOP_ID,
-						"UF_EQUIPMENTID" =>$operation->EQUIPMENT_ID,
-						"UF_USERID" =>$GLOBALS['USER']->getId() 
+					
+					
+					Writeoff::create([
+                        "GUID" => $product->attributes()->GUID[0], 
+						"STORE" => $product->attributes()->Stock[0],
+						"NAME" => $product->attributes()->Product[0],
+						"UNIT" => $product->attributes()->Unit[0],
+						"MOVINGDATE" => $product->attributes()->Date[0],
+						"QUANTITY" => $value[(string)$guid], 
+                        "OPERATION_ID" => $operation->ID, 
+                        "DATE" => $operation->PLANNED_DATE, 
+                        "LINE_ID" =>$operation->LINE_ID,
+						"WORKSHOP_ID" =>$operation->WORKSHOP_ID,
+						"EQUIPMENT_ID" =>$operation->EQUIPMENT_ID,
+						"USER_ID" => UserToir::current()->id 
 
                     ]);
 

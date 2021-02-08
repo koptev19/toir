@@ -1,6 +1,6 @@
 <div class="btn-toolbar justify-content-end py-2">
     <a href="analitics.php" class="btn btn-outline-primary me-3"><i class="fas fa-chart-line"></i> Аналитика</a>
-    <a href="equipment.php" class="btn btn-outline-primary me-3"><i class="fas fa-hammer"></i> Оборудование</a>
+    <a href="/equipments" class="btn btn-outline-primary me-3"><i class="fas fa-hammer"></i> Оборудование</a>
     <div class="btn-group" role="group">
         <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary me-3 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
         <i class="fas fa-align-justify"></i> Журналы

@@ -136,7 +136,7 @@ $nextYear = $this->month < 12 ? $this->year : $this->year + 1;
         <tr class='text-center table-row' style="<?php echo($_COOKIE["table1" . $this->workshop->ID] == "show") ? "": "display: none"; ?>">
             <td><?php echo $line->ID; ?></td>
             <td class='text-left'>
-                <a href="equipment.php?id=<?php echo $line->ID; ?>" target=_blank><?php echo $line->NAME; ?></a>
+                <a href="/equipments?id=<?php echo $line->ID; ?>" target=_blank><?php echo $line->NAME; ?></a>
             </td>
             <?php for($i = 1; $i <= date('t', mktime(0, 0, 0, $nextMonth, 1, $nextYear)); $i++) {
                 $date = date("Y-m-d", mktime(0, 0, 0, $nextMonth, $i, $nextYear));

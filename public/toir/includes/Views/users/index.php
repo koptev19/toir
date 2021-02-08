@@ -77,7 +77,7 @@ function PrintCheckBox($name,$value,$id,$checked,$display=false,$disabled=false)
 				<select name="USER_ID" id="new-user-select" class="form-control form-select w-auto">
 			      <option value="">Выберите пользователя</option>
 					<?php foreach($notConnectedUsers as $user) { 
-						if($key == $GLOBALS['USER']->getId()) continue;
+						if($key == UserToir::current()->id) continue;
 					?>
 			            <option class="newUserOption" id="newUserOption<?php echo $user->id; ?>" value="<?php echo $user->id; ?>" ><?php echo $user->fullname; ?></option>
 			        <?php } ?>

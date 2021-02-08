@@ -160,7 +160,7 @@ class Equipment extends ToirModel
      */
     public function link(bool $newWindow = true): string
     {
-        return '<a href="equipment.php?id='. $this->ID . '" ' . ($newWindow ? 'target=_blank' : '') . '>' . $this->NAME . '</a>';
+        return '<a href="/equipments?id='. $this->ID . '" ' . ($newWindow ? 'target=_blank' : '') . '>' . $this->NAME . '</a>';
     }
 
     /**

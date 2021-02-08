@@ -12,7 +12,7 @@ class Worktime extends ToirModel
      */
     public function worker(): ?Worker
     {
-        return Worker::find(['worker_id' => $this->worker_id]);
+        return Worker::find($this->worker_id);
     }
 
     /**
@@ -20,7 +20,7 @@ class Worktime extends ToirModel
      */
     public function operation(): ?Operation
     {
-        return Operation::find(['operation_id' => $this->operation_id]);
+        return Operation::find($this->operation_id);
     }
 
 }

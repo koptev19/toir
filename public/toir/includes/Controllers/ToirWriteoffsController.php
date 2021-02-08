@@ -36,15 +36,15 @@ class ToirWriteoffsController extends ToirController
         $idOperations = [];
         $idEquipments = [];
         $idUsers = [];
-		foreach($writeOffs as $id => $writeOff){
-			$idOperations[] = $writeOff['UF_OPERATIONID'];
-			$idEquipments[] = $writeOff['UF_EQUIPMENTID'];
-			$idUsers[] = $writeOff['UF_USERID'];
+		foreach($writeOffs as $writeOff){
+			$idOperations[] = $writeOff->OPERATION_ID;
+			$idEquipments[] = $writeOff->EQUIPMENT_ID;
+			$idUsers[] = $writeOff->USER_ID;
         }
         
 		$operations = Operation::filter(['ID' => $idOperations])->get();
         $equipments = Equipment::filter(['ID' => $idEquipments])->get();
-        $users = UserService::getList(['ID' => $idUsers]);
+        $users = UserToir::filter(['ID' => $idUsers])->get();
 
 		$this->view('_header', ['title' => 'Журнал списания ТМЦ']);
         $this->view('writeoffs/index', compact('writeOffs', 'operations', 'equipments', 'users'));
@@ -62,14 +62,14 @@ class ToirWriteoffsController extends ToirController
         $idEquipments = [];
         $idUsers = [];
 		foreach($writeOffs as $id => $writeOff){
-			$idOperations[] = $writeOff['UF_OPERATIONID'];
-			$idEquipments[] = $writeOff['UF_EQUIPMENTID'];
-			$idUsers[] = $writeOff['UF_USERID'];
+			$idOperations[] = $writeOff->OPERATION_ID;
+			$idEquipments[] = $writeOff->EQUIPMENT_ID;
+			$idUsers[] = $writeOff->USER_ID;
         }
         
 		$operations = Operation::filter(['ID' => $idOperations])->get();
         $equipments = Equipment::filter(['ID' => $idEquipments])->get();
-        $users = UserService::getList(['ID' => $idUsers]);
+        $users = UserToir::filter(['ID' => $idUsers])->get();
 
         $this->view('writeoffs/print', compact('writeOffs', 'operations', 'equipments', 'users'));
     }
@@ -82,46 +82,48 @@ class ToirWriteoffsController extends ToirController
         $filter = [];
 		
 		if($this->filter['USER_ID']) {
-            $filter["UF_USERID"] = $this->filter['USER_ID'];
+            $filter["user_id"] = $this->filter['USER_ID'];
         }
 
 		if($this->filter['STORE']) {
-            $filter["UF_STORE"] = $this->filter['STORE'];
+            $filter["store"] = $this->filter['STORE'];
         }
 		
 		if($this->filter['%NAME']) {
-            $filter["%UF_NAME"] = $this->filter['%NAME'];
+            $filter["%name"] = $this->filter['%NAME'];
         }
 
         if($this->filter['EQUIPMENT_ID'] && $this->filter['EQUIPMENT_ID'] != $this->workshop->ID) {
-            $filter['UF_EQUIPMENTID'] = [$this->filter['EQUIPMENT_ID']];
+            $filter['EQUIPMENT_ID'] = [$this->filter['EQUIPMENT_ID']];
             $equipment = Equipment::find($this->filter['EQUIPMENT_ID']);
             foreach($equipment->allChildren as $child) {
-                $filter['UF_EQUIPMENTID'][] = $child->ID;
+                $filter['EQUIPMENT_ID'][] = $child->ID;
             }
         } else {
             $equipments = Equipment::filter(['WORKSHOP_ID' => $this->workshop->ID])->get();
-            $filter["UF_EQUIPMENTID"] = [];
+            $filter["EQUIPMENT_ID"] = [];
             foreach($equipments as $equipment) {
-                $filter["UF_EQUIPMENTID"][] = $equipment->ID;
+                $filter["EQUIPMENT_ID"][] = $equipment->ID;
             }
         }
 
 		if($this->filter['OPERATION_ID']) {
-            $filter["UF_OPERATIONID"] = $this->filter['OPERATION_ID'];
+            $filter["OPERATION_ID"] = $this->filter['OPERATION_ID'];
         }
 
 		if($this->filter['PLANNED_DATE_FROM']){
-			$filter[">=UF_DATE"] = date("d.m.Y 00:00:00", strtotime($this->filter['PLANNED_DATE_FROM']));
+			$filter[">=DATE"] = date("Y-m-d", strtotime($this->filter['PLANNED_DATE_FROM']));
 		}
 
 		if($this->filter['PLANNED_DATE_TO']){
-			$filter["<=UF_DATE"] = date("d.m.Y 00:00:00", strtotime($this->filter['PLANNED_DATE_TO']));
+			$filter["<=DATE"] = date("Y-m-d", strtotime($this->filter['PLANNED_DATE_TO']));
 		}
 
-        $writeOffs = HighloadBlockService::getList(HIGHLOAD_WRITEOFFS_BLOCK_ID, $filter, ['ID' => 'DESC']); 
+        $writeoffs = Writeoff::filter($filter)
+            ->orderBy('created_at', 'desc')
+            ->get(); 
 
-        return $writeOffs;
+        return $writeoffs;
     }
 
     public function printUrl()
