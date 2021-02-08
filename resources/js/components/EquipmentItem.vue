@@ -1,6 +1,6 @@
 <template>
     <div class="equipment-item">
-        <div :class="'d-flex ' + activeclass">
+        <div :class="'d-flex ' + activeClass">
             <a href="#" v-on:click="opened = !opened" class="d-flex equipment-item-left link-dark">
                 <span v-show="childrencount && opened">-</span>
                 <span v-show="childrencount && !opened">&gt;</span>
@@ -8,7 +8,13 @@
             <a href="#" :class="'d-flex ' + htmlclass" @click="click">{{ name }}</a>
         </div>
         <div class="ps-3 pt-1" v-if="opened">
-            <equipment-tree :parent="id" :selected="selected" @select="$emit('select', {id: $event.id, name:name + ' / ' + $event.name})"></equipment-tree>
+            <equipment-tree 
+                :parent="id" 
+                :selected="selected"
+                :active="activeId"
+                @select="$emit('select', {id: $event.id, name:name + ' / ' + $event.name})"
+                @active="$emit('active', $event)"
+            ></equipment-tree>
         </div>
     </div>
 </template>
@@ -36,28 +42,38 @@
             selected: {
                 type: Array,
                 default: () => ([])
+            },
+            active: {
+                type: Number,
+                default: 0
             }
         },
         data() {
             return {
                 opened: false,
                 children: [],
-                activeclass: ''
+                activeClass: '',
+                activeId: 0
             }
         },
         methods: {
             click: function() {
                 this.$emit('select', {id: this.id, name: this.name});
-                this.activeclass = 'active';
             }
         },
         mounted: function() {
             if(this.selected.length > 0 && this.selected.indexOf(Number(this.id)) > -1) {
                 if(this.selected.indexOf(Number(this.id)) == this.selected.length - 1) {
-                    this.activeclass = 'active';
+                    this.activeClass = 'active';
                 } else {
                     this.opened = true;
                 }
+            }
+        },
+        watch: {
+            active: function(newActive, oldActive) {
+                this.activeClass = newActive == this.id ? "active" : "";
+                this.activeId = newActive;
             }
         }
     }

@@ -33,6 +33,10 @@
                 type: String|Number,
                 default: ""
             },
+            path: {
+                type: String,
+                default: ""
+            },
             selected: {
                 type: Array,
                 default: () => ([])
@@ -44,9 +48,8 @@
         },
         data: function() {
             return {
-                linkText: 'Выбрать оборудование',
-                id: '',
-                selected: []
+                linkText: '',
+                id: ''
             }
         },
         methods: {
@@ -57,20 +60,7 @@
         },
         mounted() {
             this.id = this.value;
-            if(this.id) {
-                this.linkText = '';
-                this.selected = [];
-                axios.get('/equipments/' + this.id + '/parents').then(({data}) => {
-                    for (let key in data.items) {
-                        let item = data.items[key];
-                        this.selected.push(item.id);
-                        this.linkText += (this.linkText ? ' / ' : '') + item.name;
-                    }
-                }).catch(function (error) {
-                    alert('error');
-                    console.log(error);
-                });
-            }
+            this.linkText = this.path ? this.path : 'Выбрать оборудование';
         }
     }
 </script>

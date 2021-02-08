@@ -4,25 +4,21 @@
  * @param boolean|null $required
  */
 
-$selected = [];
-$value = empty($equipment) ? '' : (is_a($equipment, \App\Models\Equipment::class) ? $equipment->id : $equipment);
-if($value) {
-    $equipments = [$equipment];
-    $e = $equipment;
-    while($e->parent) {
-        $equipments[] = $e->parent;
-        $e = $e->parent;
-    }
+$equipment = empty($equipment) ? null : (
+    is_a($equipment, \App\Models\Equipment::class) ? $equipment : \App\Models\Equipment::find($equipment)
+);
 
-    return response()->json([
-        'items' => new EquipmentResource(collect(array_reverse($equipments)))
-    ]);
+$selected = [];
+if($equipment) {
+    $selected = array_merge([$equipment->id], $equipment->allParentsId());
 }
+
 $required = $required ?: false;
 ?>
 
 <equipment
-    value="{{ $value }}"
+    value="{{ optional($equipment)->id }}"
     :required="{{ $required ? 'true' : 'false' }}"
-    :selected="{{ json_encode(new EquipmentResource(collect(array_reverse($selected))) }}"
+    :selected="{{ json_encode(array_reverse($selected)) }}"
+    path="{{ optional($equipment)->full_path }}"
 ></equipment>

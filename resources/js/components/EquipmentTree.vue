@@ -8,7 +8,8 @@
             :childrencount="child.children_count" 
             :htmlclass="child.html_class" 
             :selected="selected" 
-            @select="$emit('select', $event)"
+            @select="select($event)"
+            :active="activeId"
         ></equipment-item>
     </div>
 </template>
@@ -24,14 +25,27 @@
             parent: {
                 type: String|Number,
                 default: 0
+            },
+            active: {
+                type: Number,
+                default: 0
             }
         },
         data() {
             return {
                 children: [],
+                activeId: 0
             }
         },
         methods: {
+            select: function(equipment) {
+                this.$emit('select', equipment);
+                if(this.parent) {
+                    this.$emit('active', equipment.id);
+                } else {
+                    this.activeId = equipment.id;
+                }
+            }
         },
         mounted: function() {
             axios.get('/equipments/children?parent=' + this.parent).then(({data}) => {
@@ -39,6 +53,11 @@
             }).catch(function (error) {
                 alert('error');
             });
+        },
+        watch: {
+            active: function () {
+                this.activeId = this.active;
+            }
         }
     }
 </script>

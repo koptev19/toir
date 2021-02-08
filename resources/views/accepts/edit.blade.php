@@ -25,7 +25,7 @@
             <div class="mb-3 row mb-4">
                 <div class='col-2'>Чек-лист</div>
                 <div class="col-10">
-                    <textarea name="checklist" class='form-control' rows="7"></textarea>
+                    <textarea name="checklist" class='form-control' rows="7">{{ old('checklist', $accept->checklist) }}</textarea>
                     Для создания чеклиста введите текст.<br>
                     Каждая новая строка - это новый пункт чеклиста
                     @error('checklist') <div class="text-danger">{{ $message }}</div>@enderror

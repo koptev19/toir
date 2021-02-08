@@ -1,6 +1,6 @@
 <tr class='text-center'>
     <td>{{ $accept->id }}</td>
-    <td>{{ $accept->equipment->name }}</td>
+    <td>{{ $accept->equipment->line_path }}</td>
     <td>
         <input class="form-control" type="text" value=""  readonly><br>
         <a href="#">скопировать ссылку</a>

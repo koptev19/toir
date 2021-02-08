@@ -69,14 +69,13 @@ class AcceptController extends Controller
         return redirect()->route('accepts.index');
     }
 
-
     /**
      * @param DepartmentFormRequest $request
      * @param Accept $accept
      * 
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function delete(Request $request, Accept $accept)
+    public function destroy(Request $request, Accept $accept)
     {
         $accept->delete();
 
