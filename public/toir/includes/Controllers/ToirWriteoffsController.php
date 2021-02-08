@@ -42,7 +42,7 @@ class ToirWriteoffsController extends ToirController
 			$idUsers[] = $writeOff->USER_ID;
         }
         
-		$operations = Operation::filter(['ID' => $idOperations])->get();
+		$operations = Operation::filter(['ID' => $idOperations])->withTrashed()->get();
         $equipments = Equipment::filter(['ID' => $idEquipments])->get();
         $users = UserToir::filter(['ID' => $idUsers])->get();
 
@@ -67,7 +67,7 @@ class ToirWriteoffsController extends ToirController
 			$idUsers[] = $writeOff->USER_ID;
         }
         
-		$operations = Operation::filter(['ID' => $idOperations])->get();
+		$operations = Operation::filter(['ID' => $idOperations])->withTrashed()->get();
         $equipments = Equipment::filter(['ID' => $idEquipments])->get();
         $users = UserToir::filter(['ID' => $idUsers])->get();
 

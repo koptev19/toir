@@ -10,6 +10,7 @@ class History extends ToirModel
     public const SOURCE_SERVICE = 'Заявка на ремонт';
     public const SOURCE_ADD_OPERATION = 'Добавление операции';
 	public const SOURCE_DOWNTIME = 'Простой';
+    public const SOURCE_TMC = 'Списание ТМЦ';
 
     public $table = 'histories';
 
