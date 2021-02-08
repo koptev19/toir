@@ -123,6 +123,24 @@ class EquipmentController extends Controller
         return response()->json([
             'items' => new EquipmentResource($equipments)
         ]);
-}
+    }
 
+    /**
+     * @param Request $request
+     * 
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function parents(Request $request, Equipment $equipment)
+    {
+        $equipments = [$equipment];
+        $e = $equipment;
+        while($e->parent) {
+            $equipments[] = $e->parent;
+            $e = $e->parent;
+        }
+
+        return response()->json([
+            'items' => new EquipmentResource(collect(array_reverse($equipments)))
+        ]);
+    }
 }

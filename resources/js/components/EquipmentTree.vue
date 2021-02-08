@@ -1,6 +1,15 @@
 <template>
     <div>
-        <equipment-item v-for="child in children" :key="child.id" :id="child.id" :name="child.name" :childrencount="child.children_count" :htmlclass="child.html_class" :selected="selected" @select="$emit('select', $event)"></equipment-item>
+        <equipment-item 
+            v-for="child in children" 
+            :key="child.id" 
+            :id="child.id" 
+            :name="child.name" 
+            :childrencount="child.children_count" 
+            :htmlclass="child.html_class" 
+            :selected="selected" 
+            @select="$emit('select', $event)"
+        ></equipment-item>
     </div>
 </template>
 
@@ -19,13 +28,13 @@
         },
         data() {
             return {
-                children: []
+                children: [],
             }
         },
         methods: {
         },
         mounted: function() {
-            axios.get('/equipments/children/?parent=' + this.parent).then(({data}) => {
+            axios.get('/equipments/children?parent=' + this.parent).then(({data}) => {
                 this.children = data.items;
             }).catch(function (error) {
                 alert('error');

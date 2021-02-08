@@ -4,7 +4,7 @@
         <a href="#" data-bs-toggle="modal" data-bs-target="#equipmentModal">{{ linkText }}</a>
 
         <div class="modal fade" id="equipmentModal" tabindex="-1" aria-labelledby="equipmentModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Выберите оборудование</h5>
@@ -12,7 +12,7 @@
                     </div>
                     <div class="modal-body">
                         <equipment-tree
-                            :selected="[]"
+                            :selected="selected"
                             v-on:select="select"
                         ></equipment-tree>
                     </div>
@@ -33,6 +33,10 @@
                 type: String|Number,
                 default: ""
             },
+            selected: {
+                type: Array,
+                default: () => ([])
+            },
             required: {
                 type: Boolean,
                 default: false
@@ -41,7 +45,8 @@
         data: function() {
             return {
                 linkText: 'Выбрать оборудование',
-                id: ''
+                id: '',
+                selected: []
             }
         },
         methods: {
@@ -51,7 +56,21 @@
             }
         },
         mounted() {
-            this.id = this.value
+            this.id = this.value;
+            if(this.id) {
+                this.linkText = '';
+                this.selected = [];
+                axios.get('/equipments/' + this.id + '/parents').then(({data}) => {
+                    for (let key in data.items) {
+                        let item = data.items[key];
+                        this.selected.push(item.id);
+                        this.linkText += (this.linkText ? ' / ' : '') + item.name;
+                    }
+                }).catch(function (error) {
+                    alert('error');
+                    console.log(error);
+                });
+            }
         }
     }
 </script>

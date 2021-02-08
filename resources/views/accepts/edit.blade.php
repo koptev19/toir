@@ -1,48 +1,48 @@
-@extends('departments._layout')
+@extends('layouts.toir', ['app' => true])
 
-@section('content_department')
-<form action="{{ route('departments.update', $department) }}" method="post">
-    @csrf
-    @method('put')
+@section('content')
+@include('components/admin_tabs', ['active' => 'accepts'])
 
-    <h3 class="mb-5">Редактирование службы</h3>
+<div class="tab-content border border-top-0">
+    <div class="tab-pane fade show active p-3" role="tabpanel" aria-labelledby="accept-tab">
+        <h5 class='mb-4'>Редактирование приемки оборудования</h5>
 
-    <div class="row mb-3">
-        <div class='col-4 col-md-2'>Наименование:</div>
-        <div class="col-8 col-md-10">
-            <input type="text" name="name" value="{{ old('name', $department->name) }}" class='form-control' required>
-            @error('name') <span class="text-danger">{{ $message }}</span> @enderror
-        </div>
+        <form action="{{ route('accepts.update', $accept) }}" method="post">
+            @csrf
+            @method('PUT')
+            
+            <div class="mb-3 row mb-4">
+                <div class='col-2'>Оборудование</div>
+                <div class="col-10">
+                    @include('components.equipment', [
+                        'equipment' => old('equipment_id', $accept->equipment_id),
+                        'required' => true
+                    ])
+                    @error('equipment_id') <div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+            </div>
+
+            <div class="mb-3 row mb-4">
+                <div class='col-2'>Чек-лист</div>
+                <div class="col-10">
+                    <textarea name="checklist" class='form-control' rows="7"></textarea>
+                    Для создания чеклиста введите текст.<br>
+                    Каждая новая строка - это новый пункт чеклиста
+                    @error('checklist') <div class="text-danger">{{ $message }}</div>@enderror
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-6'>
+                    <input value="Сохранить" type="submit" class='btn btn-primary'>
+                </div>
+                <div class='col-6 text-end'>
+                    <a href="{{ route('accepts.index') }}"  type="" class="btn btn-outline-secondary" >Отмена</a>
+                </div>
+            </div>
+        </form>
+
     </div>
+</div>
 
-    <div class="row mb-3">
-        <div class='col-4 col-md-2'>Краткое наименование:</div>
-        <div class="col-8 col-md-10">
-            <input type="text" name="short_name" value="{{ old('short_name', $department->short_name) }}" class='form-control' required>
-            @error('short_name') <span class="text-danger">{{ $message }}</span> @enderror
-        </div>
-    </div>
-
-    <div class="row mb-3">
-        <div class='col-4 col-md-2'>Руководитель:</div>
-        <div class="col-8 col-md-10">
-            <select name="manager_id" class="form-select">
-                @foreach($users as $user)
-                    <option value="{{ $user->id }}" @if($user->id === old('manager_id', $department->manager_id)) selected @endif>{{ $user->fullname }}</option>
-                @endforeach
-            </select>
-            @error('manager_id') <span class="text-danger">{{ $message }}</span> @enderror
-        </div>
-    </div>
-
-
-    <div class='mt-4 row'>
-        <div class="col">
-            <input type="submit" class='btn btn-primary' value="Сохранить">
-        </div>
-        <div class="col-6 text-end">
-            <a href="{{ route('departments.index') }}" class="btn btn-outline-secondary">Отмена</a>
-        </div>
-    </div>
-</form>
 @endsection
