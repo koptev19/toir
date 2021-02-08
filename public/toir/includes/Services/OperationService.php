@@ -72,7 +72,7 @@ class OperationService
      * 
      * @return array
      */
-    public static function createGroup(string $sessionKey, array $addedFields = []): array
+    public static function createGroup(string $sessionKey, array $addedFields = [], bool $stopdatecreate = true): array
     {
         $result = [];
 
@@ -80,8 +80,10 @@ class OperationService
         foreach($operations as $operation) {
             $equipment = Equipment::find((int) $operation['EQUIPMENT_ID']);
             $service = service::find((int) $operation['SERVICE_ID']);
-            $dateProcess = DateProcessService::createIfNotExists($service, $equipment->workshop, $operation["PLANNED_DATE"]);
-            StopService::createIfNotExists($equipment->LINE_ID, strtotime($operation["PLANNED_DATE"]));
+            if($stopdatecreate){
+                $dateProcess = DateProcessService::createIfNotExists($service, $equipment->workshop, $operation["PLANNED_DATE"]);
+                StopService::createIfNotExists($equipment->LINE_ID, strtotime($operation["PLANNED_DATE"]));
+            }
 
             $fields = [];
             $fields["SERVICE_ID"]         = $operation['SERVICE_ID'];
@@ -95,7 +97,7 @@ class OperationService
             $fields["PLANNED_DATE"]       = date("Y-m-d", strtotime($operation['PLANNED_DATE']));
             $fields["START_DATE"]         = $fields["PLANNED_DATE"];
             $fields["REASON"]             = $operation['REASON'];
-            $fields["DATE_PROCESS_ID"]    = $dateProcess->ID;
+            $fields["DATE_PROCESS_ID"]    = $stopdatecreate ? $dateProcess->ID : false;
 
             foreach($addedFields as $fieldName => $fieldValue) {
                 $fields[$fieldName] = $fieldValue;

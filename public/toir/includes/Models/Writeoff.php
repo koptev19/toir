@@ -9,7 +9,7 @@ class Writeoff extends ToirModel
      */
     public function operation(): ?Operation
     {
-        return Operation::find($this->operation_id);
+        return Operation::filter(['ID' => $this->OPERATION_ID])->withTrashed()->first();
     }
 
     /**

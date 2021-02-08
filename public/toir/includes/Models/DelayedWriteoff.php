@@ -19,7 +19,7 @@ class DelayedWriteoff extends ToirModel
      */
     public function operation(): ?Operation
     {
-        return Operation::find($this->OPERATION_ID);
+        return Operation::filter(['ID' => $this->OPERATION_ID])->withTrashed()->first();
     }
 
 
