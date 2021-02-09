@@ -33,6 +33,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'equipments' => EquipmentController::class,
         'users' => UserController::class,
         'accepts' => AcceptController::class,
+        'accept-histories' => AcceptHistoryController::class,
     ]);
 });
 
