@@ -2,13 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Equipment;
-use App\Models\Line;
-use App\Models\Workshop;
-use App\Observers\EquipmentObserver;
-use App\Observers\LineObserver;
-use App\Observers\WorkshopObserver;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -36,8 +29,9 @@ class AppServiceProvider extends ServiceProvider
         /**
          * ObServices
          */
-        Equipment::observe(EquipmentObserver::class);
-        Workshop::observe(WorkshopObserver::class);
-        Line::observe(LineObserver::class);
+        \App\Models\AcceptHistory::observe(\App\Observers\AcceptHistoryObserver::class);
+        \App\Models\Equipment::observe(\App\Observers\EquipmentObserver::class);
+        \App\Models\Line::observe(\App\Observers\LineObserver::class);
+        \App\Models\Workshop::observe(\App\Observers\WorkshopObserver::class);
     }
 }

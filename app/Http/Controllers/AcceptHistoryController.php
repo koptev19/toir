@@ -32,57 +32,38 @@ class AcceptHistoryController extends Controller
     public function create(Request $request)
     {
         $accept = Accept::findOrFail($request->accept ?? null);
+
         return view('accept-histories.create', compact('accept'));
     }
 
     /**
-     * @param DepartmentFormRequest $request
+     * @param AcceptHistoryFormRequest $request
      * 
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(AcceptFormRequest $request)
+    public function store(AcceptHistoryFormRequest $request)
     {
-        Accept::create($request->validated());
+        $params = $request->validated() + [
+            'stage' => $request->comment ? AcceptHistory::STAGE_NEW : AcceptHistory::STAGE_DONE
+        ];
 
-        return redirect()->route('accepts.index');
+        $acceptHistory = AcceptHistory::create($params);
+
+        if($request->files_added) {
+            $acceptHistory->files()->attach($request->files_added);
+        }
+
+        return redirect()->route('accept-histories.store-ok');
     }
 
     /**
      * @param Request $request
-     * @param Accept $accept
      * 
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Request $request, Accept $accept)
+    public function storeOk(Request $request)
     {
-        return view('accepts.edit', compact('accept'));
+        return view('accept-histories.store-ok');
     }
-
-    /**
-     * @param DepartmentFormRequest $request
-     * @param Accept $accept
-     * 
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function update(AcceptFormRequest $request, Accept $accept)
-    {
-        $accept->update($request->validated());
-
-        return redirect()->route('accepts.index');
-    }
-
-    /**
-     * @param DepartmentFormRequest $request
-     * @param Accept $accept
-     * 
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(Request $request, Accept $accept)
-    {
-        $accept->delete();
-
-        return redirect()->route('accepts.index');
-    }
-
 
 }

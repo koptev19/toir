@@ -28,6 +28,8 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('equipments/children', 'EquipmentController@children')->name('equipments.children');
     Route::get('equipments/{equipment}/parents', 'EquipmentController@parents')->name('equipments.parents');
 
+    Route::get('accept-histories/store-ok', 'AcceptHistoryController@storeOk')->name('accept-histories.store-ok');
+
     Route::resources([
         'departments' => DepartmentController::class,
         'equipments' => EquipmentController::class,

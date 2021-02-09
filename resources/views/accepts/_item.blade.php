@@ -2,8 +2,7 @@
     <td>{{ $accept->id }}</td>
     <td>{{ $accept->equipment->line_path }}</td>
     <td>
-        <input class="form-control" type="text" value="{{ route('accept-histories.create', ['accept' => $accept]) }}"  readonly><br>
-        <a href="#">скопировать ссылку</a>
+        <input class="form-control" type="text" value="{{ route('accept-histories.create', ['accept' => $accept]) }}"  readonly onfocus="this.select(); document.execCommand('copy');"><br>
     </td>         
     <td><a href="{{ route('accept-histories.create', ['accept' => $accept]) }}" class="btn btn-primary" target=_blank>Принять</a></td>         
     <th>

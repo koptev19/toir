@@ -24,6 +24,7 @@ Vue.component('equipment', require('./components/Equipment.vue').default);
 Vue.component('equipment-tree', require('./components/EquipmentTree.vue').default);
 Vue.component('equipment-item', require('./components/EquipmentItem.vue').default);
 Vue.component('users-managing-table', require('./components/UsersManagingTable.vue').default);
+Vue.component('accept-history-create', require('./components/AcceptHistoryCreate.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
