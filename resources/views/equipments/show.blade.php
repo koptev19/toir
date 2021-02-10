@@ -11,7 +11,7 @@
     @endif
 </div>
 
-@include('equipments._plans')
+@include('equipments._operations')
 
 <h3 class="my-5">
     {{ $equipment->name }} 

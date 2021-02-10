@@ -16,7 +16,7 @@
                     <a href="{{ route('equipments.create') }}" class="">Добавить цех</a>
                 </div>
             </div>
-            <div class="col-8 p-3">
+            <div class="col p-3">
                 @yield('content_equipment')
             </div>
         </div>

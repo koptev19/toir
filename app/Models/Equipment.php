@@ -123,6 +123,22 @@ class Equipment extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function works()
+    {
+        return $this->hasMany(Work::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function plans()
+    {
+        return $this->hasMany(Plan::class);
+    }
+
+    /**
      * @return array
      */
     public function allParentsId(): array
