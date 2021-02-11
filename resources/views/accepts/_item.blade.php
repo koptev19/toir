@@ -2,7 +2,7 @@
     <td>{{ $accept->id }}</td>
     <td>{{ $accept->equipment->line_path }}</td>
     <td>
-        <input class="form-control" type="text" value="{{ config('app.url') }}/toir/accept_item.php?id=1" readonly>
+        <input class="form-control" type="text" value="{{ config('app.url') }}/toir/accept_item.php?id=1" readonly onfocus="this.select(); document.execCommand('copy');">
     </td>         
     <td><a href="/toir/accept_item.php?id=1" class="btn btn-primary" target=_blank>Принять</a></td>         
     <th>

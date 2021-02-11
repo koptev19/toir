@@ -106,7 +106,9 @@ class EquipmentController extends Controller
     public function show(Request $request, Equipment $equipment)
     {
         $parentsId = array_merge($equipment->allParentsId(), [$equipment->id]);
-        return view('equipments.show', compact('equipment', 'parentsId'));
+        $plans = $equipment->plans()->whereIn('service_id', \Auth::user()->available_departments_id)->get();
+        $works = $equipment->works()->whereIn('service_id', \Auth::user()->available_departments_id)->get();
+        return view('equipments.show', compact('equipment', 'parentsId', 'plans', 'works'));
     }
 
     /**

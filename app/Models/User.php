@@ -89,6 +89,14 @@ class User extends Authenticatable
     /**
      * @return Collection
      */
+    public function getAvailableDepartmentsIdAttribute()
+    {
+        return $this->available_departments->pluck('id');
+    }
+
+    /**
+     * @return Collection
+     */
     public function getFullnameAttribute()
     {
         return $this->name . ' ' . $this->last_name;

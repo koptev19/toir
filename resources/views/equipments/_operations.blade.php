@@ -39,39 +39,39 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach ($equipment->plans ?? [] as $operation)
-				<tr id='operation-{{ $operation->id }}' class='text-center'>
+            @foreach ($plans ?? [] as $plan)
+				<tr id='operation-{{ $plan->id }}' class='text-center'>
                     <td>
-                        {{ \App\Models\Operation::verbalReason($operation->reason) }}
-                        @if($operation->reason == \App\Models\Operation::REASON_VIEW)
-                            {{ $operation->department->short_name }}
+                        {{ \App\Models\Operation::verbalReason($plan->reason) }}
+                        @if($plan->reason == \App\Models\Operation::REASON_VIEW)
+                            {{ $plan->department->short_name }}
                         @endif
                         <br>
-                        ({{ \App\Models\Operation::getVerbalType($operation->type_operation) }})
+                        ({{ \App\Models\Operation::getVerbalType($plan->type_operation) }})
                     </td>
                     <td class='text-start'>
-                        <div class="font-weight-bold">{{ $operation->name }}</div>
-                        @if($operation->recommendation)
-                            <div class="font-italic fst-italic text-info">{{ $operation->recommendation }}</div>
+                        <div class="font-weight-bold">{{ $plan->name }}</div>
+                        @if($plan->recommendation)
+                            <div class="font-italic fst-italic text-info">{{ $plan->recommendation }}</div>
                         @endif
                     </td>
                     <td>
-                        @if($operation->status == 'N')
-                            <div class='text-danger'>{{ $operation->comment_no_result }}</div>
-                        @elseif($operation->status == 'Y')
+                        @if($plan->status == 'N')
+                            <div class='text-danger'>{{ $plan->comment_no_result }}</div>
+                        @elseif($plan->status == 'Y')
                             <div class='text-success'>Выполнено</div>
                         @endif
                     </td>
-                    <td>{{ $operation->last_date_from_checklist }}</td>
+                    <td>{{ $plan->last_date_from_checklist }}</td>
                      <td>
-                            {{ \App\Models\Plan::getVerbalTypeTo($operation->type_to) }}<br>
-                            {{ $operation->periodicity }} дн.
+                            {{ \App\Models\Plan::getVerbalTypeTo($plan->type_to) }}<br>
+                            {{ $plan->periodicity }} дн.
                      </td>
                       <td>                        
-                        {{ $operation->next_execution_date }}
-                        @if($operation->late > 0)
-                            <div class='text-danger'>{{ $operation->late }} дн.</div>
-                            <div>от {{ $operation->getLateDate() }}</div>
+                        {{ $plan->next_execution_date }}
+                        @if($plan->late > 0)
+                            <div class='text-danger'>{{ $plan->late }} дн.</div>
+                            <div>от {{ $plan->getLateDate() }}</div>
                             
                         @else
                             <div class='text-success'>Нет</div>
@@ -79,8 +79,8 @@
                     </td>
                     <td class='text-nowrap'>
                         <div class='links'>
-                            <a href="/toir/edit_operation.php?operation_id={{ $operation->id }}" target=_blank><img src="./images/pencil.svg" /></a>
-                            <a href="/toir/del_operation.php?id={{ $operation->id }}" onclick="return confirm('Удалить?')" class='ml-3'><img src="./images/x.svg" /></a>
+                            <a href="/toir/edit_operation.php?operation_id={{ $plan->id }}" target=_blank><img src="./images/pencil.svg" /></a>
+                            <a href="/toir/del_operation.php?id={{ $plan->id }}" onclick="return confirm('Удалить?')" class='ml-3'><img src="./images/x.svg" /></a>
                         </div>
                     </td>
                 </tr>
@@ -104,7 +104,7 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach ($equipment->works ?? [] as $work)
+            @foreach ($works ?? [] as $work)
 				<tr id='work-{{ $work->id }}' class='text-center'>
                     <td class='text-start'>
                         <div class="font-weight-bold">{{ $work->name }}</div>
