@@ -1,5 +1,5 @@
 <?php $this->view('components/select_equipment', ["multiply"=>true]); ?>
-<h1 class='text-center mb-5'>Добавление операций</h1>
+<h1 class='text-center mb-5'>Добавление операций и списания ТМЦ</h1>
 
 <div class="mb-3">
     Служба: <?php echo $this->service->NAME; ?>

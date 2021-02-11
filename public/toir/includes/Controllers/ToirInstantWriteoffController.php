@@ -146,9 +146,7 @@ class ToirInstantWriteoffController extends ToirController
      */
     private function showHeader()
     {
-        global $APPLICATION;
-        $APPLICATION->SetTitle("Добавление операций и списания ТМЦ");
-        require($_SERVER['DOCUMENT_ROOT'].'/bitrix/header.php');
+        $this->view('_header', ['title' => 'Добавление операций и списания ТМЦ']);
     }
 
 }

@@ -1,6 +1,20 @@
-<h3 class='text-center'>
-    Журнал списания ТМЦ 
-    <button type="button" class='ml-3 btn btn-outline-primary' data-bs-toggle="modal" data-bs-target="#print-akt">Акт списания ТМЦ</button>
+<?php
+$services = UserToir::current()->availableServices;
+?>
+<div class="row">
+    <div class="col-4 mb-5">
+        <?php if(count($services) > 1) { ?>
+            <button type="button" class='me-3 btn btn-outline-primary' data-bs-toggle="modal" data-bs-target="#add-writeoff">Добавить списания ТМЦ</button>
+        <?php } else { ?>
+            <a href="instant_writeoff.php?service=<?php echo reset($services)->ID; ?>" class='me-3 btn btn-outline-primary'>Добавить списания ТМЦ</a>
+        <?php } ?>
+    </div>
+    <div class="col-3 text-center h3">
+        Журнал списания ТМЦ
+    </div>
+    <div class="col-5">
+        <button type="button" class='ml-3 btn btn-outline-primary' data-bs-toggle="modal" data-bs-target="#print-akt">Акт списания ТМЦ</button>
+    </div>
 </h3>
 
 <?php
@@ -37,6 +51,24 @@ $this->view('writeoffs/filter');
 		<?php }?>
     </tbody>
 </table>
+</div>
+
+<div class="modal fade" tabindex="-1" id='add-writeoff'>
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class='modal-body'>
+            <form action="instant_writeoff.php" target="_blank" method="get">
+            <?php foreach($services as $service) { ?>
+                <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" id="add-operation-group-service-<?php echo $service->ID; ?>" name="service" value="<?php echo $service->ID; ?>">
+                    <label class="custom-control-label" for="add-operation-group-service-<?php echo $service->ID; ?>"><?php echo $service->NAME; ?></label>
+                </div>
+		    <?php } ?>
+            <div class="mt-4"><button type="submit" class="btn btn-primary">Добавить списание ТМЦ</button></div>
+            </form>
+			</div>	
+		</div>
+	</div>
 </div>
 
 <div class="modal fade" tabindex="-1" id='print-akt'>
