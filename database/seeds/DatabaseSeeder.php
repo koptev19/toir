@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->departments();
         $this->stops();
         $this->settings();
+        $this->user_relations();
     }
 
     public function users()
@@ -30,20 +31,49 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Админ',
             'last_name' => 'Админыч',
-            'email' => 'admin@admin.ru',
+            'email' => 'admin@toir24.ru',
             'password' => '$2y$10$BRSXoX4La6wck/VzJNoSy.q8tEdgMEzAxidnkHCme3Q1ol3t7F5.O', //password
             'connected' => true,
             'is_admin' => true,
         ]);
 
-        // User::create([
-        //     'name' => 'User1',
-        //     'last_name' => 'User1',
-        //     'email' => 'user1@user1.ru',
-        //     'password' => 'user1',
-        //     'connected' => false,
-        //     'is_admin' => false,
-        // ]);
+        User::create([
+            'name' => 'Начальник',
+            'last_name' => 'Службы 1',
+            'email' => 'user1@toir24.ru',
+            'password' => '$2y$10$BRSXoX4La6wck/VzJNoSy.q8tEdgMEzAxidnkHCme3Q1ol3t7F5.O', //password
+            'connected' => true,
+            'is_admin' => false,
+            'all_workshops' => true,
+        ]);
+
+        User::create([
+            'name' => 'Начальник',
+            'last_name' => 'Службы 2',
+            'email' => 'user2@toir24.ru',
+            'password' => '$2y$10$BRSXoX4La6wck/VzJNoSy.q8tEdgMEzAxidnkHCme3Q1ol3t7F5.O', //password
+            'connected' => true,
+            'is_admin' => false,
+            'all_workshops' => true,
+        ]);
+
+        User::create([
+            'name' => 'Сотрудник',
+            'last_name' => 'Службы 1 по одному цеху',
+            'email' => 'user3@toir24.ru',
+            'password' => '$2y$10$BRSXoX4La6wck/VzJNoSy.q8tEdgMEzAxidnkHCme3Q1ol3t7F5.O', //password
+            'connected' => true,
+            'is_admin' => false,
+        ]);
+
+        User::create([
+            'name' => 'Сотрудник',
+            'last_name' => 'Службы 2',
+            'email' => 'user4@toir24.ru',
+            'password' => '$2y$10$BRSXoX4La6wck/VzJNoSy.q8tEdgMEzAxidnkHCme3Q1ol3t7F5.O', //password
+            'connected' => true,
+            'is_admin' => false,
+        ]);
     }
 
     public function equipment()
@@ -117,5 +147,22 @@ class DatabaseSeeder extends Seeder
             'name' => 'plan_month_day',
             'value' => 20,
         ]);
+    }
+
+    public function user_relations()
+    {
+        $user1 = User::find(2);
+        $user1->departments()->sync([1]);
+
+        $user2 = User::find(3);
+        $user2->departments()->sync([2]);
+
+        $user3 = User::find(4);
+        $user3->departments()->sync([1]);
+        $user3->workshops()->sync([1]);
+
+        $user4 = User::find(5);
+        $user4->departments()->sync([2]);
+        $user4->workshops()->sync([1]);
     }
 }
