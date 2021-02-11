@@ -2,7 +2,7 @@
 
 @section('content')
 
-@include('components/admin_tabs', ['active' => 'departments'])
+@include('components/admin_tabs', ['active' => 'equipments'])
 
 <div class="tab-content border border-top-0" id="equipments">
     <div class="tab-pane fade show active"role="tabpanel" aria-labelledby="equipment-tab">
@@ -16,7 +16,7 @@
                     <a href="{{ route('equipments.create') }}" class="">Добавить цех</a>
                 </div>
             </div>
-            <div class="col-8 p-3">
+            <div class="col p-3">
                 @yield('content_equipment')
             </div>
         </div>

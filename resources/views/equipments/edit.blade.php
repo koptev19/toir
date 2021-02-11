@@ -77,7 +77,7 @@
     <div class="row mb-3">
         <div class='col-4 col-md-2'>Дата ввода в экспуатацию:</div>
         <div class="col-8 col-md-10">
-            <input type="date" name="enter_date" value="{{ old('enter_date', $equipment->enter_date->format('Y-m-d')) }}" class="form-control w-auto">
+            <input type="date" name="enter_date" value="{{ old('enter_date', $equipment->enter_date ? $equipment->enter_date->format('Y-m-d') : '') }}" class="form-control w-auto">
             @error('enter_date') <span class="text-danger">{{ $message }}</span> @enderror
         </div>
     </div>
