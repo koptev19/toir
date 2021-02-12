@@ -58,7 +58,7 @@ class User extends Authenticatable
         $workshops = collect([]);
 
         if($this->connected) {
-            if($this->is_admin) {
+            if($this->is_admin || $this->all_workshops) {
                 $workshops = Workshop::all();
             } else {
                 $workshops = $this->workshops;

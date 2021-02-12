@@ -96,7 +96,6 @@ class EquipmentFormRequest extends FormRequest
             'sketch' => [
                 'nullable',
                 'file',
-                'max:1000'
             ],
             'documents' => [
                 'nullable',
@@ -104,7 +103,6 @@ class EquipmentFormRequest extends FormRequest
             ],
             'documents.*' => [
                 'file',
-                'max:1000'
             ],
         ];
     }

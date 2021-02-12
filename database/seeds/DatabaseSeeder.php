@@ -2,6 +2,7 @@
 
 use App\Models\Department;
 use App\Models\Equipment;
+use App\Models\Line;
 use App\Models\Setting;
 use App\Models\Stop;
 use App\Models\User;
@@ -119,33 +120,26 @@ class DatabaseSeeder extends Seeder
 
     public function stops()
     {
-        Stop::create([
-            'workshop_id' => 1,
-            'line_id' => 3,
-            'date' => '2021-01-06',
-        ]);
-        Stop::create([
-            'workshop_id' => 1,
-            'line_id' => 3,
-            'date' => '2021-01-13',
-        ]);
-        Stop::create([
-            'workshop_id' => 1,
-            'line_id' => 3,
-            'date' => '2021-01-20',
-        ]);
-        Stop::create([
-            'workshop_id' => 1,
-            'line_id' => 3,
-            'date' => '2021-01-27',
-        ]);
+        $lines = Line::all();
+        foreach($lines as $line) {
+            Stop::create([
+                'workshop_id' => $line->workshop_id,
+                'line_id' => $line->id,
+                'date' => '2021-02-01',
+            ]);
+            Stop::create([
+                'workshop_id' => $line->workshop_id,
+                'line_id' => $line->id,
+                'date' => '2021-03-01',
+            ]);
+        }
     }
 
     public function settings()
     {
         Setting::create([
             'name' => 'plan_month_day',
-            'value' => 20,
+            'value' => 15,
         ]);
     }
 

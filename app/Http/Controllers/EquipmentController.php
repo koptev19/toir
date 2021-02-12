@@ -34,9 +34,9 @@ class EquipmentController extends Controller
     public function create(Request $request)
     {
         $parentId = $request->parent ?? null;
-        $parent = Equipment::find($parentId);
+        $parent = $parentId ? Equipment::find($parentId) : null;
 
-        $parentsId = array_merge($parent->allParentsId(), [$parent->id]);
+        $parentsId = $parent ? array_merge($parent->allParentsId(), [$parent->id]) : [];
 
         return view('equipments.create', compact('parentsId', 'parent'));
     }

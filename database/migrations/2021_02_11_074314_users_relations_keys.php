@@ -22,7 +22,7 @@ class UsersRelationsKeys extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             
-            $table->primary(['user_id', 'workshop_id']);
+            $table->unique(['user_id', 'workshop_id']);
         });
 
         Schema::table('departments_users', function (Blueprint $table) {
@@ -34,7 +34,7 @@ class UsersRelationsKeys extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('restrict');
             
-            $table->primary(['user_id', 'department_id']);
+            $table->unique(['user_id', 'department_id']);
         });
     }
 
@@ -46,13 +46,11 @@ class UsersRelationsKeys extends Migration
     public function down()
     {
         Schema::table('users_workshops', function (Blueprint $table) {
-            $table->dropPrimary(['user_id', 'workshop_id']);
             $table->dropForeign(['workshop_id']);
             $table->dropForeign(['user_id']);
         });
 
         Schema::table('departments_users', function (Blueprint $table) {
-            $table->dropPrimary(['user_id', 'department_id']);
             $table->dropForeign(['department_id']);
             $table->dropForeign(['user_id']);
         });

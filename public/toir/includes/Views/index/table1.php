@@ -16,7 +16,6 @@ $this->view('index/filter', compact('allWorkshops', 'services', 'mekhannik'));
 <table class='table table-sm table-bordered table1 ' id='table1_1'>
     <thead>
         <tr>
-            <th rowspan="3" class="text-center">№</th>
             <th rowspan="3">Наименование</th>
             <th colspan="100%" class='text-center'>
                 <div class="btn-group">
@@ -66,7 +65,6 @@ $this->view('index/filter', compact('allWorkshops', 'services', 'mekhannik'));
     <tbody>
 	<?php foreach($this->lines as $line) { ?>
         <tr class='text-center'>
-            <td><?php echo $line->ID; ?></td>
             <td class='text-left'>
                 <?php echo $line->path(); ?>
             </td>

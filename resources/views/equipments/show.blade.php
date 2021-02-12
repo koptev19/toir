@@ -3,12 +3,12 @@
 @section('content_equipment')
 
 <div class='mb-5'>
-    <a href="{{ route('equipments.create', ['parent' => $equipment]) }}" class='btn btn-outline-primary'><i class="fas fa-plus me-2"></i>  Добавить дочерний элемент</a>
-    @if($equipment->type === \App\Models\Equipment::TYPE_WORKSHOP)
-        <a href="{{ route('toir', $equipment->workshop) }}" class='btn btn-outline-primary ms-4'>
-            <i class="fas fa-clipboard-list me-2"></i> Планирование ТОиР
-        </a>
-    @endif
+    <a href="{{ route('equipments.create', ['parent' => $equipment]) }}" class='btn btn-outline-primary'>
+        <i class="fas fa-plus me-2"></i>  Добавить дочерний элемент
+    </a>
+    <a href="{{ route('toir', $equipment->workshop) }}" class='btn btn-outline-primary ms-4'>
+        <i class="fas fa-clipboard-list me-2"></i> Планирование ТОиР
+    </a>
 </div>
 
 @include('equipments._operations')

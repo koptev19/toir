@@ -22,8 +22,8 @@ class UserToir extends ToirModel
     private static $cacheAvailableWorkshopsIds = null;
 
     public $relations = [
-        'service_id' => ['table' => 'department_users', 'foreign_key' => 'department_id', 'owner_key' => 'user_id'],
-        'workshop_id' => ['table' => 'equipment_users', 'foreign_key' => 'equipment_id', 'owner_key' => 'user_id'],
+        'service_id' => ['table' => 'departments_users', 'foreign_key' => 'department_id', 'owner_key' => 'user_id'],
+        'workshop_id' => ['table' => 'users_workshops', 'foreign_key' => 'workshop_id', 'owner_key' => 'user_id'],
     ];
 
     /**

@@ -79,8 +79,8 @@
                     </td>
                     <td class='text-nowrap'>
                         <div class='links'>
-                            <a href="/toir/edit_operation.php?operation_id={{ $plan->id }}" target=_blank><img src="./images/pencil.svg" /></a>
-                            <a href="/toir/del_operation.php?id={{ $plan->id }}" onclick="return confirm('Удалить?')" class='ml-3'><img src="./images/x.svg" /></a>
+                            <a href="/toir/edit_operation.php?operation_id={{ $plan->id }}" target=_blank><img src="/images/pencil.svg" /></a>
+                            <a href="/toir/del_operation.php?id={{ $plan->id }}" onclick="return confirm('Удалить?')" class='ml-3'><img src="/images/x.svg" /></a>
                         </div>
                     </td>
                 </tr>
@@ -117,8 +117,8 @@
                     <td>{{ \App\Models\Operation::getVerbalType($work->type) }}</td>
                     <td class='text-nowrap'>
                         <div class='links'>
-                            <a href="/toir/add_work.php?action=edit&work_id={{ $work->id }}" target=_blank><img src="./images/pencil.svg" /></a>
-                            <a href="/toir/add_work.php?action=delete&work_id={{ $work->id }}" onclick="return confirm('Удалить?')" class='ml-3'><img src="./images/x.svg" /></a>
+                            <a href="/toir/add_work.php?action=edit&work_id={{ $work->id }}" target=_blank><img src="/images/pencil.svg" /></a>
+                            <a href="/toir/add_work.php?action=delete&work_id={{ $work->id }}" onclick="return confirm('Удалить?')" class='ml-3'><img src="/images/x.svg" /></a>
                         </div>
                     </td>
                 </tr>
