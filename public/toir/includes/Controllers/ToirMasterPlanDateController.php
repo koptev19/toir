@@ -355,18 +355,20 @@ class ToirMasterPlanDateController extends ToirController
 	private function getOperations(?array $done = null, bool $addInSession = true): array
     {
         $operations = [];
-		$cookie = $this->getCookie();		 
 
         if(!(is_array($done) && count($done) == 0)) {
-            $filter = [
-				'DATE_PROCESS_ID' => array_keys($this->dateProcesses),
-            ];
+            foreach($this->dateProcesses as $dateProcess) {
+                $filter = [
+                    'WORKSHOP_ID' => $dateProcess->WORKSHOP_ID,
+                    'PLANNED_DATE' => date('Y-m-d', strtotime($dateProcess->DATE))
+                ];
 
-            if(is_array($done)) {
-                $filter['ID'] = $done;
+                if(is_array($done)) {
+                    $filter['ID'] = $done;
+                }
+
+                $operations = array_merge($operations, Operation::filter($filter)->get());
             }
-
-            $operations = Operation::filter($filter)->get();
         }
 
         if($addInSession) {
