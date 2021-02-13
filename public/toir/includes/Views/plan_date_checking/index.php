@@ -13,7 +13,7 @@
 						$dateProcess = DateProcessService::getByServiceAndDate($service, $workshop, $this->date);
 						if($dateProcess && $dateProcess->COMMENT_EXPIRED) {?>
 							<p class="text-danger" style="font-size:12px">Причина просрочки: <?php echo $dateProcess->COMMENT_EXPIRED; ?></p>
-						<?}?>
+						<?php } ?>
 						</th>
                     <?php } ?>
                     <th rowspan="2" class="align-middle">Время простоя</th>
@@ -88,7 +88,7 @@
                         <td class="text-left pl-5"><?php echo $operation->NAME . ' (' . $operation->equipment->link() . ')'; ?></td>
                         <?php foreach($services as $service) { ?>
                             <td><?php echo $operation->SERVICE_ID == $service->ID ? $operation->WORK_TIME : ''; ?></td>
-                            <td><?php echo $operation->SERVICE_ID == $service->ID ? $this->durationByTime($operation->WORK_TIME) : ''; ?></td>
+                            <td><?php echo $operation->SERVICE_ID == $service->ID ? $this->operationDuration($operation->ID) : ''; ?></td>
                         <?php } ?>
                         <td></td>
                     </tr>

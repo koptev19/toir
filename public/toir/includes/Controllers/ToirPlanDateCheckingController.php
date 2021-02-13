@@ -153,9 +153,29 @@ class ToirPlanDateCheckingController extends ToirController
      */
     public function timeDuration(DateProcess $dateProcess, ?Line $line = null): string
     {
-        $timeBeginEnd = $this->timeBeginEnd($dateProcess, $line);
+        $sumTime =0;
+		foreach($dateProcess->operations as $operation) {
+            if($line && $operation->LINE_ID != $line->ID) {
+                continue;
+            }
+			
+			$operationIds[] = $operation->ID;
+	
+		}
+		
+		if(count($operationIds)){
+		    $operationTime = $this->getTimesGroup($operationIds);
+			return $this->TimeFromArray($operationTime);
+		}else{
+			return "";	
+		}
+    }
 
-        return $this->durationByTime($timeBeginEnd);
+    public function operationDuration(int $operationId): string
+    {
+        $operationTime = $this->getTimesGroup([$operationId]);
+    
+        return $this->TimeFromArray($operationTime);
     }
 
     /**
@@ -173,44 +193,80 @@ class ToirPlanDateCheckingController extends ToirController
         $timeMinutes = [60 * 24, 0];
 
         foreach ($dateProcesses as $dateProcess) {
-            $timeBeginEnd = $this->timeBeginEnd($dateProcess, $line);
-            if ($timeBeginEnd) {
-                [$begin, $end] = explode(' - ', $timeBeginEnd);
-                [$beginH, $beginM] = explode(':', $begin);
-                [$endH, $endM] = explode(':', $end);
-    
-                $timeMinutes[0] = min($timeMinutes[0], $beginH * 60 + $beginM);
-                $timeMinutes[1] = max($timeMinutes[1], $endH * 60 + $endM);    
-            }
+           foreach($dateProcess->operations as $operation) {
+				if($line && $operation->LINE_ID != $line->ID) {
+					continue;
+				}
+				$operationIds[] = $operation->ID;
+		   }	
         }
 
-        $time = $timeMinutes[1] > 0 
-            ? ($timeMinutes[0] < 600 ? '0' : '') . floor($timeMinutes[0] / 60) . ':' . ($timeMinutes[0] % 60 < 10 ? '0' : '') . ($timeMinutes[0] % 60)
-                . ' - '
-                . ($timeMinutes[1] < 600 ? '0' : '') . floor($timeMinutes[1] / 60) . ':' . ($timeMinutes[1] % 60 < 10 ? '0' : '') . ($timeMinutes[1] % 60)
-            : '';
-        
-        return $this->durationByTime($time);
+		if(count($operationIds)){
+			$operationTime = $this->getTimesGroup($operationIds);
+			return $this->TimeFromArray($operationTime);
+		}else{
+			return "";	
+		}
+
     }
 
-    /**
-     * @param string|null $time
-     * @return string
-     */
-    public function durationByTime(?string $time): string
+	private function TimeFromArray(array $times): string 
+	{
+		$arr=[];
+		
+		while(true){
+    		foreach($times as $time){
+    		    $find=0;
+    		    foreach($arr as $key=>$time1){
+   			    	if( $time[0] < $time1[1] && $time[1] > $time1[0]){
+    	 	
+						$begin1 = min($time[0], $time1[0]);
+    			    	$end1 = max($time[1], $time1[1]);
+    			    
+    			    	$arr[$key] =[$begin1,$end1];	
+    			    	$find=1;
+    			    	break;
+    			    }   
+    		    }	
+    		    if(!$find) $arr[]= $time;
+    	    }  
+			if (count($times) == count($arr)) break;
+			$times=$arr;
+			$arr=[];
+		}
+	    
+        $sumTime = 0;
+		foreach($times as $time){	
+				  [$endH, $endM] = explode(':', trim($time[1]));
+				  [$beginH, $beginM] = explode(':', trim($time[0]));
+				  $sumTime += $endH * 60 + $endM - ($beginH * 60 + $beginM);	 
+			}
+			
+		return floor($sumTime / 60) . ' ч. ' . ($sumTime % 60) . ' м.';	 
+	    
+	}
+
+    private function getTimesGroup(array $operationsId)
     {
-        $duration = '';
-        if ($time) {
-            [$begin, $end] = explode(' - ', $time);
-            [$beginH, $beginM] = explode(':', $begin);
-            [$endH, $endM] = explode(':', $end);
+        $allTimes = Worktime::filter(['operation_id' => $operationsId])
+            ->orderBy('time_from', 'asc')
+            ->get();
 
-            $durationMinutes = $endH * 60 + $endM - ($beginH * 60 + $beginM);
+        $times = [];
+		$return =[];
 
-            $duration = floor($durationMinutes / 60) . ' ч. ' . ($durationMinutes % 60) . ' м.';
-        }
+        foreach($allTimes as $time) {
+            if(!isset($times[$time->operatiopn_id][$time->group])) {
+                $times[$time->operatiopn_id][$time->group] = 1;
+				$return[] = [
+                    $time->time_from, 
+                    $time->time_to
+				];
+			}
 
-        return $duration;
+	      }
+
+        return $return;
     }
 
    

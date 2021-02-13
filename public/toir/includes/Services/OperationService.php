@@ -246,7 +246,7 @@ class OperationService
             'RECOMMENDATION' => $operation->RECOMMENDATION,
             'COMMENT' => $operation->COMMENT,
             'WORK_TIME' => $operation->WORK_TIME,
-            'START_DATE' => '',
+            'START_DATE' => $operation->START_DATE,
             'PLANNED_DATE' => $operation->PLANNED_DATE,
             'TASK_RESULT' => $operation->TASK_RESULT,
             'LAST_DATE_FROM_CHECKLIST' => $operation->LAST_DATE_FROM_CHECKLIST,
@@ -255,6 +255,7 @@ class OperationService
             'CRASH_ID' => $operation->CRASH_ID,
             'SERVICE_ID' => $operation->SERVICE_ID,
             'REASON' => $operation->REASON,
+            'SOURCE_OPERATION_ID' => $operation->SOURCE_OPERATION_ID ?: $operation->ID,
         ];
 
         foreach($newFields as $fieldKey => $fieldValue) {

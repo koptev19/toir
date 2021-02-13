@@ -115,7 +115,7 @@ $times = json_decode($cookie['result'], true);
 						<img src='images/x.svg'>
 						</a>
 					</div>
-					<?}?>
+					<?php }?>
 				</div>
 				<button type="button" onClick="selectWorkersDone();" class="btn btn-primary">Выбрать</button>
 			</div>	
@@ -247,6 +247,12 @@ function selectWorkersDone(){
 		selectedWorkers[currentWorker] = res;
 	});
 	updateNames(currentWorker);
+
+	$("#table-operations tr.operation").each(function(index, item){
+		var operationId = $(item).attr('operation-id');
+		sumTime(operationId,currentWorker);
+	});
+
 	$('#workers').modal('hide');
 }
 
@@ -304,20 +310,30 @@ function timeInterval(begin,end){
 	return (Number(endArr[0])*60+Number(endArr[1]))-(Number(beginArr[0])*60+Number(beginArr[1]));
 }
 
+function countWorkers(i){
+	if (selectedWorkers[i] === undefined){
+		return 1;
+	}else{
+		return (selectedWorkers[i].length == 0) ? 1 : selectedWorkers[i].length;
+	}
+}
+
 function sumTime(operation,worker){
 	var find=false;
 	var maxEnd,minBegin,minutes;
 	for(var i=1;i<=numWorker;i++){
 		el=$("tr[operation-id='"+operation+"']").find("td.worker"+i);
 		if(el.find("input[type='checkbox']").prop("checked")){
+		   var workerCount = countWorkers(i);
 		   if(find){
 				[maxEnd,minBegin]=compareTimes(el.find("input[name='begin']").val(),minBegin,el.find("input[name='end']").val(),maxEnd);
-				minutes+=timeInterval(el.find("input[name='begin']").val(),el.find("input[name='end']").val());
+				minutes+=timeInterval(el.find("input[name='begin']").val(),el.find("input[name='end']").val())*workerCount;
+
 		   }else{	 
 			   maxEnd=el.find("input[name='end']").val();
 			   minBegin=el.find("input[name='begin']").val();
 			   if (minBegin>maxEnd)minBegin = [maxEnd, maxEnd = minBegin][0];
-			   minutes=timeInterval(minBegin,maxEnd);
+			   minutes=timeInterval(minBegin,maxEnd)*workerCount;
 			   find=true;
 	       }
 		}
@@ -409,9 +425,9 @@ function submitForm(reverse)
 	var resultbyworker =[];
 		
 	$("td.table-danger").removeClass("table-danger");
+	$("div.table-danger").removeClass("table-danger");
 	$("input.is-invalid").removeClass("is-invalid");
 	$("tr.table-danger").removeClass("table-danger");
-	$("div.table-danger").removeClass("table-danger");
 	var error = false;
 	for (var i = 1; i <= numWorker; i++) {
 		var operation = {};
@@ -535,10 +551,10 @@ $(document).ready(function() {
 			if($workers[$id]){
 			?>
 			 ar.push(<?php echo $id ?>);
-			<?}}?>
+			<?php }}?>
 		 selectedWorkers[<?php echo $workerKey ?>] = ar;
 		 ar =[];
-		<?}
+		<?php }
     }
     ?>
 	restoreWorkersNames();

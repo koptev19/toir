@@ -153,14 +153,15 @@ class ToirAddPlanController extends ToirController
     public function step2_save()
     {
         $_SESSION['add_plan_errors'] = [];
+        $created = false;
         
         if(!empty($_SESSION['add_plan_dates'])) {
             $this->pushAll();
 
-            $this->tryCreateNext();
+            $created = $this->tryCreateNext();
         }
 
-        $step = count($_SESSION['add_plan_errors']) > 0 ? 2 : 3;
+        $step = count($_SESSION['add_plan_errors']) > 0 || $created ? 2 : 3;
         header("Location: add_plan.php?workshop=" . $this->workshop->ID . '&step=' . $step);
     }
 
@@ -528,10 +529,12 @@ class ToirAddPlanController extends ToirController
     }
 
     /**
-     * @return void
+     * @return bool
      */
-    private function tryCreateNext()
+    private function tryCreateNext(): bool
     {
+        $created = false;
+
         if(!empty($_SESSION['add_plan_dates'])) {
             $plan = (object)$_SESSION['add_plan_data'];
 
@@ -540,8 +543,10 @@ class ToirAddPlanController extends ToirController
             $nextTime = strtotime($lastDate) + $plan->PERIODICITY * 60 * 60 * 24;
             if(date('Y-m', $nextTime) == date("Y-m", strtotime($lastDate))) {
                 $_SESSION['add_plan_dates'][] = date('Y-m-d', $nextTime);
+                $created = true;
             }
         }
-    }
 
+        return $created;
+    }
 }

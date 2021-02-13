@@ -69,6 +69,33 @@ class HighloadBlockService
         return $times;
     }
 
+
+	/**
+     * @param int $blockId
+     * @param array $filter
+     * @return array
+     */
+    public static function getTimesGroup(int $blockId, array $filter): array
+    {
+        $allTimes = self::getList($blockId, $filter, ['UF_BEGINTIME' => 'ASC']);
+
+        $times = [];
+		$return =[];
+
+        foreach($allTimes as $time) {
+            if(!isset($times[$time['UF_OPERATIONID']][$time['UF_GROUP']])) {
+                $times[$time['UF_OPERATIONID']][$time['UF_GROUP']] = 1;
+				$return[] = [
+                    $time['UF_BEGINTIME'], 
+                    $time['UF_ENDTIME']
+				];
+			}
+
+	      }
+
+        return $return;
+    }
+
     /**
      * @param array $filter = []
      * @return array

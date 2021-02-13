@@ -95,7 +95,7 @@ class PushService
      */
     private static function check(array $operations): ?string
     {
-        $errorDate = null;
+        $error = null;
 
         $operationsInDate = [];
 
@@ -108,19 +108,19 @@ class PushService
                 ->first();
 
             if (!$stop) {
-                $errors[] = 'Нет дня остановки для операции '.$operation->NAME;
+                $error = 'Нет дня остановки для операции '.$operation->NAME;
                 continue;
             }
             
             if ($operation->PLAN_ID) {
                 $existOperations = Operation::filter([
                         'PLAN_ID' => $operation->PLAN_ID,
-                        'PLANNED_DATE' => $stop->DATE,
+                        'PLANNED_DATE' => date('Y-m-d', strtotime($stop->DATE)),
                         '!ID' => $operation->ID,
                     ])->count();
                 
                 if($existOperations || in_array($stop->DATE, $operationsInDate)) {
-                    $errorDate = $stop->DATE;
+                    $error = "На дату " . $stop->DATE .' две одинаковых плановых операции';
                     break;
                 }
 
@@ -128,7 +128,7 @@ class PushService
             }
         }
 
-        return $errorDate;
+        return $error;
     }
 
 
