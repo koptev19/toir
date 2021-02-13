@@ -400,12 +400,14 @@ class ToirMasterReportDateController extends ToirController
                     $this->updatePlannedOperation($operation, true);
                 }
 
-
                 // Обновляем операцию без даты
                 if($operation->WORK_ID) {
                     $operation->work->LAST_COMPLETED = date("Y-m-d", strtotime($this->date));
                     $operation->work->save();
                 }
+
+                // Обновляем копии этой операции
+                $this->updateCopies($operation);
             } else {        //Если операция не выполнена
                 $time = mktime(0, 0, 0, $cookie['month'][$id], $cookie['day'][$id], $cookie['year'][$id]);
 
@@ -496,7 +498,7 @@ class ToirMasterReportDateController extends ToirController
     {
         if($plan = $childOperation->plan) {
             $childOperationNext = $plan->operations()
-                ->setFilter(['>PLANNED_DATE' => date('Y-m-d')])
+                ->setFilter(['>PLANNED_DATE' => date('Y-m-d', strtotime($childOperation->PLANNED_DATE))])
                 ->orderBy('PLANNED_DATE', 'ASC')
                 ->first();
 
@@ -513,12 +515,29 @@ class ToirMasterReportDateController extends ToirController
             if ($isDone) {
                 $plan->LAST_DATE_FROM_CHECKLIST = $childOperation->PLANNED_DATE;
                 $operationsNotDone = null;
+
+                $oldOperations = $plan->operations()
+                    ->setFilter(['<PLANNED_DATE' => date('Y-m-d', strtotime($childOperation->PLANNED_DATE)), '!TASK_RESULT' => 'Y'])
+                    ->get();
+
+                foreach($oldOperations as $oldOperation) {
+                    $oldOperation->TASK_RESULT = 'Y';
+                    $oldOperation->save();
+                }
             } else {
                 $operationsNotDone = is_array($plan->OPERATIONS_NOT_DONE) ? $plan->OPERATIONS_NOT_DONE : [];
                 $operationsNotDone[] = $childOperation->ID;
             }
             $plan->OPERATIONS_NOT_DONE = json_encode($operationsNotDone);
             $plan->save();
+        }
+    }
+
+    private function updateCopies(Operation $sourceOperation)
+    {
+        foreach($sourceOperation->copies as $copyOperation) {
+            $copyOperation->TASK_RESULT = 'Y';
+            $copyOperation->save();
         }
     }
 

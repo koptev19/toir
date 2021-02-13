@@ -1,5 +1,5 @@
 <?php $this->view('components/select_equipment', ["multiply"=>true]); ?>
-<h1 class='text-center mb-5'>Добавление операций и списания ТМЦ</h1>
+<h1 class='text-center mb-5'>Добавление операций</h1>
 
 <div class="mb-3">
     Служба: <?php echo $this->service->NAME; ?>
@@ -259,6 +259,7 @@ function validateForm()
     var error = "";
     $('#operations-table tbody tr').each(function( index, element ) {
         let id = $(element).data('id');
+		if(id === undefined) return true;
         
         let name = $(element).find('input[name="NAME[' + id + ']"]');
         if (name.length && !name.val()) {
@@ -284,11 +285,9 @@ function validateForm()
             date.removeClass("is-invalid");	
         }    
 
-		/*console.log(id);
-		console.log(resultArray);
 		if(resultArray[id] === undefined){
-			error = "\nНеобходимо указать списание у всех операций!"
-		}*/		
+			error = error + "\nНеобходимо указать списание у всех операций!"
+		}
     });
     
     if(error) {
@@ -367,12 +366,6 @@ var clickondate = function(el)
 
 //tmc
 
-	var allOperations={};
-	<?php foreach($operationsInLine as $lineName => $operations) {
-		 foreach($operations as $operation) { ?>
-			allOperations['<?php echo $operation->ID ?>']=1;	
-		<?php }
-	} ?>
 	var saveStep=1;
 	var operation=0;
 	var result="";

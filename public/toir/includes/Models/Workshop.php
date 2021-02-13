@@ -116,5 +116,12 @@ class Workshop extends Equipment
     {
         return Operation::filter(['WORKSHOP_ID' => $this->id]);
     }
+    /**
+     * @return ToirModelBuilder
+     */
+    public function planMonthes(): ToirModelBuilder
+    {
+        return PlanMonth::filter(['WORKSHOP_ID' => $this->id]);
+    }
 
 }

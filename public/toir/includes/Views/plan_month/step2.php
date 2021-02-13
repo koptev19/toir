@@ -1,13 +1,10 @@
 <h5 class='text-center mt-5'>Шаг 2 - прижать операции к датам остановки</h5>
 
-<?php if($_SESSION['pushErrors']) { ?>
+<?php if($_REQUEST['error']) { ?>
 <div class='alert alert-danger text-center my-5'>
-    <?php foreach($_SESSION['pushErrors'] as $error) ?>
-	<div><?php echo $error['error']; ?></div>
-
+	<?php echo $_REQUEST['error']; ?>
 </div>
-<?php unset($_SESSION['pushErrors']);
-} ?>
+<?php } ?>
 
 <table class='table table-sm table-bordered table1 mt-5' id='table1_1'>
     <thead>

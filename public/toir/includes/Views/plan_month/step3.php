@@ -35,7 +35,7 @@
     </tbody>
 </table>
 
-<div class='text-center mt-5 pt-5' id='button-next'><a class="btn btn-primary" href="#" role="button" onclick="opener.location.href = opener.location.href; self.close(); return false;" >Завершить планирование</a></div>
+<div class='text-center mt-5 pt-5' id='button-next'><a class="btn btn-primary" href="index.php?workshop=<?php echo $this->workshop->ID; ?>">Завершить планирование</a></div>
 
 <script>
 

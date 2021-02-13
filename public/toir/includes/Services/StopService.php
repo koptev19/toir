@@ -88,29 +88,26 @@ class StopService
     {
         $result = null;
 
-        $currentMonth = currentMonth();
+        $monthObject = (int)date('j') >= (int)Settings::getValueByName('plan_month_day') ? next2Month() : nextMonth();
 
-        $lastStop = $workshop->stops()
-            ->setFilter(['>=DATE' => $currentMonth['Y'] . '-' . ($currentMonth['m'] < 10 ? '0' : '') . $currentMonth['m'] . '-01'])
-            ->orderBy('DATE', 'desc')
+        $lastPlan = $workshop->planMonthes()
+            ->setFilter(['STAGE' => PlanMonth::STAGE_DONE])
+            ->orderBy('YEAR', 'desc')
+            ->orderBy('MONTH', 'desc')
             ->first();
 
-        if($lastStop) {
-            $date = date('Y-m', strtotime($lastStop->DATE));
-            $nextMonth = nextMonth();
-            if($date < date('Y-m', mktime(0, 0, 0, $nextMonth['m'], 1, $nextMonth['Y']))) {
-                $result = ['month' => $nextMonth['m'], 'year' => $nextMonth['Y']];
-            } else {
-                if((int)date('j') >= (int)Settings::getValueByName('plan_month_day')) {
-                    $next2Month = next2Month();
-                    if($date < date('Y-m', mktime(0, 0, 0, $next2Month['m'], 1, $next2Month['Y']))) {
-                        $result = ['month' => $next2Month['m'], 'year' => $next2Month['Y']];
-                    }
-                }
+        if($lastPlan) {
+            if($lastPlan->YEAR != $monthObject['Y'] || $lastPlan->MONTH != $monthObject['m']) {
+                $lastMonthTime = mktime(0, 0, 0, $lastPlan->MONTH, 1, $lastPlan->YEAR);
+                $lastMonthObject = [
+                    'Y' => (int)date('Y', $lastMonthTime),
+                    'm' => (int)date('m', $lastMonthTime),
+                ];
+                $nextMonthObject = nextMonth($lastMonthObject);
+                $result = ['month' => $nextMonthObject['m'], 'year' => $nextMonthObject['Y']];
             }
-            
         } else {
-            $result = ['month' => $currentMonth['m'], 'year' => $currentMonth['Y']];
+            $result = ['month' => (int)date('m'), 'year' => (int)date('Y')];
         }
 
         return $result ? (object)$result : null;

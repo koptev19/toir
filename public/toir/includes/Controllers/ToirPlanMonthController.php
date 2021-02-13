@@ -49,6 +49,8 @@ class ToirPlanMonthController extends ToirController
      */
     public function step1()
     {
+        $this->checkPlanMonth();
+
         $this->view('plan_month/header');
 
         $this->view('plan_month/step1', [
@@ -62,6 +64,8 @@ class ToirPlanMonthController extends ToirController
      */
     public function step1_save()
     {
+        $this->checkPlanMonth();
+
         // Формируем даты остановки
         foreach($_REQUEST['stop'] ?? [] as $lineId => $dates) {
             foreach($dates as $date => $s) {
@@ -75,9 +79,12 @@ class ToirPlanMonthController extends ToirController
 
         // Теперь формируем операции на основе плановых
         foreach($this->workshop->plans as $plan) {
-            // Сначала удалим все старые
+            // Сначала удалим все старые плановые
             $oldOperations = $plan->operations()
-                ->setFilter(['>PLANNED_DATE' => date('Y-m-d', $this->timeStart - 1)])
+                ->setFilter([
+                    '!PLAN_ID' => false,
+                    '>PLANNED_DATE' => date('Y-m-d', $this->timeStart - 1)
+                ])
                 ->get();
             
             foreach ($oldOperations as $operation) {
@@ -98,6 +105,8 @@ class ToirPlanMonthController extends ToirController
      */
     public function step2()
     {
+        $this->checkPlanMonth();
+
         $this->view('plan_month/header');
 
         $this->view('plan_month/step2', [
@@ -112,21 +121,23 @@ class ToirPlanMonthController extends ToirController
      */
     public function step2_save()
     {
-        $errorDate = [];
+        $this->checkPlanMonth();
+
+        $error = null;
 
         foreach($this->workshop->plans as $plan) {
             $createdOperations = $plan->operations()
                 ->setFilter(['>PLANNED_DATE' => date('Y-m-d', $this->timeStart - 1)])
                 ->get();
 
-            $errorDate = PushService::checkAndPush($createdOperations);
-            if($errorDate) {
+            $error = PushService::checkAndPush($createdOperations);
+            if($error) {
                 break;
             }
         }
 
-        if($errorDate) {
-            header('Location: ?step=2&workshop=' . $this->workshop->ID . "&error_date=" . $errorDate);
+        if($error) {
+            header('Location: ?step=2&workshop=' . $this->workshop->ID . "&error=" . $error);
         } else {
             header('Location: ?step=3&workshop=' . $this->workshop->ID);
         }
@@ -137,6 +148,8 @@ class ToirPlanMonthController extends ToirController
      */
     public function step3()
     {
+        $this->checkPlanMonth(true);
+
         unset($_SESSION['plan_month_date']);
 
         $this->view('plan_month/header');
@@ -225,13 +238,44 @@ class ToirPlanMonthController extends ToirController
 		header('Location: plan_month.php?step=2&workshop=' . $this->workshop->ID );
     }
 
-
     /**
-     * @param string $date
-     * @param string $direction
+     * @param bool $isSetDone = false
      * 
-     * @return string
+     * @return void
      */
-  
+    private function checkPlanMonth(bool $isSetDone = false)
+    {
+        $planMonth = $this->workshop->planMonthes()
+            ->setFilter([
+                'YEAR' => $this->date->year,
+                'MONTH' => $this->date->month
+            ])
+            ->first();
+        
+        if($planMonth) {
+            if($planMonth->stage == PlanMonth::STAGE_DONE) {
+                die('Планирование уже пройдено');
+            }
+        } else {
+            $planMonthId = PlanMonth::create([
+                'WORKSHOP_ID' => $this->workshop->ID,
+                'YEAR' => (int)$this->date->year,
+                'MONTH' => (int)$this->date->month,
+                'STAGE' => PlanMonth::STAGE_NEW
+            ]);
+
+            $planMonth = PlanMonth::find($planMonthId);
+        }
+
+        if($planMonth->STAGE != PlanMonth::STAGE_PROCESS) {
+            $planMonth->STAGE = PlanMonth::STAGE_PROCESS;
+            $planMonth->save();
+        }
+
+        if($isSetDone) {
+            $planMonth->STAGE = PlanMonth::STAGE_DONE;
+            $planMonth->save();
+        }
+    }
 
 }

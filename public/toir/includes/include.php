@@ -32,6 +32,7 @@ require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/History.ph
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/Line.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/Operation.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/Plan.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/PlanMonth.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/Registry.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/Receiving.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Models/Service.php");

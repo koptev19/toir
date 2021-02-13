@@ -140,6 +140,14 @@ class Operation extends ToirModel
     }
 
     /**
+     * @return ToirModelBuilder
+     */
+    public function copies(): ToirModelBuilder
+    {
+        return Operation::filter(['SOURCE_OPERATION_ID' => $this->ID]);
+    }
+
+    /**
      * @return DateProcess|null
      */
     public function dateProcess(): ?DateProcess

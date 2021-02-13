@@ -56,7 +56,7 @@
 
 <?php if($showPlanMonth) { ?>
     <div class='mb-2 alert alert-danger'>
-        <a href="plan_month.php?workshop=<?php echo $this->workshop->ID; ?>" target=_blank class="text-danger">Составить "График ТОиР" на <?php echo monthName($showPlanMonth->month) . ' ' . $showPlanMonth->year; ?></a>
+        <a href="plan_month.php?workshop=<?php echo $this->workshop->ID; ?>" class="text-danger">Составить "График ТОиР" на <?php echo monthName($showPlanMonth->month) . ' ' . $showPlanMonth->year; ?></a>
     </div>
 <?php } ?>
 
