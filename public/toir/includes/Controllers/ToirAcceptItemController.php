@@ -35,8 +35,8 @@ class ToirAcceptItemController extends ToirController
 
         $create = [
             'ACCEPT_ID' => $accept->ID,
-            'WORKSHOP_ID' => $accept->WORKSHOP_ID,
-            'LINE_ID' => $accept->LINE_ID,
+            'WORKSHOP_ID' => $accept->equipment->WORKSHOP_ID,
+            'LINE_ID' => $accept->equipment->LINE_ID,
             'EQUIPMENT_ID' => $accept->EQUIPMENT_ID,
             'USER_SECOND_NAME' => $_REQUEST['USER_NAME'],
 			'STAGE' => $_REQUEST['COMMENT'] ? AcceptItem::STAGE_NEW : AcceptItem::STAGE_DONE,
