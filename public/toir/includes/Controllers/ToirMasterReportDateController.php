@@ -147,34 +147,35 @@ class ToirMasterReportDateController extends ToirController
         $owners = [];
 		$cookie=$this->getCookie();
 		$times = json_decode($cookie['result'], true);
-       
+
 		foreach($times as $workerKey => $operationObjects){
             if(!$operationObjects) {
                 continue;
             }
             foreach($operationObjects as $operationId => $time){
-                    if(!$operationsTime[$operationId][0]){
-                        $operationsTime[$operationId] = [$time[0], $time[1]];
-                    } else {
-                        $operationsTime[$operationId][0] = min($operationsTime[$operationId][0], $time[0]);
-                        $operationsTime[$operationId][1] = max($operationsTime[$operationId][1], $time[1]);
-                    }
-                    
-                    if(!isset($owners[$operationId])) {
-                        $owners[$operationId] = [];
-                    }
+                if(!$operationsTime[$operationId]){
+                    $operationsTime[$operationId] = [];
+                }
+                $operationsTime[$operationId][] = [$time[0], $time[1]];
 
-                    $owners[$operationId][] = $cookie['workersNames'][$workerKey];
-                
             }
 		}
-		
-		
+
+        $timesGrouped = [];
+        foreach($operationsTime as $operationId => $operationTimes) {
+            $timesGrouped[$operationId] = OperationService::getTimesGroup($operationTimes);
+
+            $owners[$operationId] = [];
+            foreach($timesGrouped[$operationId] as $finalTime) {
+                $owners[$operationId][] = $this->getOwners((int)$operationId, $finalTime);                
+            }
+        }
+
         $this->showHeader();
      	$this->view('master_report_date/step3', [
             'operationsInLine' => $this->getOperationsInLine($this->getOperations()),
             'cookie' => $cookie,
-			'operationsTime' => $operationsTime,
+			'timesGrouped' => $timesGrouped,
 			'owners' =>  $owners
 
         ]);
@@ -319,7 +320,6 @@ class ToirMasterReportDateController extends ToirController
        
         // Сохранение времени работ по операциям для каждого исполнителя
         $operationsTime = [];
-        $owners = [];
         foreach($operationsStep3 as $workerKey => $operationObjects){
             if(!$operationObjects) {
                 continue;
@@ -336,20 +336,16 @@ class ToirMasterReportDateController extends ToirController
                         "group" => $group,
                     ]);
                 }
-                if(!$operationsTime[$operationId][0]){
-                    $operationsTime[$operationId] = [$time[0], $time[1]];
-                } else {
-                    $operationsTime[$operationId][0] = min($operationsTime[$operationId][0], $time[0]);
-                    $operationsTime[$operationId][1] = max($operationsTime[$operationId][1], $time[1]);
+                if(!$operationsTime[$operationId]){
+                    $operationsTime[$operationId] = [];
                 }
-                
-                if(!isset($owners[$operationId])) {
-                    $owners[$operationId] = [];
-                }
-
-                $owners[$operationId][] = $cookie['workersNames'][$workerKey];
+                $operationsTime[$operationId][] = [$time[0], $time[1]];
             }
+        }
 
+        $timesGrouped = [];
+        foreach($operationsTime as $operationId => $operationTimes) {
+            $timesGrouped[$operationId] = OperationService::getTimesGroup($operationTimes);
         }
 
         // Сохранение отложенных списаний
@@ -390,13 +386,15 @@ class ToirMasterReportDateController extends ToirController
                 $operation = Operation::find($operation->ID);
 
                 // Вставляем запись в Журнал учета проф. работ
-                $historyId = HistoryService::createByOperationDone($operation, History::SOURCE_REPORT_DATE);
+                foreach($timesGrouped[$id] as $operationFinalTime) {
+                    $historyId = HistoryService::createByOperationDone($operation, History::SOURCE_REPORT_DATE);
 
-                // Обновляем поля: время работы, исполнитель
-                $history = History::find($historyId);
-                $history->WORK_TIME = $operationsTime[$id][0].' - '.$operationsTime[$id][1];
-                $history->OWNER = implode(", ", $owners[$id]);
-                $history->save();
+                    // Обновляем поля: время работы, исполнитель
+                    $history = History::find($historyId);
+                    $history->WORK_TIME = $operationFinalTime[0].' - '.$operationFinalTime[1];
+                    $history->OWNER = $this->getOwners((int)$id, $operationFinalTime);
+                    $history->save();
+                }
 
                 // Обновляем плановую операцию
                 if($operation->PLAN_ID) {
@@ -542,6 +540,30 @@ class ToirMasterReportDateController extends ToirController
             $copyOperation->TASK_RESULT = 'Y';
             $copyOperation->save();
         }
+    }
+
+    private function getOwners(int $operationId, array $time): string
+    {
+		$cookie=$this->getCookie();
+        $workersNames = $cookie['workersNames'];
+        $allCookiesTimes = json_decode($cookie['result'], true);
+
+        $workers = [];
+
+        foreach($allCookiesTimes as $workerId => $operationsTimes) {
+            if(empty($operationsTimes)) {
+                continue;
+            }
+            if(empty($operationsTimes[$operationId])) {
+                continue;
+            }
+
+            if($operationsTimes[$operationId][0] >= $time[0] && $operationsTimes[$operationId][1] <= $time[1]) {
+                $workers[] = $workersNames[$workerId];
+            }
+        }
+
+        return implode(", ", $workers);
     }
 
 }

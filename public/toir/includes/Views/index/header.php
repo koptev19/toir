@@ -13,6 +13,7 @@
             <li><a class="dropdown-item" href="writeoffs.php?workshop=<?php echo $this->workshop->ID; ?>" target="_blank">Журнал списания ТМЦ</a></li>
             <li><a class="dropdown-item" href="delayed_writeoffs.php" target="_blank">Журнал "Отложенных списаний ТМЦ"</a></li>
             <li><a class="dropdown-item" href="work_planned_log.php" target="_blank">Журнал плановых операций</a></li>
+            <li><a class="dropdown-item" href="/downtimes" target="_blank">Журнал простоев</a></li>
         </ul>
     </div>
     <a href="#" onclick="addOperationGroup()" class="btn btn-outline-primary me-3"><i class="fas fa-plus"></i> Добавить операции</a>

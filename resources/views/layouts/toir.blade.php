@@ -10,7 +10,7 @@
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
 
-        <title>ТОиР</title>
+        <title>{{ $title ?? 'ТОиР'}}</title>
     </head>
     <body>
 

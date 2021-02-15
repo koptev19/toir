@@ -20,6 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('downtimes-table', require('./components/DowntimesTable.vue').default);
 Vue.component('equipment', require('./components/Equipment.vue').default);
 Vue.component('equipment-tree', require('./components/EquipmentTree.vue').default);
 Vue.component('equipment-item', require('./components/EquipmentItem.vue').default);

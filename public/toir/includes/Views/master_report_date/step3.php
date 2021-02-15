@@ -72,10 +72,14 @@ $this->view('components/select_equipment', ["multiply"=>true]);
                </form>
 			</td>
             <td class='text-center'>
-                <?php echo $operationsTime[$operation->ID][0]." - ".$operationsTime[$operation->ID][1];	?>
+				<?php foreach($timesGrouped[$operation->ID] as $time) { ?>
+                	<?php echo $time[0]." - ".$time[1];	?><br>
+				<?php } ?>
             </td>
             <td width="200">
-				<?php echo implode(",",$owners[$operation->ID] ?? []); ?>
+				<?php foreach($owners[$operation->ID] as $owner) { ?>
+                	<?php echo $owner;	?><br>
+				<?php } ?>
 			</td>
 			<td width="190">
 				<?php if (in_array($operation->ID, $cookie['done'])) { ?>

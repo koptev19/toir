@@ -28,6 +28,9 @@ Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('equipments/children', 'EquipmentController@children')->name('equipments.children');
     Route::get('equipments/{equipment}/parents', 'EquipmentController@parents')->name('equipments.parents');
 
+    Route::get('downtimes', 'DowntimeController@index')->name('downtimes.index');
+    Route::get('downtimes/items', 'DowntimeController@items')->name('downtimes.items');
+
     Route::resources([
         'departments' => DepartmentController::class,
         'equipments' => EquipmentController::class,
@@ -35,7 +38,3 @@ Route::group(['middleware' => ['web', 'auth']], function () {
         'accepts' => AcceptController::class,
     ]);
 });
-
-// Route::resource('equipments', EquipmentController::class);
-
-// Route::resource('departments', DepartmentController::class);

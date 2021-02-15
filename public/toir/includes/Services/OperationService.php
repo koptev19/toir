@@ -265,4 +265,36 @@ class OperationService
         return Operation::create($create);
     }
 
+    /**
+     * 
+     */
+    public static function getTimesGroup(array $times)
+    {
+        $arr = [];
+    
+        while(true) {
+            foreach ($times as $time) {
+                $find = false;
+                foreach($arr as $key => $time1){
+                   if ($time[0] <= $time1[1] && $time[1] >= $time1[0]){             
+                        $begin1 = min($time[0], $time1[0]);
+                        $end1 = max($time[1], $time1[1]);
+                    
+                        $arr[$key] = [$begin1,$end1];  
+                        $find = true;
+                        break;
+                    }   
+                }  
+                if(!$find) {
+                    $arr[] = $time;
+                }
+            }  
+            if (count($times) == count($arr)) break;
+            $times = $arr;
+            $arr = [];
+        }
+
+        return $arr;
+    }
+
 }
