@@ -24,6 +24,8 @@ $title = $title ?? 'ТОиР';
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
         <title><?php echo $title; ?></title>
     </head>
     <body>

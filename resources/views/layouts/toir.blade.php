@@ -10,6 +10,8 @@
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
 
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
         <title>{{ $title ?? 'ТОиР'}}</title>
     </head>
     <body>
