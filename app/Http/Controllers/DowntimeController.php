@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\TimeHelper;
+use App\Http\Resources\DowntimeOperationsResource;
 use App\Http\Resources\DowntimeResource;
 use App\Models\Equipment;
+use App\Models\History;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -44,18 +48,51 @@ class DowntimeController extends Controller
             abort(404);
         }
 
-        $eqipments = Equipment::whereParentId($parent)->get();
+        $equipments = Equipment::whereParentId($parent)
+            ->withCount('children')
+            ->get();
 
         $downtimes = [];
-        foreach($eqipments as $eqipment) {
+        foreach($equipments as $equipment) {
             $downtimes[] = (object)[
-                'eqipment' => $eqipment
+                'eqipment' => $equipment,
+                'downtime' => $this->getDowntime($dateFrom, $dateTo, $equipment),
             ];
         }
 
         return response()->json([
             'items' => new DowntimeResource($downtimes)
         ]);
+    }
+
+    public function operations(Request $request, Equipment $equipment)
+    {
+        $dateFrom = $request->date_from ?? null;
+        $dateTo = $request->date_to ?? Carbon::today()->format('Y-m-d');
+        if(!$dateFrom) {
+            abort(404);
+        }
+
+        $histories = $this->getHistories($dateFrom, $dateTo, $equipment);
+
+        return response()->json([
+            'items' => new DowntimeOperationsResource($histories)
+        ]);
+    }
+
+    private function getDowntime(string $dateFrom, string $dateTo, Equipment $equipment): string
+    {
+        $histories = $this->getHistories($dateFrom, $dateTo, $equipment);
+        
+        return TimeHelper::sumTime($histories->pluck('work_time')->toArray());
+    }
+
+    public function getHistories(string $dateFrom, string $dateTo, Equipment $equipment): Collection
+    {
+        return History::whereIn('equipment_id', $equipment->allChildrenAndSelfId())
+            ->where('planned_date', '>=', $dateFrom)
+            ->where('planned_date', '<=', $dateTo)
+            ->get();
     }
 
 }

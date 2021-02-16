@@ -16,6 +16,9 @@ class MainController extends Controller
      */
     public function index(Request $request)
     {
+        session_start();
+        $_SESSION['auth_id'] = \Auth::user()->id;
+
         $workshops = \Auth::user()->availableWorkshops;
         if(count($workshops) == 1) {
             $workshop = reset($workshops);

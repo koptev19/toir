@@ -2,9 +2,7 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Collection;
 
 class DowntimeResource extends JsonResource
 {
@@ -24,6 +22,9 @@ class DowntimeResource extends JsonResource
                 'equipment_name' => $item->eqipment->name,
                 'html_class' => $item->eqipment->html_class,
                 'level' => $item->eqipment->level,
+                'children_count' => $item->eqipment->children_count,
+                'downtime' => $item->downtime,
+                'exists_operations' => $item->downtime != '00:00',
             ];
         }
 

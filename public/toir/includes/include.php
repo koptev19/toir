@@ -62,9 +62,9 @@ require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Services/StopServ
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Services/TaskService.php");
 require_once($_SERVER["DOCUMENT_ROOT"] . TOIR_PATH . "includes/Services/UserService.php");
 
-
 if (!defined('DONT_CHECK_AUTH') || !DONT_CHECK_AUTH) {
     if(empty(UserToir::current())) {
         header("Location: /login");
     }
 }
+

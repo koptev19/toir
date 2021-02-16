@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 
 class Equipment extends Model
 {
@@ -151,6 +152,28 @@ class Equipment extends Model
         }
 
         return $parentsId;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function allChildrenId(): Collection
+    {
+        $childrenId = collect([]);
+
+        foreach($this->children as $child) {
+            $childrenId = $childrenId->merge($child->allChildrenAndSelfId());
+        }
+
+        return $childrenId;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function allChildrenAndSelfId(): Collection
+    {
+        return collect([$this->id])->merge($this->allChildrenId());
     }
 
     /**

@@ -154,6 +154,7 @@ class ToirPlanDateCheckingController extends ToirController
     public function timeDuration(DateProcess $dateProcess, ?Line $line = null): string
     {
         $sumTime =0;
+        $operationIds = [];
 		foreach($dateProcess->operations as $operation) {
             if($line && $operation->LINE_ID != $line->ID) {
                 continue;
@@ -191,6 +192,8 @@ class ToirPlanDateCheckingController extends ToirController
         ])->get();
 
         $timeMinutes = [60 * 24, 0];
+
+        $operationIds = [];
 
         foreach ($dateProcesses as $dateProcess) {
            foreach($dateProcess->operations as $operation) {

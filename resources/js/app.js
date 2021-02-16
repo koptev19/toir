@@ -1,3 +1,8 @@
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -25,6 +30,9 @@ Vue.component('equipment', require('./components/Equipment.vue').default);
 Vue.component('equipment-tree', require('./components/EquipmentTree.vue').default);
 Vue.component('equipment-item', require('./components/EquipmentItem.vue').default);
 Vue.component('users-managing-table', require('./components/UsersManagingTable.vue').default);
+
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

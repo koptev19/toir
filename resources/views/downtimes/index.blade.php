@@ -7,7 +7,7 @@
 @include('downtimes._filter')
 
 <downtimes-table
-    route="{{ route('downtimes.items') }}?date_from={{ old('date_from') }}&date_to={{ old('date_to') }}"
+    dates="date_from={{ old('date_from') }}&date_to={{ old('date_to') }}"
 ></downtimes-table>
 
 @endsection
