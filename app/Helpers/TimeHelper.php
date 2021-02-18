@@ -9,7 +9,7 @@ class TimeHelper
     {
         $minutes = 0;
         foreach($times as $time) {
-            $minutes += self::getDiffMinutes($time);
+            $minutes += $time ? self::getDiffMinutes($time) : 0;
         }
         $h = floor($minutes / 60);
         $m = $minutes % 60;

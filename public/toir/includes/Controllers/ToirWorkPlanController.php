@@ -140,7 +140,11 @@ class ToirWorkPlanController extends ToirController
 	public function WorkersRoutePrint() 
 	{
         $operations = [];
-		$filter= ["PLANNED_DATE" => date("Y-m-d",strtotime($this->date))];
+		$filter= [
+			"PLANNED_DATE" => date("Y-m-d",strtotime($this->date)),
+            'SERVICE_ID' => UserToir::current()->availableServicesIds,
+            'WORKSHOP_ID' => UserToir::current()->availableWorkshopsIds,
+		];
 		
 		if($_REQUEST['workshop'] && $_REQUEST['filtred'])
 		{
