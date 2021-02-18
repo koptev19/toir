@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\TimeHelper;
-use App\Http\Resources\DowntimeOperationsResource;
-use App\Http\Resources\DowntimeResource;
+use App\Http\Resources\Downtime;
 use App\Models\Equipment;
 use App\Models\History;
+use App\Models\Operation;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 class DowntimeController extends Controller
 {
     /**
+     * @param Request $request
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index(Request $request)
@@ -36,63 +37,159 @@ class DowntimeController extends Controller
     }
 
     /**
-     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function items(Request $request)
     {
         $parent = $request->parent ?? null;
+        $level = $request->level ?? 1;
         $dateFrom = $request->date_from ?? null;
         $dateTo = $request->date_to ?? Carbon::today()->format('Y-m-d');
 
+        if($level == 1) {
+            return $this->itemsDate($dateFrom, $dateTo);
+        } elseif($level == 2) {
+            return $this->itemsType($parent);
+        } else {
+            return $this->itemsEquipment($dateFrom, $dateTo, $parent);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function operations(Request $request)
+    {
+        $parentArray = explode('.', $request->id);
+
+        $equipment = isset($parentArray[2]) ? Equipment::find($parentArray[2]) : null;
+
+        $histories = $this->getHistories($parentArray[0], $parentArray[1] ?? null, $equipment);
+
+        return response()->json([
+            'items' => new Downtime\OperationsResource($histories)
+        ]);
+    }
+
+    /**
+     * @param string $dateFrom
+     * @param string $dateTo
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function itemsDate(string $dateFrom, string $dateTo)
+    {
         if(!$dateFrom) {
             abort(404);
         }
 
-        $equipments = Equipment::whereParentId($parent)
+        $downtimes = [];
+
+        $groupedHistories = History::whereResult('Y')
+            ->where('planned_date', '>=', $dateFrom)
+            ->where('planned_date', '<=', $dateTo)
+            ->orderBy('planned_date', 'asc')
+            ->get()
+            ->groupBy('date_database');
+
+        foreach($groupedHistories as $date => $histories) {
+            $downtimes[] = (object)[
+                'date_format' => $date,
+                'date' => (new Carbon($date))->format('d.m.Y'),
+                'downtime' => TimeHelper::sumTime($histories->pluck('work_time')->toArray()),
+            ];
+        }
+
+        return response()->json([
+            'items' => new Downtime\DateResource($downtimes)
+        ]);
+    }
+
+    private function itemsType(string $date)
+    {
+        if(!$date) {
+            abort(404);
+        }
+
+        $groupedHistories = History::whereResult('Y')
+            ->wherePlannedDate($date)
+            ->get()
+            ->groupBy(function ($item) {
+                if ($item->reason === Operation::REASON_CRASH) {
+                    return Downtime\TypeResource::TYPE_CRASH;
+                } elseif ($item->reason === Operation::REASON_REPAIR) {
+                    return Downtime\TypeResource::TYPE_REPAIR;
+                } elseif ($item->source === History::SOURCE_REPORT_DATE) {
+                    return Downtime\TypeResource::TYPE_WORKS;
+                } else {
+                    return Downtime\TypeResource::TYPE_UNDEFINED;
+                }
+            });
+
+        foreach($groupedHistories as $type => $histories) {
+            $downtimes[] = (object)[
+                'id' => $date . '.' . $type,
+                'type' => $type,
+                'downtime' => TimeHelper::sumTime($histories->pluck('work_time')->toArray()),
+            ];
+        }
+
+        return response()->json([
+            'items' => new Downtime\TypeResource($downtimes)
+        ]);
+    }
+
+    private function itemsEquipment($dateFrom, $dateTo, $parent)
+    {
+        if(!$parent) {
+            abort(404);
+        }
+
+        $parentArray = explode('.', $parent);
+        $date = $parentArray[0];
+        $reason = $parentArray[1];
+        $parentEquipmentId = $parentArray[2] ?? null;
+
+        $equipments = Equipment::whereParentId($parentEquipmentId)
             ->withCount('children')
             ->get();
 
         $downtimes = [];
         foreach($equipments as $equipment) {
-            $downtimes[] = (object)[
-                'eqipment' => $equipment,
-                'downtime' => $this->getDowntime($dateFrom, $dateTo, $equipment),
-            ];
+            $histories = $this->getHistories($date, $reason, $equipment);
+
+            if($histories->count()) {
+                $downtimes[] = (object)[
+                    'id' => $date . '.' . $reason . '.' . $equipment->id,
+                    'eqipment' => $equipment,
+                    'downtime' => TimeHelper::sumTime($histories->pluck('work_time')->toArray()),
+                ];
+            }
         }
 
         return response()->json([
-            'items' => new DowntimeResource($downtimes)
+            'items' => new Downtime\EquipmentResource($downtimes)
         ]);
     }
 
-    public function operations(Request $request, Equipment $equipment)
+    public function getHistories(string $date, ?string $type, ?Equipment $equipment): Collection
     {
-        $dateFrom = $request->date_from ?? null;
-        $dateTo = $request->date_to ?? Carbon::today()->format('Y-m-d');
-        if(!$dateFrom) {
-            abort(404);
-        }
-
-        $histories = $this->getHistories($dateFrom, $dateTo, $equipment);
-
-        return response()->json([
-            'items' => new DowntimeOperationsResource($histories)
-        ]);
-    }
-
-    private function getDowntime(string $dateFrom, string $dateTo, Equipment $equipment): string
-    {
-        $histories = $this->getHistories($dateFrom, $dateTo, $equipment);
-        
-        return TimeHelper::sumTime($histories->pluck('work_time')->toArray());
-    }
-
-    public function getHistories(string $dateFrom, string $dateTo, Equipment $equipment): Collection
-    {
-        return History::whereIn('equipment_id', $equipment->allChildrenAndSelfId())
-            ->where('planned_date', '>=', $dateFrom)
-            ->where('planned_date', '<=', $dateTo)
+        return History::whereResult('Y')
+            ->wherePlannedDate($date)
+            ->when($type == Downtime\TypeResource::TYPE_CRASH, function (Builder $builder) {
+                return $builder->whereReason(Operation::REASON_CRASH);
+            })
+            ->when($type == Downtime\TypeResource::TYPE_REPAIR, function (Builder $builder) {
+                return $builder->whereReason(Operation::REASON_REPAIR);
+            })
+            ->when($type == Downtime\TypeResource::TYPE_WORKS, function (Builder $builder) {
+                return $builder->whereSource(History::SOURCE_REPORT_DATE);
+            })
+            ->when($equipment, function (Builder $builder, Equipment $equipment) {
+                return $builder->whereIn('equipment_id', $equipment->allChildrenAndSelfId());                
+            })
             ->get();
-    }
+}
 
 }

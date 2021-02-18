@@ -53,4 +53,12 @@ class History extends Model
         return $this->planned_date ? $this->planned_date->format('d.m.Y') : '';
     }
 
+    /**
+     * @return string
+     */
+    public function getDateDatabaseAttribute()
+    {
+        return $this->planned_date ? $this->planned_date->format('Y-m-d') : '';
+    }
+
 }

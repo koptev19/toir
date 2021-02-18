@@ -17,6 +17,7 @@ class Operation extends Model
     public const REASON_VIEW = 'view';
     public const REASON_CRASH = 'crash';
 	public const REASON_DOWNTIME = 'downtime';
+	public const REASON_REPAIR = 'repair';
 
     public const SOURCE_GROUP_PLAN_DATE = 'plan_date';
     public const SOURCE_GROUP_REPORT_DATE = 'report_date';

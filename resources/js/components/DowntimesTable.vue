@@ -3,8 +3,9 @@
         <table class="table table-bordered m-3 table-hover w-auto">
             <thead>
                 <tr class='text-center'>
-                    <th>Оборудование</th>
-                    <th>Простои</th>
+                    <th>Дата</th>
+                    <th>План</th>
+                    <th>Простой</th>
                     <th>Операции</th>
                 </tr>
             </thead>
@@ -12,23 +13,24 @@
                 <tr v-for="row in rows" :key="row.id">
                     <td :style="'padding-left:' + 30 * (row.level-1) + 'px;' ">
                         <button v-if="row.children_count" :class="'btn py-0 ' + row.html_class" @click="showChildren(row)" type="button">
-                            {{ row.equipment_name }}
+                            {{ row.name }}
                             <i v-if="row.show" class="fa fa-angle-up" aria-hidden="true"></i>
                             <i v-else class="fa fa-angle-down" aria-hidden="true"></i>
                         </button>
-                        <span v-else :class="row.html_class">{{ row.equipment_name }}</span>
+                        <span v-else :class="row.html_class">{{ row.name }}</span>
                     </td>
+                    <td></td>
                     <td class="text-center">
                         {{ row.downtime }}
                     </td>
                     <td class="text-center">
-                        <b-button v-if="row.exists_operations" variant="link" class="p-0" @click="showOperations(row)">Операции</b-button>
+                        <b-button variant="link text-dark" class="p-0" @click="showOperations(row)"><i class="fa fa-align-justify" aria-hidden="true"></i></b-button>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <b-modal v-model="modalShow" size="xl" hide-footer centered hide-backdrop content-class="shadow" scrollable title="Операции">
+        <b-modal v-model="modalShow" size="xl" hide-footer centered content-class="shadow" scrollable title="Операции">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -77,14 +79,17 @@
             showChildren: function(parentDowntime) {  
                 parentDowntime.show = !parentDowntime.show;
                 if(parentDowntime.show) {
-                    this.getDowntimes(parentDowntime);
+                    this.getDowntimes(parentDowntime, parentDowntime.level);
                 } else {
                     parentDowntime.children = {};
                     this.createRowsByDowntimes();
                 }
             },
-            getDowntimes: function(parentDowntime) {
-                let url = '/downtimes/items?' + this.dates;
+            getDowntimes: function(parentDowntime, parentLevel) {
+                let url = '/downtimes/items?' + 'level=' + (parentLevel + 1);
+                if(parentLevel == 0) {
+                    url += '&' + this.dates;
+                }
                 if(parentDowntime.id) {
                     url += '&parent=' + parentDowntime.id;
                 }
@@ -120,7 +125,7 @@
             },
             showOperations: function(downtime) {
                 this.operations = [];
-                axios.get('/downtimes/' + downtime.id + '/operations?' + this.dates).then(({data}) => {
+                axios.get('/downtimes/operations?id=' + downtime.id).then(({data}) => {
                     this.modalShow = true;
                     this.operations = data.items;
                 }).catch(function (error) {
@@ -129,7 +134,7 @@
             }
         },
         mounted: function() {
-            this.getDowntimes(this.downtimes);
+            this.getDowntimes(this.downtimes, 0);
         }
     }
 </script>

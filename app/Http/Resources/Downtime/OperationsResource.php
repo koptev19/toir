@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Downtime;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DowntimeOperationsResource extends JsonResource
+class OperationsResource extends JsonResource
 {
     /**
      * Transform the resource collection into an array.

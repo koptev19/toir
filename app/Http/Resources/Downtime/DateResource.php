@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Downtime;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DowntimeResource extends JsonResource
+class DateResource extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -18,13 +18,12 @@ class DowntimeResource extends JsonResource
 
         foreach($this->resource as $item) {
             $result[] = [
-                'id' => $item->eqipment->id,
-                'equipment_name' => $item->eqipment->name,
-                'html_class' => $item->eqipment->html_class,
-                'level' => $item->eqipment->level,
-                'children_count' => $item->eqipment->children_count,
+                'id' => $item->date_format,
+                'name' => $item->date,
+                'html_class' => 'link-dark',
+                'level' => 1,
+                'children_count' => true,
                 'downtime' => $item->downtime,
-                'exists_operations' => $item->downtime != '00:00',
             ];
         }
 

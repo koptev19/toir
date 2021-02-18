@@ -70,7 +70,7 @@ class ToirAddHistoryGroupController extends ToirController
 
             $equipment = Equipment::find((int) $_REQUEST['equipment'][$keyOperation]);
 
-            $reasons = ['Downtime' => 'downtime' , 'ServiceRequest' => 'crash'];
+			$reason = $this->crash ? Operation::REASON_CRASH : Operation::REASON_REPAIR;
 
             $fields = [
                 'SERVICE_ID' => $this->sourceModel->SERVICE_ID,
@@ -85,20 +85,17 @@ class ToirAddHistoryGroupController extends ToirController
                 'OWNER' => $_REQUEST['OWNER'][$keyOperation],
                 'PLANNED_DATE' => $_REQUEST['PLANNED_DATE'][$keyOperation] ?? $this->date,
                 'START_DATE' => $_REQUEST['PLANNED_DATE'][$keyOperation] ?? $this->date,
-                'REASON' => $reasons[get_class($this->sourceModel)],
+                'WORK_TIME' => $_REQUEST['time_from'][$keyOperation]. ' - ' . $_REQUEST['time_to'][$keyOperation],
+                'REASON' => $reason,
                 'RESULT' => 'Y',
             ];
 
-            if($this->crash){
-				$fields["WORK_TIME"] = $this->crash->TIME_FROM . " - " . $this->crash->TIME_TO;
-			}
-			
-			$source ="";
+            $source ="";
 			
 			if(get_class($this->sourceModel) == "ServiceRequest"){
-			$source = $this->crash
-                ? History::SOURCE_CRASH . ': ' . $this->crash->ID
-			        : History::SOURCE_SERVICE . ': ' . $this->sourceModel->ID;
+                $source = $this->crash
+                    ? History::SOURCE_CRASH . ': ' . $this->crash->ID
+                        : History::SOURCE_SERVICE . ': ' . $this->sourceModel->ID;
 			}elseif(get_class($this->sourceModel) == "Downtime"){
 				$source = History::SOURCE_DOWNTIME . ': ' . $this->sourceModel->ID;
 			}

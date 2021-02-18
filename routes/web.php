@@ -30,7 +30,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 
     Route::get('downtimes', 'DowntimeController@index')->name('downtimes.index');
     Route::get('downtimes/items', 'DowntimeController@items')->name('downtimes.items');
-    Route::get('downtimes/{equipment}/operations', 'DowntimeController@operations')->name('downtimes.operations');
+    Route::get('downtimes/operations', 'DowntimeController@operations')->name('downtimes.operations');
 
     Route::resources([
         'departments' => DepartmentController::class,

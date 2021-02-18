@@ -22,6 +22,7 @@ $this->view('components/select_equipment', ["multiply"=>true]);
             <th>Тип операции</th>
             <th>Комментарий по результату</th>
             <th>Ответственный исполнитель</th>
+            <th>Время от и до</th>
             <th>Дата</th>
             <th></th>
         </tr>
@@ -96,6 +97,8 @@ function historyGroupCopy(link)
         COMMENT: row.find('input[name="COMMENT[' + row.data('id') + ']"]').val(),
         OWNER: row.find('input[name="OWNER[' + row.data('id') + ']"]').val(),
         TYPE_OPERATION: row.find('select[name="TYPE_OPERATION[' + row.data('id') + ']"]').val(),
+        time_from: row.find('input[name="time_from[' + row.data('id') + ']"]').val(),
+        time_to: row.find('input[name="time_to[' + row.data('id') + ']"]').val(),
     };
     historyGroupAdd(values);
 }
@@ -206,6 +209,28 @@ function validateForm()
         } else if(date.length && date.val()) {
             date.removeClass("is-invalid");	
         }    
+
+        let type = $(element).find('select[name="TYPE_OPERATION[' + id + ']"]');
+        if (!type.val()) {
+            type.addClass("is-invalid");	
+            error = error + "\nНе выбран тип операции!";	
+        } else {
+            type.removeClass("is-invalid");	
+        }    
+
+        let time_from = $(element).find('input[name="time_from[' + id + ']"]');
+        let time_to = $(element).find('input[name="time_to[' + id + ']"]');
+        time_from.removeClass("is-invalid");	
+        time_to.removeClass("is-invalid");	
+        if (!time_from.val() || !time_to.val()) {
+            time_from.addClass("is-invalid");	
+            time_to.addClass("is-invalid");	
+            error = error + "\nНе выбрано время!";	
+        } else if(time_to.val() < time_from.val()) {
+            time_from.addClass("is-invalid");	
+            time_to.addClass("is-invalid");	
+            error = error + "\nВремя \"от\" должно быть меньше времени \"после\"!";	
+        }
     });
     
     if(error) {

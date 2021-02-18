@@ -17,7 +17,9 @@
     <td><input type="text" class="form-control" name="COMMENT[<?php echo $id; ?>]" value="<?php echo $values['COMMENT'] ?? '' ?>" required></td>
     <td><input type="text" class="form-control" name="OWNER[<?php echo $id; ?>]" value="<?php echo $values['OWNER'] ?? '' ?>" required></td>
     <td>
-        <input type="text" class="form-control text-center" value="<?php echo $date; ?>" readonly>
+    <input type="time" name="time_from[<?php echo $id; ?>]" class="form-control mb-2" value="<?php echo $values['time_from'] ?? '' ?>" required>
+    <input type="time" name="time_to[<?php echo $id; ?>]" class="form-control" value="<?php echo $values['time_to'] ?? '' ?>" required>
     </td>
+    <td><input type="text" class="form-control text-center" value="<?php echo $date; ?>" readonly></td>
     <td class="text-center align-middle"><a href="#" onclick="historyGroupRemove(this); return false;"><img src="images/x.svg"></a></td>
 </tr>
