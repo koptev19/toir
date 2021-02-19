@@ -14,7 +14,7 @@ class DowntimesMigration extends Migration
     public function up()
     {
         Schema::table('equipment', function (Blueprint $table) {
-            $table->boolean('is_repair')->nullable()->after('enter_date');
+
         });
     }
 
@@ -26,7 +26,6 @@ class DowntimesMigration extends Migration
     public function down()
     {
         Schema::table('equipment', function (Blueprint $table) {
-            $table->dropColumn('is_repair');
         });
     }
 }

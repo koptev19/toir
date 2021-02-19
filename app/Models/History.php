@@ -22,6 +22,11 @@ class History extends Model
 	public const SOURCE_DOWNTIME = 'Простой';
     public const SOURCE_TMC = 'Списание ТМЦ';
 
+    public const DOWNTIME_TYPE_CRASH = 'crash';
+    public const DOWNTIME_TYPE_REPAIR = 'repair';
+    public const DOWNTIME_TYPE_WORKS = 'works';
+    public const DOWNTIME_TYPE_UNDEFINED = 'undefined';
+
     protected $fillable = [
     ];
 
@@ -59,6 +64,20 @@ class History extends Model
     public function getDateDatabaseAttribute()
     {
         return $this->planned_date ? $this->planned_date->format('Y-m-d') : '';
+    }
+
+    /**
+     * @return string
+     */
+    public function getDowntimeTypeAttribute()
+    {
+        if ($this->reason === Operation::REASON_CRASH) {
+            return self::DOWNTIME_TYPE_CRASH;
+        } elseif ($this->source === self::SOURCE_REPORT_DATE) {
+            return self::DOWNTIME_TYPE_WORKS;
+        } else {
+            return self::DOWNTIME_TYPE_UNDEFINED;
+        }
     }
 
 }

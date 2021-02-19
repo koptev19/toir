@@ -1,11 +1,13 @@
 <template>
     <div>
+        <div class="p-3">Общее время простоя: {{ totalTime }}</div>
         <table class="table table-bordered m-3 table-hover w-auto">
             <thead>
                 <tr class='text-center'>
                     <th>Дата</th>
                     <th>План</th>
                     <th>Простой</th>
+                    <th>Человеко-часы</th>
                     <th>Операции</th>
                 </tr>
             </thead>
@@ -19,9 +21,20 @@
                         </button>
                         <span v-else :class="row.html_class">{{ row.name }}</span>
                     </td>
-                    <td></td>
+                    <td class="text-center">
+                        <div v-if="row.level < 4">
+                            {{ zeroNum(row.plan.h) }} : {{ zeroNum(row.plan.m) }}
+                        </div>
+                        <div v-if="row.level == 4">
+                            <input type="number" @change="changePlan(downtimes)" @keyup="changePlan(downtimes)" v-model.number="row.plan.h" placeholder="Часы" step="1" min="0" class="form-control form-control-sm d-inline downtime-plan"> :
+                            <input type="number" @change="changePlan(downtimes)" @keyup="changePlan(downtimes)" v-model.number="row.plan.m" placeholder="Минуты" step="1" min="0" max="59" class="form-control form-control-sm d-inline downtime-plan">
+                        </div>
+                    </td>
                     <td class="text-center">
                         {{ row.downtime }}
+                    </td>
+                    <td class="text-center">
+                        {{ row.worktime }}
                     </td>
                     <td class="text-center">
                         <b-button variant="link text-dark" class="p-0" @click="showOperations(row)"><i class="fa fa-align-justify" aria-hidden="true"></i></b-button>
@@ -72,7 +85,8 @@
                 downtimes: {},
                 showed: {},
                 operations: [],
-                modalShow: false
+                modalShow: false,
+                totalTime: '00:00'
             }
         },
         methods: {
@@ -94,10 +108,11 @@
                     url += '&parent=' + parentDowntime.id;
                 }
                 axios.get(url).then(({data}) => {
-                    if(parentDowntime.id) {
+                    if(parentLevel) {
                         parentDowntime.children = this.objectDowntimesFromArrayItems(data.items);
                     } else {
                         this.downtimes = this.objectDowntimesFromArrayItems(data.items);
+                        this.totalTime = data.total;
                     }
                     this.createRowsByDowntimes();
                 }).catch(function (error) {
@@ -119,6 +134,10 @@
             objectDowntimesFromArrayItems: function (items) {
                 let objectDownTimes = {};
                 for(let itemKey in items) {
+                    items[itemKey].plan = {
+                        h: 0,
+                        m: 0
+                    };
                     objectDownTimes[items[itemKey].id] = items[itemKey];
                 }
                 return objectDownTimes;
@@ -131,6 +150,30 @@
                 }).catch(function (error) {
                     alert('error');
                 });
+            },
+            zeroNum: function(n) {
+                return (n < 10 ? '0' : '') + n;
+            },
+            changePlan: function(downtimes) {
+                let childrenPlan = {h: 0, m: 0};
+                for (let key in downtimes) {
+                    let childPlan = {h: 0, m: 0}
+                    if(downtimes[key].level > 4) {
+                        continue;
+                    }
+                    if(downtimes[key].children && downtimes[key].level < 4) {
+                        childPlan = this.changePlan(downtimes[key].children);
+                        downtimes[key].plan.h = childPlan.h;
+                        downtimes[key].plan.m = childPlan.m;
+                        downtimes[key].plan.h += Math.floor(downtimes[key].plan.m / 60);
+                        downtimes[key].plan.m = downtimes[key].plan.m % 60;
+                    }
+                    childrenPlan.h += downtimes[key].plan.h;
+                    childrenPlan.m += downtimes[key].plan.m;
+                }
+                childrenPlan.h += Math.floor(childrenPlan.m / 60);
+                childrenPlan.m = childrenPlan.m % 60;
+                return childrenPlan;
             }
         },
         mounted: function() {
@@ -138,3 +181,9 @@
         }
     }
 </script>
+
+<style scoped>
+    .downtime-plan {
+        width: 50px;
+    }
+</style>

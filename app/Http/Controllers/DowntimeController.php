@@ -21,6 +21,7 @@ class DowntimeController extends Controller
 {
     /**
      * @param Request $request
+     * 
      * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
      */
     public function index(Request $request)
@@ -38,6 +39,7 @@ class DowntimeController extends Controller
 
     /**
      * @param Request $request
+     * 
      * @return \Illuminate\Http\JsonResponse
      */
     public function items(Request $request)
@@ -58,6 +60,7 @@ class DowntimeController extends Controller
 
     /**
      * @param Request $request
+     * 
      * @return \Illuminate\Http\JsonResponse
      */
     public function operations(Request $request)
@@ -76,6 +79,7 @@ class DowntimeController extends Controller
     /**
      * @param string $dateFrom
      * @param string $dateTo
+     * 
      * @return \Illuminate\Http\JsonResponse
      */
     private function itemsDate(string $dateFrom, string $dateTo)
@@ -94,18 +98,27 @@ class DowntimeController extends Controller
             ->groupBy('date_database');
 
         foreach($groupedHistories as $date => $histories) {
+            $worktimes = $histories->where('downtime_type', '!=', History::DOWNTIME_TYPE_REPAIR)->pluck('work_time');
+
             $downtimes[] = (object)[
                 'date_format' => $date,
                 'date' => (new Carbon($date))->format('d.m.Y'),
-                'downtime' => TimeHelper::sumTime($histories->pluck('work_time')->toArray()),
+                'downtime' => TimeHelper::sumWorkTime($worktimes),
+                'worktime' => '00:00',
             ];
         }
 
         return response()->json([
-            'items' => new Downtime\DateResource($downtimes)
+            'items' => new Downtime\DateResource($downtimes),
+            'total' => TimeHelper::sumTime(collect($downtimes)->pluck('downtime'))
         ]);
     }
 
+    /**
+     * @param string $date
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
     private function itemsType(string $date)
     {
         if(!$date) {
@@ -116,23 +129,14 @@ class DowntimeController extends Controller
             ->whereResult('Y')
             ->wherePlannedDate($date)
             ->get()
-            ->groupBy(function ($item) {
-                if ($item->equipment->workshop->is_repair) {
-                    return Downtime\TypeResource::TYPE_REPAIR;
-                } elseif ($item->reason === Operation::REASON_CRASH) {
-                    return Downtime\TypeResource::TYPE_CRASH;
-                } elseif ($item->source === History::SOURCE_REPORT_DATE) {
-                    return Downtime\TypeResource::TYPE_WORKS;
-                } else {
-                    return Downtime\TypeResource::TYPE_UNDEFINED;
-                }
-            });
+            ->groupBy('downtime_type');
 
         foreach($groupedHistories as $type => $histories) {
             $downtimes[] = (object)[
-                'id' => $date . '.' . $type,
+                'date' => $date,
                 'type' => $type,
-                'downtime' => TimeHelper::sumTime($histories->pluck('work_time')->toArray()),
+                'downtime' => $type !== History::DOWNTIME_TYPE_REPAIR ? TimeHelper::sumWorkTime($histories->pluck('work_time')->toArray()) : '',
+                'worktime' => '00:00',
             ];
         }
 
@@ -141,7 +145,12 @@ class DowntimeController extends Controller
         ]);
     }
 
-    private function itemsEquipment($parent)
+    /**
+     * @param string $parent
+     * 
+     * @return \Illuminate\Http\JsonResponse
+     */
+    private function itemsEquipment(string $parent)
     {
         if(!$parent) {
             abort(404);
@@ -149,7 +158,7 @@ class DowntimeController extends Controller
 
         $parentArray = explode('.', $parent);
         $date = $parentArray[0];
-        $reason = $parentArray[1];
+        $type = $parentArray[1];
         $parentEquipmentId = $parentArray[2] ?? null;
 
         $equipments = Equipment::whereParentId($parentEquipmentId)
@@ -158,13 +167,15 @@ class DowntimeController extends Controller
 
         $downtimes = [];
         foreach($equipments as $equipment) {
-            $histories = $this->getHistories($date, $reason, $equipment);
+            $histories = $this->getHistories($date, $type, $equipment);
 
             if($histories->count()) {
                 $downtimes[] = (object)[
-                    'id' => $date . '.' . $reason . '.' . $equipment->id,
+                    'date' => $date,
+                    'type' => $type,
                     'eqipment' => $equipment,
-                    'downtime' => TimeHelper::sumTime($histories->pluck('work_time')->toArray()),
+                    'downtime' => $type !== History::DOWNTIME_TYPE_REPAIR ? TimeHelper::sumWorkTime($histories->pluck('work_time')->toArray()) : '',
+                    'worktime' => '00:00',
                 ];
             }
         }
@@ -174,27 +185,33 @@ class DowntimeController extends Controller
         ]);
     }
 
-    public function getHistories(string $date, ?string $type, ?Equipment $equipment): Collection
+    /**
+     * @param string $date
+     * @param string|null $type
+     * @param Equipment|null $equipment
+     * 
+     * @return Collection
+     */
+    private function getHistories(string $date, ?string $type, ?Equipment $equipment): Collection
     {
         return History::whereResult('Y')
             ->wherePlannedDate($date)
-            ->when($type == Downtime\TypeResource::TYPE_CRASH, function (Builder $builder) {
+            ->when($type == History::DOWNTIME_TYPE_CRASH, function (Builder $builder) {
                 return $builder->whereReason(Operation::REASON_CRASH);
             })
-            ->when($type == Downtime\TypeResource::TYPE_REPAIR, function (Builder $builder) {
+            ->when($type == History::DOWNTIME_TYPE_REPAIR, function (Builder $builder) {
                 return $builder->whereHas('equipment', function (Builder $builder) {
                     return $builder->whereHas('workshop', function (Builder $builder) {
                         return $builder->whereIsRepair(true);
                     });
                 });
             })
-            ->when($type == Downtime\TypeResource::TYPE_WORKS, function (Builder $builder) {
+            ->when($type == History::DOWNTIME_TYPE_WORKS, function (Builder $builder) {
                 return $builder->whereSource(History::SOURCE_REPORT_DATE);
             })
             ->when($equipment, function (Builder $builder, Equipment $equipment) {
                 return $builder->whereIn('equipment_id', $equipment->allChildrenAndSelfId());                
             })
             ->get();
-}
-
+    }
 }

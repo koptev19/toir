@@ -5,11 +5,33 @@ namespace App\Helpers;
 class TimeHelper
 {
 
-    public static function sumTime(array $times): string
+    /**
+     * @param array|Collection
+     * 
+     * @return string
+     */
+    public static function sumWorkTime($times): string
     {
         $minutes = 0;
         foreach($times as $time) {
             $minutes += $time ? self::getDiffMinutes($time) : 0;
+        }
+        $h = floor($minutes / 60);
+        $m = $minutes % 60;
+        return sprintf('%02d:%02d', $h, $m);
+    }
+
+    /**
+     * @param array|Collection
+     * 
+     * @return string
+     */
+    public static function sumTime($times): string
+    {
+        $minutes = 0;
+        foreach($times as $time) {
+            [$h, $m] = explode(":", $time);
+            $minutes += (int)$h * 60 + (int)$m;
         }
         $h = floor($minutes / 60);
         $m = $minutes % 60;

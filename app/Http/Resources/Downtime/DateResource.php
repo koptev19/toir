@@ -19,11 +19,13 @@ class DateResource extends JsonResource
         foreach($this->resource as $item) {
             $result[] = [
                 'id' => $item->date_format,
+                'parent_id' => null,
                 'name' => $item->date,
                 'html_class' => 'link-dark',
                 'level' => 1,
                 'children_count' => true,
-                'downtime' => $item->downtime,
+                'downtime' => implode(' : ', explode(':', $item->downtime)),
+                'worktime' => implode(' : ', explode(':', $item->worktime)),
             ];
         }
 

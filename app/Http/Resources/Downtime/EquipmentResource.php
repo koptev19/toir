@@ -18,12 +18,14 @@ class EquipmentResource extends JsonResource
 
         foreach($this->resource as $item) {
             $result[] = [
-                'id' => $item->id,
+                'id' => $item->date . '.' . $item->type . '.' . $item->eqipment->id,
+                'parent_id' => $item->date . '.' . $item->type . ($item->eqipment->parent_id ? '.' . $item->eqipment->parent_id : ''),
                 'name' => $item->eqipment->name,
                 'html_class' => $item->eqipment->html_class,
                 'level' => $item->eqipment->level + 2,
                 'children_count' => $item->eqipment->children_count,
-                'downtime' => $item->downtime,
+                'downtime' => implode(' : ', explode(':', $item->downtime)),
+                'worktime' => implode(' : ', explode(':', $item->worktime)),
             ];
         }
 
