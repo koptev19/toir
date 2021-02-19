@@ -52,7 +52,7 @@ class DowntimeController extends Controller
         } elseif($level == 2) {
             return $this->itemsType($parent);
         } else {
-            return $this->itemsEquipment($dateFrom, $dateTo, $parent);
+            return $this->itemsEquipment($parent);
         }
     }
 
@@ -112,14 +112,15 @@ class DowntimeController extends Controller
             abort(404);
         }
 
-        $groupedHistories = History::whereResult('Y')
+        $groupedHistories = History::with(['equipment', 'equipment.workshop'])
+            ->whereResult('Y')
             ->wherePlannedDate($date)
             ->get()
             ->groupBy(function ($item) {
-                if ($item->reason === Operation::REASON_CRASH) {
-                    return Downtime\TypeResource::TYPE_CRASH;
-                } elseif ($item->reason === Operation::REASON_REPAIR) {
+                if ($item->equipment->workshop->is_repair) {
                     return Downtime\TypeResource::TYPE_REPAIR;
+                } elseif ($item->reason === Operation::REASON_CRASH) {
+                    return Downtime\TypeResource::TYPE_CRASH;
                 } elseif ($item->source === History::SOURCE_REPORT_DATE) {
                     return Downtime\TypeResource::TYPE_WORKS;
                 } else {
@@ -140,7 +141,7 @@ class DowntimeController extends Controller
         ]);
     }
 
-    private function itemsEquipment($dateFrom, $dateTo, $parent)
+    private function itemsEquipment($parent)
     {
         if(!$parent) {
             abort(404);
@@ -181,7 +182,11 @@ class DowntimeController extends Controller
                 return $builder->whereReason(Operation::REASON_CRASH);
             })
             ->when($type == Downtime\TypeResource::TYPE_REPAIR, function (Builder $builder) {
-                return $builder->whereReason(Operation::REASON_REPAIR);
+                return $builder->whereHas('equipment', function (Builder $builder) {
+                    return $builder->whereHas('workshop', function (Builder $builder) {
+                        return $builder->whereIsRepair(true);
+                    });
+                });
             })
             ->when($type == Downtime\TypeResource::TYPE_WORKS, function (Builder $builder) {
                 return $builder->whereSource(History::SOURCE_REPORT_DATE);

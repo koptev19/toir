@@ -89,6 +89,12 @@ class DatabaseSeeder extends Seeder
             'mechanic_id' => 1,
         ]);
 
+        $workshop3 = Workshop::create([
+            'name' => 'Ремонтный цех',
+            'mechanic_id' => 1,
+            'is_repair' => true,
+        ]);
+
         $line1 = $workshop1->lines()->create(['name' => 'Линия 1.1']);
         $line2 = $workshop1->lines()->create(['name' => 'Линия 1.2']);
 
@@ -99,6 +105,19 @@ class DatabaseSeeder extends Seeder
 
         $line1->children()->create([
             'name' => 'Механизм 1',
+            'type' => Equipment::TYPE_MECHANISM,
+        ]);
+
+        $line3 = $workshop3->lines()->create(['name' => 'Ремонтная линия 1']);
+        $line4 = $workshop3->lines()->create(['name' => 'Ремонтная линия 2']);
+
+        $line1->children()->create([
+            'name' => 'Механизм 1',
+            'type' => Equipment::TYPE_MECHANISM,
+        ]);
+
+        $line3->children()->create([
+            'name' => 'Ремонтный Механизм 1',
             'type' => Equipment::TYPE_MECHANISM,
         ]);
     }

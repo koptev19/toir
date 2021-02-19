@@ -27,6 +27,7 @@ class Equipment extends Model
         'workshop_id',
         'line_id',
         'mechanic_id',
+        'is_repair',
         'short_name',
         'manager_id',
         'inventory_number',
@@ -49,6 +50,7 @@ class Equipment extends Model
 
     protected $casts = [
         'enter_date' => 'date',
+        'is_repair' => 'boolean',
     ];
 
     /**
