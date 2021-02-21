@@ -82,10 +82,6 @@ class EquipmentFormRequest extends FormRequest
             'inventory_number' => [
                 'nullable',
             ],
-            'is_repair' => [
-                'nullable',
-                'boolean',
-            ],
             'enter_date' => [
                 'nullable',
                 'date',

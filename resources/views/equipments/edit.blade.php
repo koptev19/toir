@@ -74,20 +74,6 @@
         </div>
     </div>
 
-    @if($equipment->isWorkshop())
-    <div class="row mb-3">
-        <div class='col-4 col-md-2'>Ремонтный:</div>
-        <div class="col-8 col-md-10">
-            <div class="form-check">
-                <input type="hidden" value="0" name="is_repair">
-                <input class="form-check-input" type="checkbox" value="1" name="is_repair" id="is_repair" @if(old('is_repair', $equipment->is_repair)) checked @endif>
-                <label class="form-check-label" for="is_repair"></label>
-            </div>
-            @error('inventory_number') <span class="text-danger">{{ $message }}</span> @enderror
-        </div>
-    </div>
-    @endif
-
     <div class="row mb-3">
         <div class='col-4 col-md-2'>Дата ввода в экспуатацию:</div>
         <div class="col-8 col-md-10">

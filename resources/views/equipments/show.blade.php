@@ -38,19 +38,6 @@
     <div class="col-8 col-md-10">{{ optional($equipment->mechanic)->fullname }}</div>
 </div>
 
-@if($equipment->isWorkshop())
-    <div class="row mb-3">
-        <div class='col-4 col-md-2'>Ремонтный:</div>
-        <div class="col-8 col-md-10">
-            @if($equipment->is_repair) 
-                Да
-            @else
-                Нет
-            @endif
-        </div>
-    </div>
-@endif
-
 <div class="row mb-3">
     <div class='col-4 col-md-2'>Инвентарный номер:</div>
     <div class="col-8 col-md-10">{{ $equipment->inventory_number }}</div>

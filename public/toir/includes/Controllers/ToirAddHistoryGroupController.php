@@ -70,8 +70,6 @@ class ToirAddHistoryGroupController extends ToirController
 
             $equipment = Equipment::find((int) $_REQUEST['equipment'][$keyOperation]);
 
-			$reason = $this->crash ? Operation::REASON_CRASH : Operation::REASON_REPAIR;
-
             $fields = [
                 'SERVICE_ID' => $this->sourceModel->SERVICE_ID,
                 'EQUIPMENT_ID' => $equipment->ID,
@@ -86,7 +84,7 @@ class ToirAddHistoryGroupController extends ToirController
                 'PLANNED_DATE' => $_REQUEST['PLANNED_DATE'][$keyOperation] ?? $this->date,
                 'START_DATE' => $_REQUEST['PLANNED_DATE'][$keyOperation] ?? $this->date,
                 'WORK_TIME' => $_REQUEST['time_from'][$keyOperation]. ' - ' . $_REQUEST['time_to'][$keyOperation],
-                'REASON' => $reason,
+                'REASON' => Operation::REASON_CRASH,
                 'RESULT' => 'Y',
             ];
 
